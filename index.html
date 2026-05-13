@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishabh Rishabh — AI Product Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-dim: rgba(201,168,76,0.15);
+  --obsidian: #0A0A0F;
+  --dark: #111118;
+  --card: #16161E;
+  --card2: #1C1C26;
+  --cream: #FAF7F0;
+  --muted: #6B6B7B;
+  --border: rgba(201,168,76,0.2);
+  --text: #D8D4CC;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--obsidian);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ---- GRAIN OVERLAY ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* ---- NAV ---- */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 60px;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+/* ---- HERO ---- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 120px 60px 80px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 80% at 10% 50%, rgba(201,168,76,0.03) 0%, transparent 60%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero-name span { color: var(--gold); }
+
+.hero-tagline {
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 40px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.hero-tagline strong { color: var(--text); font-weight: 500; }
+
+.hero-metrics {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.metric-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--gold);
+  color: var(--obsidian);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(201,168,76,0.25);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.hero-scroll::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--muted));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ---- SECTIONS ---- */
+section {
+  padding: 100px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 48px;
+  letter-spacing: -0.02em;
+}
+
+/* ---- ABOUT ---- */
+#about { border-top: 1px solid var(--border); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.about-text p strong { color: var(--cream); font-weight: 600; }
+
+.about-quote {
+  margin-top: 32px;
+  padding: 24px 28px;
+  border-left: 2px solid var(--gold);
+  background: var(--card);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--cream);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.about-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.stat-card:hover {
+  border-color: var(--gold);
+  transform: translateX(4px);
+}
+
+.stat-card-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-card-label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat-card-desc {
+  font-size: 13px;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+/* ---- PRODUCTS ---- */
+#products { border-top: 1px solid var(--border); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+
+.product-card:hover {
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.product-card:hover::before { transform: scaleX(1); }
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.product-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid var(--border);
+}
+
+.product-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.ptag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  background: rgba(201,168,76,0.08);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.2);
+}
+
+.product-url {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.product-url:hover { opacity: 1; }
+
+.product-section {
+  margin-bottom: 12px;
+}
+
+.product-section-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.product-section p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.product-bullets {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-bullets li {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.product-bullets li::before {
+  content: '▸';
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---- EXPERIENCE ---- */
+#experience { border-top: 1px solid var(--border); }
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: all 0.25s;
+}
+
+.exp-card:hover {
+  border-color: rgba(201,168,76,0.4);
+  background: var(--card2);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.exp-company {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.exp-period {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.exp-role {
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.exp-location {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.exp-bullets li {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.exp-bullets li::before {
+  content: '—';
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ---- ACHIEVEMENTS ---- */
+#achievements { border-top: 1px solid var(--border); }
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.ach-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  transition: all 0.25s;
+}
+
+.ach-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.ach-icon {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.ach-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.ach-meta {
+  font-size: 11px;
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 10px;
+}
+
+.ach-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ---- SKILLS ---- */
+#skills { border-top: 1px solid var(--border); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.skill-group {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.skill-group-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  font-size: 12px;
+  padding: 5px 12px;
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.15);
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.skill-tag:hover {
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.4);
+  color: var(--gold);
+}
+
+/* ---- TIMELINE ---- */
+#timeline { border-top: 1px solid var(--border); }
+
+.timeline-list {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -44px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(201,168,76,0.4);
+}
+
+.timeline-period {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.timeline-org {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+
+.timeline-role {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.timeline-notes {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ---- CONTACT ---- */
+#contact {
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.contact-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contact-inner .section-label { justify-content: center; }
+.contact-inner .section-label::before { display: none; }
+
+.contact-email {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--gold);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 12px;
+  transition: opacity 0.2s;
+}
+
+.contact-email:hover { opacity: 0.7; }
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.contact-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.contact-link:hover { color: var(--gold); }
+
+/* ---- FOOTER ---- */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+footer a { color: var(--gold); text-decoration: none; }
+
+/* ---- ANIMATIONS ---- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  section { padding: 60px 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .achievements-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .hero-metrics { gap: 24px; }
+  footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Rishabh Rishabh</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">AI Product Manager · Bengaluru, India</div>
+    <h1 class="hero-name">Rishabh<br><span>Rishabh</span></h1>
+    <p class="hero-tagline">
+      <strong>Vibe Coder. First-Principles Thinker. High-Ownership Builder.</strong><br>
+      I don't wait for perfect information — I decompose the problem, form a hypothesis, and ship.
+    </p>
+
+    <div class="hero-metrics">
+      <div class="metric-item">
+        <span class="metric-num">4+</span>
+        <span class="metric-label">Yrs Experience</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-num">2</span>
+        <span class="metric-label">Apps Shipped</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-num">£10K+</span>
+        <span class="metric-label">Contracts Won</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-num">3×</span>
+        <span class="metric-label">Key Contributor</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-num">100%</span>
+        <span class="metric-label">Client Retention</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-num">81%</span>
+        <span class="metric-label">Cohort Top Score</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
+      <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+      <a href="#products" class="btn-ghost">View Products ↓</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">High-Ownership AI PM.<br>Built to ship.</h2>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>
+        I am a high-ownership product professional with <strong>4+ years of experience</strong> shipping
+        features end-to-end, building with AI tools, and driving outcomes without hand-holding across
+        global technology environments.
+      </p>
+      <p>
+        <strong>M.Sc. Entrepreneurship & Innovation Management (Distinction)</strong>, University of
+        Liverpool. I decompose ambiguous business problems into first-principles logic, write crisp PRDs,
+        and collaborate directly with engineering and design — moving fast with full agency.
+      </p>
+      <p>
+        I recently shipped two live applications using vibe coding — demonstrating that I can go from
+        user problem to deployed product independently. For me, <strong>AI is not a gimmick.</strong>
+        It's how I move faster, think clearer, and build things that actually work.
+      </p>
+      <div class="about-quote">
+        "I shipped two real products because I had ideas worth building. I use AI not to replace thinking — 
+        but to move from thinking to shipping, faster."
+      </div>
+    </div>
+    <div class="about-aside">
+      <div class="stat-card">
+        <span class="stat-card-num">£10K+</span>
+        <span class="stat-card-label">New B2B Contracts</span>
+        <span class="stat-card-desc">Generated through crisp, data-backed product proposals at Sood Agency</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num">30%</span>
+        <span class="stat-card-label">System Performance Uplift</span>
+        <span class="stat-card-desc">Resolved a 5-year critical issue via first-principles root-cause analysis at CLO</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num">35%</span>
+        <span class="stat-card-label">Revenue Growth</span>
+        <span class="stat-card-desc">Driven in just 7 weeks through structured product and GTM execution</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card-num">81%</span>
+        <span class="stat-card-label">Highest Cohort Score</span>
+        <span class="stat-card-desc">Research on "Information Overload & Decision-Making" — directly relevant to AI product design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-label">Products Shipped</div>
+  <h2 class="section-title">Vibe Coded.<br>Deployed. Live.</h2>
+  <div class="products-grid fade-in">
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name">New Year Resolution Tracker</div>
+        <div class="product-badge">Live ↗</div>
+      </div>
+      <div class="product-tags">
+        <span class="ptag">Productivity</span>
+        <span class="ptag">Habit Tracking</span>
+        <span class="ptag">Personal Growth</span>
+      </div>
+      <a href="https://new-year-resolution-tracker-d0aa1e0b.base44.app" target="_blank" class="product-url">
+        ↗ new-year-resolution-tracker-d0aa1e0b.base44.app
+      </a>
+      <div class="product-section">
+        <div class="product-section-label">Problem</div>
+        <p>Most people set resolutions but have no structured system to track, measure, and stay accountable — leading to abandonment within weeks.</p>
+      </div>
+      <div class="product-section">
+        <div class="product-section-label">Solution</div>
+        <p>A clean, goal-oriented web app where users set resolutions, break them into milestones, track weekly progress, and stay accountable through visualisation.</p>
+      </div>
+      <ul class="product-bullets">
+        <li>Identified user problem: resolution abandonment due to lack of visibility</li>
+        <li>Defined requirements: milestone tracking, progress visualisation, reminders</li>
+        <li>Shipped fully functional live app using Base44 — idea to deployed URL</li>
+        <li>Metric: weekly active usage rate & milestone completion percentage</li>
+      </ul>
+    </div>
+
+    <div class="product-card">
+      <div class="product-header">
+        <div class="product-name">Shaadi Sync Plan</div>
+        <div class="product-badge">Live ↗</div>
+      </div>
+      <div class="product-tags">
+        <span class="ptag">Event Management</span>
+        <span class="ptag">Wedding Tech</span>
+        <span class="ptag">Coordination</span>
+      </div>
+      <a href="https://shaadi-sync-plan.base44.app" target="_blank" class="product-url">
+        ↗ shaadi-sync-plan.base44.app
+      </a>
+      <div class="product-section">
+        <div class="product-section-label">Problem</div>
+        <p>Indian wedding planning involves coordinating dozens of vendors, guests, events, and budgets across weeks — generic event tools fail this complexity completely.</p>
+      </div>
+      <div class="product-section">
+        <div class="product-section-label">Solution</div>
+        <p>Wedding planning platform tailored to Indian weddings: event timeline management, vendor tracker, guest list, and budget management in one place.</p>
+      </div>
+      <ul class="product-bullets">
+        <li>Identified underserved niche: generic tools fail multi-day Indian weddings</li>
+        <li>Defined user flows: couple, family coordinator, and vendor-facing views</li>
+        <li>Built and deployed full product using Base44 — domain empathy + speed</li>
+        <li>Metric: single source of truth reducing coordination overhead</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work Experience</div>
+  <h2 class="section-title">Where I've<br>shipped.</h2>
+  <div class="experience-list fade-in">
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-company">Sood Agency</div>
+        <div class="exp-period">Apr 2024 – Jan 2026</div>
+      </div>
+      <div class="exp-role">Technical Business Manager — AI-Augmented Product & Growth</div>
+      <div class="exp-location">Liverpool, UK</div>
+      <ul class="exp-bullets">
+        <li>Owned product features end-to-end: discovery → PRD → sprint → QA → launch with <strong>100% client retention</strong></li>
+        <li>Integrated AI tools (ChatGPT, automation platforms) into workflows; generated <strong>£10,000+ in new B2B contracts</strong></li>
+        <li>Used Google Analytics for funnel analysis; ran A/B experiments iterating rapidly on real usage data</li>
+        <li>Collaborated directly with engineers and designers in a small-team, high-agency environment</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-company">CLO Virtual Fashion Inc.</div>
+        <div class="exp-period">Feb 2022 – Sep 2023</div>
+      </div>
+      <div class="exp-role">IT Consultant — Product Owner & Technical PM</div>
+      <div class="exp-location">Bengaluru, India · Seoul, South Korea</div>
+      <ul class="exp-bullets">
+        <li>Shipped <strong>3 concurrent enterprise integrations</strong> at <strong>100% on-time delivery</strong> (WFX, Centric PLM, Modern Mirror)</li>
+        <li>Resolved a 5-year critical system issue via first-principles root-cause analysis → <strong>30% performance uplift</strong></li>
+        <li><strong>Key Contributor ×3</strong> · Selected for Seoul deployment · Coached cross-functional teams</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-company">Accenture</div>
+        <div class="exp-period">Jun 2021 – Dec 2021</div>
+      </div>
+      <div class="exp-role">Transaction Processing Associate</div>
+      <div class="exp-location">Bengaluru, India</div>
+      <ul class="exp-bullets">
+        <li>AWS cloud workflows · <strong>100% compliance</strong> · Automated reporting pipelines for senior stakeholders</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-label">Achievements</div>
+  <h2 class="section-title">Proof of<br>product thinking.</h2>
+  <div class="achievements-grid fade-in">
+
+    <div class="ach-card">
+      <div class="ach-icon">🤖</div>
+      <div class="ach-title">AI Strategy Consultancy — Mando Agency</div>
+      <div class="ach-meta">Jan–Mar 2024 · University Live Challenge</div>
+      <div class="ach-desc">Delivered a full AI integration roadmap identifying how agentic AI tools could automate workflows and unlock enterprise value. Directly mirrors Libra AI's mission.</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">🏆</div>
+      <div class="ach-title">Best Negotiator Award</div>
+      <div class="ach-meta">Jan 2024 · University of Liverpool</div>
+      <div class="ach-desc">Won by structuring a sponsorship deal delivering 25% higher brand value through first-principles data analysis — demonstrating evidence-based commercial thinking.</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">🎤</div>
+      <div class="ach-title">Dragon's Den — Best Elevated Pitch</div>
+      <div class="ach-meta">Mar 2024 · Enterprise Challenge</div>
+      <div class="ach-desc">Built and presented a full investor-ready business concept end-to-end under competition pressure — from problem definition to financial case to live pitch.</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">🥇</div>
+      <div class="ach-title">1st Place Business Simulation</div>
+      <div class="ach-meta">Mar 2024 · Board Director & Strategic Manager</div>
+      <div class="ach-desc">Led 6-member team to 1st place outperforming 20+ university teams. Made high-stakes strategic decisions in real time under ambiguity.</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">📚</div>
+      <div class="ach-title">81% — Highest in Cohort</div>
+      <div class="ach-meta">Sep 2024 · University of Liverpool</div>
+      <div class="ach-desc">Research on "The Impact of Information Overload on Decision-Making" — directly relevant to designing AI tools that cut noise and amplify signal.</div>
+    </div>
+
+    <div class="ach-card">
+      <div class="ach-icon">⭐</div>
+      <div class="ach-title">Key Contributor Award ×3</div>
+      <div class="ach-meta">2022–2023 · CLO Virtual Fashion</div>
+      <div class="ach-desc">Recognised three consecutive times for mastering new technologies, resolving a 5-year legacy issue, and delivering 30% performance improvement.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">What I bring<br>to the table.</h2>
+  <div class="skills-grid fade-in">
+
+    <div class="skill-group">
+      <div class="skill-group-label">AI Product Management</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AI Tools Integration</span>
+        <span class="skill-tag">Agentic Workflows</span>
+        <span class="skill-tag">LLM-Powered Use Cases</span>
+        <span class="skill-tag">AI Roadmapping</span>
+        <span class="skill-tag">Feature Prioritisation</span>
+        <span class="skill-tag">Vibe Coding</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Product Execution</div>
+      <div class="skill-tags">
+        <span class="skill-tag">End-to-End Ownership</span>
+        <span class="skill-tag">PRD & User Stories</span>
+        <span class="skill-tag">Backlog Prioritisation</span>
+        <span class="skill-tag">Sprint Execution</span>
+        <span class="skill-tag">A/B Testing</span>
+        <span class="skill-tag">Discovery & Research</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Analytical Thinking</div>
+      <div class="skill-tags">
+        <span class="skill-tag">First-Principles Decomposition</span>
+        <span class="skill-tag">Google Analytics</span>
+        <span class="skill-tag">Funnel & Cohort Analysis</span>
+        <span class="skill-tag">KPI / OKR Frameworks</span>
+        <span class="skill-tag">Data-Driven Decisions</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">JIRA</span>
+        <span class="skill-tag">Google Analytics</span>
+        <span class="skill-tag">AWS</span>
+        <span class="skill-tag">Base44</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">ChatGPT</span>
+        <span class="skill-tag">Claude</span>
+        <span class="skill-tag">CRM / ERP / PLM</span>
+        <span class="skill-tag">MS Excel</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-label">Timeline</div>
+  <h2 class="section-title">The journey<br>so far.</h2>
+  <div class="timeline-list fade-in">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2025</div>
+      <div class="timeline-org">Vibe Coder — Independent</div>
+      <div class="timeline-role">Product Builder · Base44</div>
+      <div class="timeline-notes">Shipped 2 live apps: New Year Resolution Tracker + Shaadi Sync Plan. From idea to deployed product, independently.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Apr 2024 – Jan 2026</div>
+      <div class="timeline-org">Sood Agency</div>
+      <div class="timeline-role">Technical Business Manager — AI-Augmented Product & Growth · Liverpool, UK</div>
+      <div class="timeline-notes">£10K+ contracts · 100% client retention · AI tooling integration · A/B testing · GTM launches</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Sep 2023 – Sep 2024</div>
+      <div class="timeline-org">University of Liverpool</div>
+      <div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management — Distinction</div>
+      <div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy · Course Rep</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Feb 2022 – Sep 2023</div>
+      <div class="timeline-org">CLO Virtual Fashion Inc.</div>
+      <div class="timeline-role">IT Consultant — Product Owner & Technical PM · Bengaluru + Seoul</div>
+      <div class="timeline-notes">3 integrations shipped · Key Contributor ×3 · Seoul deployment · 30% performance uplift</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jun 2021 – Dec 2021</div>
+      <div class="timeline-org">Accenture</div>
+      <div class="timeline-role">Transaction Processing Associate · Bengaluru</div>
+      <div class="timeline-notes">AWS cloud workflows · 100% compliance · Automated reporting</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2016 – 2020</div>
+      <div class="timeline-org">HKBK College of Engineering</div>
+      <div class="timeline-role">B.E. Mechanical Engineering · Bengaluru</div>
+      <div class="timeline-notes">Basketball captain · E-Go-Kart team 8th/200 nationally · Built analytical foundations</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner fade-in">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's build<br>something.</h2>
+    <a href="mailto:rishabhukrishabh@gmail.com" class="contact-email">
+      rishabhukrishabh@gmail.com
+    </a>
+    <p style="color: var(--muted); font-size: 14px;">+91 8660127783 · Bengaluru, India</p>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="contact-link">LinkedIn ↗</a>
+      <a href="https://new-year-resolution-tracker-d0aa1e0b.base44.app" target="_blank" class="contact-link">App 1 ↗</a>
+      <a href="https://shaadi-sync-plan.base44.app" target="_blank" class="contact-link">App 2 ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Rishabh Rishabh · AI Product Manager</span>
+  <span>Built with product thinking · <a href="mailto:rishabhukrishabh@gmail.com">Get in touch</a></span>
+</footer>
+
+<script>
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (window.pageYOffset >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.style.color = '';
+    if (link.getAttribute('href') === '#' + current) {
+      link.style.color = 'var(--gold)';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
