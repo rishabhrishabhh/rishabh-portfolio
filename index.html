@@ -7,17 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #C9A84C;
-  --gold-light: #E8C96A;
-  --gold-dim: rgba(201,168,76,0.15);
-  --obsidian: #0A0A0F;
-  --dark: #111118;
-  --card: #16161E;
-  --card2: #1C1C26;
-  --cream: #FAF7F0;
-  --muted: #6B6B7B;
-  --border: rgba(201,168,76,0.2);
-  --text: #D8D4CC;
+--gold: #38BDF8;             /* Technical Electric Cyan / Blue Accent */
+  --gold-light: #0EA5E9;       /* Deepened Cyan for hover states */
+  --gold-dim: rgba(56,189,248,0.06); /* Crisp blue tint for metrics & badges */
+  --obsidian: #0F172A;         /* Rich Slate / Navy - Product Executive Background */
+  --dark: #1E293B;             /* Intermediate structural charcoal panel tracking */
+  --card: #1E293B;             /* Premium deep slate panels for cards */
+  --card2: #334155;            /* Highlight slate for hover execution states */
+  --cream: #F8FAFC;            /* Clean off-white for main bold typography and headers */
+  --muted: #94A3B8;            /* Highly readable muted slate text for details & subheadings */
+  --border: rgba(56,189,248,0.15); /* Tech blueprint grid lines and card borders */
+  --text: #CBD5E1;             /* Sharp contrast light grey for detailed body copy */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -102,11 +102,12 @@ nav {
 }
 
 .hero-grid {
-  position: absolute;
+position: absolute;
   inset: 0;
+  /* Updated rgba values to use the new blue tech theme tint */
   background-image:
-    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(56,189,248,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.05) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
 }
