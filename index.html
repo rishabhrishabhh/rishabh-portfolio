@@ -84,58 +84,49 @@ nav {
 .nav-links a:hover { color: var(--gold); }
 
 /* ---- HERO ---- */
-/* ---- HERO VIEWPORT OPTIMIZATION ---- */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 80px 60px 40px; /* Reduced padding to lift content */
+  padding: 100px 60px 40px; /* Gives room for navigation elements */
   overflow: hidden;
 }
 
-/* ---- HERO SPLIT LAYOUT FIX ---- */
 .hero-split-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Aligns left text and right image perfectly at the top */
   justify-content: space-between;
-  gap: 40px;
+  gap: 50px;
   width: 100%;
-  max-width: 1100px; /* Forces the layout to stay within the page boundaries */
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .hero-left {
-  flex: 1.3;
-  min-width: 0; /* Crucial: Stops text boxes from exploding horizontally */
+  flex: 1.4;
+  min-width: 0;
 }
 
 .hero-right {
-  flex: 0.7;
+  flex: 0.6;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  margin-top: -40px;
-  min-width: 0; /* Prevents image child elements from overflowing */
+  align-items: flex-start;
+  margin-top: -30px; /* Shifts the image up into the drawn top-right corner box */
+  min-width: 0;
 }
 
-/* Shrunk & strictly bounded technical image frame */
+/* Scaled down profile image frame */
 .hero-image-frame {
   width: 100%;
-  max-width: 310px; /* Enforces the maximum size cap */
+  max-width: 250px; /* Reduced from 310px to sit neatly in your drawn box */
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
   padding: 10px;
-  box-sizing: border-box; /* Ensures padding stays inside the 310px limit */
-}
-
-.hero-avatar {
-  width: 100%;       /* Forces the large image to shrink down to the frame width */
-  height: auto;      /* Maintains proper image proportions */
-  display: block;
-  object-fit: cover;
-  border-radius: 2px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, transform 0.3s;
 }
 
 .hero-image-frame:hover {
@@ -143,27 +134,35 @@ nav {
   transform: translateY(-2px);
 }
 
-/* ---- METRICS IN A STRAIGHT LINE ---- */
+.hero-avatar {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ---- ALL 6 METRICS IN A STRAIGHT LINE ---- */
 .hero-metrics {
   display: flex;
-  flex-direction: row; /* Forces horizontal direction */
-  justify-content: space-between; /* Spreads elements evenly */
-  gap: 20px;
-  margin-bottom: 32px; /* Tighter gap above buttons */
-  flex-wrap: nowrap; /* Prevents wrapping into two lines */
+  flex-direction: row; /* Forces straight-line layout horizontal orientation */
+  justify-content: space-between;
+  gap: 15px; /* Tighter gap to cleanly accommodate all 6 items without overflow */
+  margin-top: 40px;
+  margin-bottom: 36px;
+  flex-wrap: nowrap; /* Strictly prevents splitting or wrapping onto a second row */
   width: 100%;
-  max-width: 800px; /* Keeps line from over-stretching */
 }
 
 .metric-item {
   display: flex;
   flex-direction: column;
-  flex: 1; /* Assigns equal width to items */
+  flex: 1;
 }
 
 .metric-num {
   font-family: 'Playfair Display', serif;
-  font-size: 26px; /* Slightly downsized to fit one row perfectly */
+  font-size: 24px; /* Slightly downsized to keep all 6 numbers balanced */
   font-weight: 700;
   color: var(--gold);
   line-height: 1;
@@ -171,50 +170,38 @@ nav {
 
 .metric-label {
   font-size: 9px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
   margin-top: 4px;
-  white-space: nowrap; /* Prevents text splitting awkwardly */
+  white-space: nowrap; /* Keeps descriptive labels on one line */
 }
 
-/* Button group spacing adjustments */
+/* ---- ALL QUICK BUTTONS IN A STRAIGHT LINE ---- */
 .hero-cta {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Ensures buttons stick side-by-side on desktop viewports */
+  width: 100%;
 }
 
-/* ---- RESPONSIVE MOBILE OVERRIDE ---- */
+/* ---- RESPONSIVE DESIGN ---- */
 @media (max-width: 1024px) {
   .hero-split-container {
     flex-direction: column-reverse;
-    gap: 30px;
+    gap: 35px;
   }
   .hero-right {
     margin-top: 0;
     justify-content: flex-start;
   }
   .hero-metrics {
-    flex-wrap: wrap; /* Allows wrap on mobile screen form factors */
+    flex-wrap: wrap; /* Allows text wrapping strictly on small mobile screens */
   }
-}
-
-/* ---- RESPONSIVE MOBILE FIX ---- */
-@media (max-width: 1024px) {
-  .hero-split-container {
-    flex-direction: column-reverse; /* Puts photo on top on mobile viewports */
-    gap: 40px;
-    text-align: left;
-  }
-  
-  .hero-right {
-    width: 100%;
-    justify-content: flex-start;
-  }
-  
-  .hero-image-frame {
-    max-width: 320px; /* Downsizes the avatar frame for mobile screens */
+  .hero-cta {
+    flex-wrap: wrap; /* Allows natural wrapping for small responsive touch breaks */
   }
 }
 .hero-eyebrow {
@@ -970,39 +957,20 @@ footer a { color: var(--gold); text-decoration: none; }
         </p>
 
         <div class="hero-metrics">
-  <div class="metric-item">
-    <span class="metric-num">4+</span>
-    <span class="metric-label">Yrs Experience</span>
-  </div>
-  <div class="metric-item">
-    <span class="metric-num">2</span>
-    <span class="metric-label">Apps Shipped</span>
-  </div>
-  <div class="metric-item">
-    <span class="metric-num">£10K+</span>
-    <span class="metric-label">Contracts Won</span>
-  </div>
-  <div class="metric-item">
-    <span class="metric-num">3×</span>
-    <span class="metric-label">Key Contributor</span>
-  </div>
-  <div class="metric-item">
-    <span class="metric-num">100%</span>
-    <span class="metric-label">Client Retention</span>
-  </div>
-  <div class="metric-item">
-    <span class="metric-num">81%</span>
-    <span class="metric-label">Cohort Top Score</span>
-  </div>
+  <div class="metric-item"><span class="metric-num">4+</span><span class="metric-label">Yrs Experience</span></div>
+  <div class="metric-item"><span class="metric-num">2</span><span class="metric-label">Apps Shipped</span></div>
+  <div class="metric-item"><span class="metric-num">£10K+</span><span class="metric-label">Contracts Won</span></div>
+  <div class="metric-item"><span class="metric-num">3×</span><span class="metric-label">Key Contributor</span></div>
+  <div class="metric-item"><span class="metric-num">100%</span><span class="metric-label">Client Retention</span></div>
+  <div class="metric-item"><span class="metric-num">81%</span><span class="metric-label">Cohort Top Score</span></div>
 </div>
 
         <div class="hero-cta">
-          <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
-          <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
-          <a href="#products" class="btn-ghost">View Products ↓</a>
-          <a href="#certifications" class="btn-ghost">Certifications ↓</a>
-        </div>
-      </div>
+  <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
+  <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+  <a href="#products" class="btn-ghost">View Products ↓</a>
+  <a href="#certifications" class="btn-ghost">Certifications ↓</a>
+</div>
 
       <!-- RIGHT COLUMN: THE HERO PROFILE IMAGE FLOATING IN THE EMPTY SPACE -->
       <div class="hero-right">
