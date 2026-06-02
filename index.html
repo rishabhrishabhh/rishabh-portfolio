@@ -119,7 +119,67 @@ position: absolute;
   margin: 0 auto;
   width: 100%;
 }
+/* ---- HERO SPLIT LAYOUT ---- */
+.hero-split-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  width: 100%;
+}
 
+.hero-left {
+  flex: 1.3; /* Allocates slightly more width to your text and metrics */
+}
+
+.hero-right {
+  flex: 0.9; /* Keeps the photo sized elegantly on the right side */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Technical blueprint framing for the profile photo */
+.hero-image-frame {
+  width: 100%;
+  max-width: 400px; /* Controls maximum width of the headshot */
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border); /* Matches slate grid system lines */
+  padding: 16px; /* Inner casing border spacing */
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.hero-image-frame:hover {
+  border-color: var(--gold); /* Lights up tech cyan-blue on hover */
+  transform: translateY(-4px) scale(1.01);
+}
+
+.hero-avatar {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ---- RESPONSIVE MOBILE FIX ---- */
+@media (max-width: 1024px) {
+  .hero-split-container {
+    flex-direction: column-reverse; /* Puts photo on top on mobile viewports */
+    gap: 40px;
+    text-align: left;
+  }
+  
+  .hero-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .hero-image-frame {
+    max-width: 320px; /* Downsizes the avatar frame for mobile screens */
+  }
+}
 .hero-eyebrow {
   font-family: 'DM Mono', monospace;
   font-size: 11px;
@@ -859,46 +919,45 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">AI Product Manager · Bengaluru, India</div>
-    <h1 class="hero-name">Rishabh<br><span>Rishabh</span></h1>
-    <p class="hero-tagline">
-      <strong>AI Product Manager | AI Workflow Automation | Agentic Systems | AI-Powered Product Strategy</strong><br>
-      I don't wait for perfect information. I decompose the problem, form a hypothesis, and ship.
-    </p>
+    
+    <!-- NEW WRAPPER GRID TO FIX THE EMPTY SPACE -->
+    <div class="hero-split-container">
+      
+      <!-- LEFT COLUMN: ALL YOUR TYPOGRAPHY AND CTA BUTTONS -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">AI Product Manager · Bengaluru, India</div>
+        <h1 class="hero-name">Rishabh<br><span>Rishabh</span></h1>
+        <p class="hero-tagline">
+          <strong>AI Product Manager | AI Workflow Automation | Agentic Systems | AI-Powered Product Strategy</strong><br>
+          I don't wait for perfect information. I decompose the problem, form a hypothesis, and ship.
+        </p>
 
-    <div class="hero-metrics">
-      <div class="metric-item">
-        <span class="metric-num">4+</span>
-        <span class="metric-label">Yrs Experience</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-num">2</span>
-        <span class="metric-label">Apps Shipped</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-num">£10K+</span>
-        <span class="metric-label">Contracts Won</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-num">3×</span>
-        <span class="metric-label">Key Contributor</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-num">100%</span>
-        <span class="metric-label">Client Retention</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-num">81%</span>
-        <span class="metric-label">Cohort Top Score</span>
-      </div>
-    </div>
+        <div class="hero-metrics">
+          <div class="metric-item"><span class="metric-num">4+</span><span class="metric-label">Yrs Experience</span></div>
+          <div class="metric-item"><span class="metric-num">2</span><span class="metric-label">Apps Shipped</span></div>
+          <div class="metric-item"><span class="metric-num">£10K+</span><span class="metric-label">Contracts Won</span></div>
+          <div class="metric-item"><span class="metric-num">3×</span><span class="metric-label">Key Contributor</span></div>
+          <div class="metric-item"><span class="metric-num">100%</span><span class="metric-label">Client Retention</span></div>
+          <div class="metric-item"><span class="metric-num">81%</span><span class="metric-label">Cohort Top Score</span></div>
+        </div>
 
-    <div class="hero-cta">
-      <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
-      <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
-      <a href="#products" class="btn-ghost">View Products ↓</a>
-      <a href="#certifications" class="btn-ghost">Certifications ↓</a>
-    </div>
+        <div class="hero-cta">
+          <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
+          <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+          <a href="#products" class="btn-ghost">View Products ↓</a>
+          <a href="#certifications" class="btn-ghost">Certifications ↓</a>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: THE HERO PROFILE IMAGE FLOATING IN THE EMPTY SPACE -->
+      <div class="hero-right">
+        <div class="hero-image-frame">
+          <img src="profile.jpeg" alt="Rishabh Rishabh" class="hero-avatar">
+        </div>
+      </div>
+
+    </div><!-- END SPLIT CONTAINER -->
+
   </div>
   <div class="hero-scroll">Scroll</div>
 </div>
