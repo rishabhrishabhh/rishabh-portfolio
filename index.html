@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
---gold: #38BDF8;             /* Technical Electric Cyan / Blue Accent */
+  --gold: #38BDF8;             /* Technical Electric Cyan / Blue Accent */
   --gold-light: #0EA5E9;       /* Deepened Cyan for hover states */
   --gold-dim: rgba(56,189,248,0.06); /* Crisp blue tint for metrics & badges */
   --obsidian: #0F172A;         /* Rich Slate / Navy - Product Executive Background */
@@ -53,7 +53,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 18px 60px;
-  background: rgba(10,10,15,0.85);
+  background: rgba(15,23,42,0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
@@ -83,24 +83,48 @@ nav {
 
 .nav-links a:hover { color: var(--gold); }
 
-/* ---- HERO ---- */
+/* ---- HERO SECTION CONSTRAINTS ---- */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 100px 60px 40px; /* Gives room for navigation elements */
+  padding: 100px 60px 40px;
   overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 70% 50%, rgba(56,189,248,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 80% at 10% 50%, rgba(15,23,42,0.4) 0%, transparent 60%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-split-container {
   display: flex;
-  align-items: flex-start; /* Aligns left text and right image perfectly at the top */
+  align-items: flex-start;
   justify-content: space-between;
   gap: 50px;
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 .hero-left {
@@ -113,14 +137,13 @@ nav {
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-top: -30px; /* Shifts the image up into the drawn top-right corner box */
+  margin-top: -30px; /* Shifts picture to top right corner frame */
   min-width: 0;
 }
 
-/* Scaled down profile image frame */
 .hero-image-frame {
   width: 100%;
-  max-width: 250px; /* Reduced from 310px to sit neatly in your drawn box */
+  max-width: 250px; /* Scaled down frame to maximize left content space */
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
@@ -142,68 +165,6 @@ nav {
   border-radius: 2px;
 }
 
-/* ---- ALL 6 METRICS IN A STRAIGHT LINE ---- */
-.hero-metrics {
-  display: flex;
-  flex-direction: row; /* Forces straight-line layout horizontal orientation */
-  justify-content: space-between;
-  gap: 15px; /* Tighter gap to cleanly accommodate all 6 items without overflow */
-  margin-top: 40px;
-  margin-bottom: 36px;
-  flex-wrap: nowrap; /* Strictly prevents splitting or wrapping onto a second row */
-  width: 100%;
-}
-
-.metric-item {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.metric-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px; /* Slightly downsized to keep all 6 numbers balanced */
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-
-.metric-label {
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 4px;
-  white-space: nowrap; /* Keeps descriptive labels on one line */
-}
-
-/* ---- ALL QUICK BUTTONS IN A STRAIGHT LINE ---- */
-.hero-cta {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: nowrap; /* Ensures buttons stick side-by-side on desktop viewports */
-  width: 100%;
-}
-
-/* ---- RESPONSIVE DESIGN ---- */
-@media (max-width: 1024px) {
-  .hero-split-container {
-    flex-direction: column-reverse;
-    gap: 35px;
-  }
-  .hero-right {
-    margin-top: 0;
-    justify-content: flex-start;
-  }
-  .hero-metrics {
-    flex-wrap: wrap; /* Allows text wrapping strictly on small mobile screens */
-  }
-  .hero-cta {
-    flex-wrap: wrap; /* Allows natural wrapping for small responsive touch breaks */
-  }
-}
 .hero-eyebrow {
   font-family: 'DM Mono', monospace;
   font-size: 11px;
@@ -213,19 +174,6 @@ nav {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.hero-eyebrow::before {
-font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  /* gap: 12px; <-- REMOVE OR COMMENT THIS OUT */
 }
 
 .hero-name {
@@ -251,45 +199,56 @@ font-family: 'DM Mono', monospace;
 
 .hero-tagline strong { color: var(--text); font-weight: 500; }
 
+/* ---- ALL 6 METRICS IMMUTABLE SINGLE ROW SYSTEM ---- */
 .hero-metrics {
   display: flex;
-  gap: 40px;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 40px;
+  margin-bottom: 36px;
+  flex-wrap: nowrap; /* Locked from wrapping down into a second row */
+  width: 100%;
 }
 
 .metric-item {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .metric-num {
   font-family: 'Playfair Display', serif;
-  font-size: 32px;
+  font-size: 24px; /* Perfectly sized to maintain structural alignment */
   font-weight: 700;
   color: var(--gold);
   line-height: 1;
 }
 
 .metric-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  font-size: 9px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
   margin-top: 4px;
+  white-space: nowrap;
 }
 
+/* ---- ALL QUICK CTA ACTION BUTTONS IN A ROW ---- */
 .hero-cta {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 14px 24px;
   background: var(--gold);
   color: var(--obsidian);
   font-family: 'DM Sans', sans-serif;
@@ -299,19 +258,20 @@ font-family: 'DM Mono', monospace;
   text-transform: uppercase;
   text-decoration: none;
   transition: all 0.25s;
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
   background: var(--gold-light);
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(201,168,76,0.25);
+  box-shadow: 0 12px 32px rgba(56,189,248,0.25);
 }
 
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 14px 24px;
   border: 1px solid var(--border);
   color: var(--text);
   font-size: 13px;
@@ -320,6 +280,7 @@ font-family: 'DM Mono', monospace;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.25s;
+  white-space: nowrap;
 }
 
 .btn-ghost:hover {
@@ -371,19 +332,6 @@ section {
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.section-label::before {
-font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  /* gap: 12px; <-- REMOVE OR COMMENT THIS OUT */
 }
 
 .section-title {
@@ -401,7 +349,7 @@ font-family: 'DM Mono', monospace;
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 80px;
   align-items: start;
 }
@@ -499,7 +447,7 @@ font-family: 'DM Mono', monospace;
 }
 
 .product-card:hover {
-  border-color: rgba(201,168,76,0.4);
+  border-color: rgba(56,189,248,0.4);
   transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
@@ -543,9 +491,9 @@ font-family: 'DM Mono', monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 3px 10px;
-  background: rgba(201,168,76,0.08);
+  background: rgba(56,189,248,0.08);
   color: var(--gold);
-  border: 1px solid rgba(201,168,76,0.2);
+  border: 1px solid rgba(56,189,248,0.2);
 }
 
 .product-url {
@@ -623,7 +571,7 @@ font-family: 'DM Mono', monospace;
 }
 
 .exp-card:hover {
-  border-color: rgba(201,168,76,0.4);
+  border-color: rgba(56,189,248,0.4);
   background: var(--card2);
 }
 
@@ -730,6 +678,9 @@ font-family: 'DM Mono', monospace;
   line-height: 1.6;
 }
 
+/* ---- CERTIFICATIONS ---- */
+#certifications { border-top: 1px solid var(--border); }
+
 /* ---- SKILLS ---- */
 #skills { border-top: 1px solid var(--border); }
 
@@ -763,15 +714,15 @@ font-family: 'DM Mono', monospace;
 .skill-tag {
   font-size: 12px;
   padding: 5px 12px;
-  background: rgba(201,168,76,0.06);
-  border: 1px solid rgba(201,168,76,0.15);
+  background: rgba(56,189,248,0.06);
+  border: 1px solid rgba(56,189,248,0.15);
   color: var(--text);
   transition: all 0.2s;
 }
 
 .skill-tag:hover {
-  background: rgba(201,168,76,0.12);
-  border-color: rgba(201,168,76,0.4);
+  background: rgba(56,189,248,0.12);
+  border-color: rgba(56,189,248,0.4);
   color: var(--gold);
 }
 
@@ -808,7 +759,7 @@ font-family: 'DM Mono', monospace;
   height: 8px;
   background: var(--gold);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(201,168,76,0.4);
+  box-shadow: 0 0 12px rgba(56,189,248,0.4);
 }
 
 .timeline-period {
@@ -851,7 +802,6 @@ font-family: 'DM Mono', monospace;
 }
 
 .contact-inner .section-label { justify-content: center; }
-.contact-inner .section-label::before { display: none; }
 
 .contact-email {
   font-family: 'Playfair Display', serif;
@@ -907,24 +857,37 @@ footer a { color: var(--gold); text-decoration: none; }
   transform: translateY(0);
 }
 
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
+/* ---- RESPONSIVE MEDIA BREAKPOINTS ---- */
+@media (max-width: 1024px) {
   nav { padding: 14px 20px; }
   .nav-links { display: none; }
   .hero { padding: 100px 20px 60px; }
+  .hero-split-container {
+    flex-direction: column-reverse;
+    gap: 35px;
+  }
+  .hero-right {
+    margin-top: 0;
+    justify-content: flex-start;
+  }
+  .hero-metrics {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .hero-cta {
+    flex-wrap: wrap;
+  }
   section { padding: 60px 20px; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .products-grid { grid-template-columns: 1fr; }
   .achievements-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
-  .hero-metrics { gap: 24px; }
   footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">Rishabh Rishabh</div>
   <ul class="nav-links">
@@ -938,16 +901,13 @@ footer a { color: var(--gold); text-decoration: none; }
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
     
-    <!-- NEW WRAPPER GRID TO FIX THE EMPTY SPACE -->
     <div class="hero-split-container">
       
-      <!-- LEFT COLUMN: ALL YOUR TYPOGRAPHY AND CTA BUTTONS -->
       <div class="hero-left">
         <div class="hero-eyebrow">AI Product Manager · Bengaluru, India</div>
         <h1 class="hero-name">Rishabh<br><span>Rishabh</span></h1>
@@ -957,35 +917,34 @@ footer a { color: var(--gold); text-decoration: none; }
         </p>
 
         <div class="hero-metrics">
-  <div class="metric-item"><span class="metric-num">4+</span><span class="metric-label">Yrs Experience</span></div>
-  <div class="metric-item"><span class="metric-num">2</span><span class="metric-label">Apps Shipped</span></div>
-  <div class="metric-item"><span class="metric-num">£10K+</span><span class="metric-label">Contracts Won</span></div>
-  <div class="metric-item"><span class="metric-num">3×</span><span class="metric-label">Key Contributor</span></div>
-  <div class="metric-item"><span class="metric-num">100%</span><span class="metric-label">Client Retention</span></div>
-  <div class="metric-item"><span class="metric-num">81%</span><span class="metric-label">Cohort Top Score</span></div>
-</div>
+          <div class="metric-item"><span class="metric-num">4+</span><span class="metric-label">Yrs Experience</span></div>
+          <div class="metric-item"><span class="metric-num">2</span><span class="metric-label">Apps Shipped</span></div>
+          <div class="metric-item"><span class="metric-num">£10K+</span><span class="metric-label">Contracts Won</span></div>
+          <div class="metric-item"><span class="metric-num">3×</span><span class="metric-label">Key Contributor</span></div>
+          <div class="metric-item"><span class="metric-num">100%</span><span class="metric-label">Client Retention</span></div>
+          <div class="metric-item"><span class="metric-num">81%</span><span class="metric-label">Cohort Top Score</span></div>
+        </div>
 
         <div class="hero-cta">
-  <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
-  <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
-  <a href="#products" class="btn-ghost">View Products ↓</a>
-  <a href="#certifications" class="btn-ghost">Certifications ↓</a>
-</div>
+          <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
+          <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+          <a href="#products" class="btn-ghost">View Products ↓</a>
+          <a href="#certifications" class="btn-ghost">Certifications ↓</a>
+        </div>
+      </div>
 
-      <!-- RIGHT COLUMN: THE HERO PROFILE IMAGE FLOATING IN THE EMPTY SPACE -->
       <div class="hero-right">
         <div class="hero-image-frame">
           <img src="profile.jpeg" alt="Rishabh Rishabh" class="hero-avatar">
         </div>
       </div>
 
-    </div><!-- END SPLIT CONTAINER -->
+    </div>
 
   </div>
   <div class="hero-scroll">Scroll</div>
 </div>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="section-label">About</div>
   <h2 class="section-title">High Ownership AI PM.<br>Built to ship.</h2>
@@ -997,33 +956,31 @@ footer a { color: var(--gold); text-decoration: none; }
         global technology environments.
       </p>
       <p>
-        <strong>AI Product Manager<strong> with 4+ years of end-to-end product ownership across 
-          enterprise software integrations, AI-augmented platforms, and digital products.
+        <strong>AI Product Manager</strong> with 4+ years of end-to-end product ownership across 
+        enterprise software integrations, AI-augmented platforms, and digital products.
       </p>
       <p>
-       I hold a Generative AI Skills for Product Managers certification from IBM, an N8N Workflow 
-      Automation Certification from AcceleratorX, and ranked 410 out of 179,216 globally in a 
-        Project Management assessment, top 0.23% worldwide. My  <strong> M.Sc. in Entrepreneurship and 
-        Innovation Management (Distinction) <strong> is from the University of Liverpool.
+        I hold a Generative AI Skills for Product Managers certification from IBM, an N8N Workflow 
+        Automation Certification from AcceleratorX, and ranked 410 out of 179,216 globally in a 
+        Project Management assessment, top 0.23% worldwide. My <strong>M.Sc. in Entrepreneurship and 
+        Innovation Management (Distinction)</strong> is from the University of Liverpool.
       </p>
       <p>
         I decompose ambiguous business problems into first-principles logic, craft sharp PRDs, 
         and work directly with engineering and design teams, moving fast with full ownership
         and zero dependency on hand-holding.
-        </p>
-      <p>
-       I have built and launched two live AI-powered applications independently 
-      a New Year Resolution Tracker and Shaadi Sync Plan demonstrating 
-      that I can go from user problem to deployed, metrics-driven product without an engineering team.
-      Both applications have AI features I defined, built, and measured myself.
       </p>
-          
+      <p>
+        I have built and launched two live AI-powered applications independently—a New Year Resolution Tracker 
+        and Shaadi Sync Plan—demonstrating that I can go from user problem to deployed, metrics-driven product 
+        without an engineering team. Both applications have AI features I defined, built, and measured myself.
+      </p>
       <p>
         For me, AI is not a gimmick. It is how I move faster, think clearer, and build things that actually work.
       </p>
       <div class="about-quote">
         "I shipped two real products because I had ideas worth building. 
-        I use AI not to replace thinking but to move from thinking to shipping, faster.."
+        I use AI not to replace thinking but to move from thinking to shipping, faster."
       </div>
     </div>
     <div class="about-aside">
@@ -1051,10 +1008,9 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
   <div class="section-label">Products Shipped</div>
-  <h2 class="section-title">Vibe Coded.<br>Deployed. Live.</h2>
+  <h2 class="section-title">Autonomous Project Sandbox.<br>Deployed. Live.</h2>
   <div class="products-grid fade-in">
 
     <div class="product-card">
@@ -1118,7 +1074,6 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-label">Work Experience</div>
   <h2 class="section-title">Where I've<br>shipped.</h2>
@@ -1133,7 +1088,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="exp-location">Liverpool, UK</div>
       <ul class="exp-bullets">
         <li>Owned product features end-to-end: discovery → PRD → sprint → QA → launch with <strong>100% client retention</strong></li>
-        <li>Integrated AI tools (ChatGPT, automation platforms) into workflows; generated <strong>£10,000+ in new B2B contracts</strong></li>
+        <li>Integrated AI tools (OpenAI GPT-4o, automation platforms) into workflows; generated <strong>£10,000+ in new B2B contracts</strong></li>
         <li>Used Google Analytics for funnel analysis; ran A/B experiments iterating rapidly on real usage data</li>
         <li>Collaborated directly with engineers and designers in a small-team, high-agency environment</li>
       </ul>
@@ -1168,7 +1123,6 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- ACHIEVEMENTS -->
 <section id="achievements">
   <div class="section-label">Achievements</div>
   <h2 class="section-title">Proof of<br>product thinking.</h2>
@@ -1219,14 +1173,11 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-          
-<!-- CERTIFICATIONS -->
 <section id="certifications">
   <div class="section-label">Certifications</div>
   <h2 class="section-title">Validated Tech.<br>Continuous Iteration.</h2>
   <div class="products-grid fade-in">
 
-    <!-- IBM Certification -->
     <div class="product-card">
       <div class="product-header">
         <div class="product-name">Generative AI Skills for Product Managers</div>
@@ -1243,7 +1194,6 @@ footer a { color: var(--gold); text-decoration: none; }
       </div>
     </div>
 
-    <!-- AcceleratorX Certification -->
     <div class="product-card">
       <div class="product-header">
         <div class="product-name">N8N Workflow Automation Certification</div>
@@ -1262,7 +1212,7 @@ footer a { color: var(--gold); text-decoration: none; }
 
   </div>
 </section>
-<!-- SKILLS -->
+
 <section id="skills">
   <div class="section-label">Skills</div>
   <h2 class="section-title">What I bring<br>to the table.</h2>
@@ -1276,7 +1226,7 @@ footer a { color: var(--gold); text-decoration: none; }
         <span class="skill-tag">LLM-Powered Use Cases</span>
         <span class="skill-tag">AI Roadmapping</span>
         <span class="skill-tag">Feature Prioritisation</span>
-        <span class="skill-tag">Vibe Coding</span>
+        <span class="skill-tag">Product Prototyping</span>
       </div>
     </div>
 
@@ -1321,7 +1271,6 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- TIMELINE -->
 <section id="timeline">
   <div class="section-label">Timeline</div>
   <h2 class="section-title">The journey<br>so far.</h2>
@@ -1348,7 +1297,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="timeline-period">Sep 2023 – Sep 2024</div>
       <div class="timeline-org">University of Liverpool</div>
       <div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management -Distinction</div>
-      <div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy · Course Rep</div>
+      <div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy</div>
     </div>
 
     <div class="timeline-item">
@@ -1378,7 +1327,6 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner fade-in">
     <div class="section-label">Contact</div>
@@ -1395,9 +1343,8 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <span>© 2025 Rishabh Rishabh · AI Product Manager</span>
+  <span>© 2026 Rishabh Rishabh · AI Product Manager</span>
   <span>Built with product thinking · <a href="mailto:rishabhukrishabh@gmail.com">Get in touch</a></span>
 </footer>
 
