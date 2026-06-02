@@ -10,7 +10,7 @@
   --gold: #38BDF8;             /* Technical Electric Cyan / Blue Accent */
   --gold-light: #0EA5E9;       /* Deepened Cyan for hover states */
   --gold-dim: rgba(56,189,248,0.06); /* Crisp blue tint for metrics & badges */
-  --obsidian: #0F172A;         /* Rich Slate / Navy - Product Executive Background */
+  --obsidian: #0F172A;         /* Rich Slate / Navy - Background */
   --dark: #1E293B;             /* Intermediate structural charcoal panel tracking */
   --card: #1E293B;             /* Premium deep slate panels for cards */
   --card2: #334155;            /* Highlight slate for hover execution states */
@@ -83,13 +83,13 @@ nav {
 
 .nav-links a:hover { color: var(--gold); }
 
-/* ---- HERO SECTION CONSTRAINTS ---- */
+/* ---- HERO SECTION LAYOUT ---- */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 100px 60px 40px;
+  padding: 120px 60px 60px;
   overflow: hidden;
 }
 
@@ -128,27 +128,27 @@ nav {
 }
 
 .hero-left {
-  flex: 1.4;
+  flex: 1.2;
   min-width: 0;
 }
 
 .hero-right {
-  flex: 0.6;
+  flex: 0.8;
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-top: -30px; /* Shifts picture to top right corner frame */
   min-width: 0;
 }
 
 .hero-image-frame {
   width: 100%;
-  max-width: 250px; /* Scaled down frame to maximize left content space */
+  max-width: 340px; 
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 10px;
+  padding: 12px;
   box-sizing: border-box;
+  margin-top: 15px;
   transition: border-color 0.3s, transform 0.3s;
 }
 
@@ -197,9 +197,9 @@ nav {
   line-height: 1.6;
 }
 
-.hero-tagline strong { color: var(--text); font-weight: 500; }
+.hero-tagline strong { color: var(--cream); font-weight: 500; }
 
-/* ---- ALL 6 METRICS IMMUTABLE SINGLE ROW SYSTEM ---- */
+/* ---- METRICS ROW ---- */
 .hero-metrics {
   display: flex;
   flex-direction: row;
@@ -207,7 +207,7 @@ nav {
   gap: 15px;
   margin-top: 40px;
   margin-bottom: 36px;
-  flex-wrap: nowrap; /* Locked from wrapping down into a second row */
+  flex-wrap: nowrap;
   width: 100%;
 }
 
@@ -219,7 +219,7 @@ nav {
 
 .metric-num {
   font-family: 'Playfair Display', serif;
-  font-size: 24px; /* Perfectly sized to maintain structural alignment */
+  font-size: 24px;
   font-weight: 700;
   color: var(--gold);
   line-height: 1;
@@ -234,7 +234,7 @@ nav {
   white-space: nowrap;
 }
 
-/* ---- ALL QUICK CTA ACTION BUTTONS IN A ROW ---- */
+/* ---- BUTTON ROW ---- */
 .hero-cta {
   display: flex;
   flex-direction: row;
@@ -316,7 +316,7 @@ nav {
   50% { opacity: 1; }
 }
 
-/* ---- SECTIONS ---- */
+/* ---- GLOBAL SECTIONS ---- */
 section {
   padding: 100px 60px;
   max-width: 1100px;
@@ -344,7 +344,7 @@ section {
   letter-spacing: -0.02em;
 }
 
-/* ---- ABOUT ---- */
+/* ---- ABOUT LAYOUT ---- */
 #about { border-top: 1px solid var(--border); }
 
 .about-grid {
@@ -394,6 +394,7 @@ section {
 .stat-card:hover {
   border-color: var(--gold);
   transform: translateX(4px);
+  background: var(--card2);
 }
 
 .stat-card-num {
@@ -450,6 +451,7 @@ section {
   border-color: rgba(56,189,248,0.4);
   transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  background: var(--card2);
 }
 
 .product-card:hover::before { transform: scaleX(1); }
@@ -648,7 +650,7 @@ section {
 
 .ach-card:hover {
   border-color: var(--gold);
-  transform: translateY(-3px);
+  background: var(--card2);
 }
 
 .ach-icon {
@@ -888,6 +890,7 @@ footer a { color: var(--gold); text-decoration: none; }
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="nav-logo">Rishabh Rishabh</div>
   <ul class="nav-links">
@@ -901,6 +904,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </ul>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
@@ -908,6 +912,7 @@ footer a { color: var(--gold); text-decoration: none; }
     
     <div class="hero-split-container">
       
+      <!-- LEFT COLUMN -->
       <div class="hero-left">
         <div class="hero-eyebrow">AI Product Manager · Bengaluru, India</div>
         <h1 class="hero-name">Rishabh<br><span>Rishabh</span></h1>
@@ -916,6 +921,7 @@ footer a { color: var(--gold); text-decoration: none; }
           I don't wait for perfect information. I decompose the problem, form a hypothesis, and ship.
         </p>
 
+        <!-- LOCKED METRIC STRIP -->
         <div class="hero-metrics">
           <div class="metric-item"><span class="metric-num">4+</span><span class="metric-label">Yrs Experience</span></div>
           <div class="metric-item"><span class="metric-num">2</span><span class="metric-label">Apps Shipped</span></div>
@@ -925,14 +931,16 @@ footer a { color: var(--gold); text-decoration: none; }
           <div class="metric-item"><span class="metric-num">81%</span><span class="metric-label">Cohort Top Score</span></div>
         </div>
 
+        <!-- ACTION BUTTON ROW -->
         <div class="hero-cta">
-          <a href="mailto:rishabhukrishabh@gmail.com" class="btn-primary">↗ Get in Touch</a>
+          <a href="#contact" class="btn-primary">↗ Get in Touch</a>
           <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
           <a href="#products" class="btn-ghost">View Products ↓</a>
           <a href="#certifications" class="btn-ghost">Certifications ↓</a>
         </div>
       </div>
 
+      <!-- RIGHT COLUMN (IMAGE BOX) -->
       <div class="hero-right">
         <div class="hero-image-frame">
           <img src="profile.jpeg" alt="Rishabh Rishabh" class="hero-avatar">
@@ -945,6 +953,7 @@ footer a { color: var(--gold); text-decoration: none; }
   <div class="hero-scroll">Scroll</div>
 </div>
 
+<!-- ABOUT -->
 <section id="about">
   <div class="section-label">About</div>
   <h2 class="section-title">High Ownership AI PM.<br>Built to ship.</h2>
@@ -1008,6 +1017,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- PRODUCTS -->
 <section id="products">
   <div class="section-label">Products Shipped</div>
   <h2 class="section-title">Autonomous Project Sandbox.<br>Deployed. Live.</h2>
@@ -1074,6 +1084,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-label">Work Experience</div>
   <h2 class="section-title">Where I've<br>shipped.</h2>
@@ -1103,7 +1114,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="exp-location">Bengaluru, India · Seoul, South Korea</div>
       <ul class="exp-bullets">
         <li>Shipped <strong>3 concurrent enterprise integrations</strong> at <strong>100% on-time delivery</strong> (WFX, Centric PLM, Modern Mirror)</li>
-        <li>Resolved a 5-year critical system issue via first-principles root-cause analysis → <strong>30% performance uplift</strong></li>
+        <li>Resolved a 5-year critical issue via first-principles root-cause analysis → <strong>30% performance uplift</strong></li>
         <li><strong>Key Contributor ×3</strong> · Selected for Seoul deployment · Coached cross-functional teams</li>
       </ul>
     </div>
@@ -1123,6 +1134,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- ACHIEVEMENTS -->
 <section id="achievements">
   <div class="section-label">Achievements</div>
   <h2 class="section-title">Proof of<br>product thinking.</h2>
@@ -1173,11 +1185,13 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- CERTIFICATIONS -->
 <section id="certifications">
   <div class="section-label">Certifications</div>
   <h2 class="section-title">Validated Tech.<br>Continuous Iteration.</h2>
   <div class="products-grid fade-in">
 
+    <!-- IBM Certification -->
     <div class="product-card">
       <div class="product-header">
         <div class="product-name">Generative AI Skills for Product Managers</div>
@@ -1194,6 +1208,7 @@ footer a { color: var(--gold); text-decoration: none; }
       </div>
     </div>
 
+    <!-- AcceleratorX Certification -->
     <div class="product-card">
       <div class="product-header">
         <div class="product-name">N8N Workflow Automation Certification</div>
@@ -1213,6 +1228,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
   <div class="section-label">Skills</div>
   <h2 class="section-title">What I bring<br>to the table.</h2>
@@ -1271,6 +1287,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- TIMELINE -->
 <section id="timeline">
   <div class="section-label">Timeline</div>
   <h2 class="section-title">The journey<br>so far.</h2>
@@ -1296,7 +1313,7 @@ footer a { color: var(--gold); text-decoration: none; }
       <div class="timeline-dot"></div>
       <div class="timeline-period">Sep 2023 – Sep 2024</div>
       <div class="timeline-org">University of Liverpool</div>
-      <div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management -Distinction</div>
+      <div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management -Distinction · Liverpool, UK</div>
       <div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy</div>
     </div>
 
@@ -1327,6 +1344,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner fade-in">
     <div class="section-label">Contact</div>
@@ -1343,6 +1361,7 @@ footer a { color: var(--gold); text-decoration: none; }
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <span>© 2026 Rishabh Rishabh · AI Product Manager</span>
   <span>Built with product thinking · <a href="mailto:rishabhukrishabh@gmail.com">Get in touch</a></span>
