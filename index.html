@@ -236,7 +236,7 @@ nav.scrolled{
   color:var(--muted);margin-top:4px;white-space:nowrap;
 }
 
-/* ─── CTA BUTTONS ─── */
+/* ─── CTA BUTTONS ─── FIX: no overflow, wrap cleanly ─── */
 .hero-cta{
   display:flex;flex-direction:row;align-items:center;
   gap:10px;flex-wrap:wrap;width:100%;
@@ -511,6 +511,7 @@ section{padding:100px 60px;max-width:1100px;margin:0 auto;}
 .contact-inner .section-label{justify-content:center;}
 .contact-inner .section-label::after{display:none;}
 
+/* FIX: click-to-copy email */
 .contact-email{
   font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);
   text-decoration:none;display:block;width:100%;text-align:center;
@@ -527,7 +528,7 @@ section{padding:100px 60px;max-width:1100px;margin:0 auto;}
 .copy-hint{
   font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;
   text-transform:uppercase;color:var(--muted);margin-bottom:8px;
-  display:block;
+  display:block;transition:opacity .3s;
 }
 .copy-toast{
   display:inline-flex;align-items:center;gap:6px;
@@ -557,6 +558,9 @@ footer a{color:var(--gold);text-decoration:none;}
   animation:blink .8s step-end infinite;
 }
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ═══ COUNT UP ═══ */
+.count-up{display:inline;}
 
 /* ═══════════════════════════════════
    AI CHATBOT
@@ -627,9 +631,16 @@ footer a{color:var(--gold);text-decoration:none;}
 .chat-msg{display:flex;flex-direction:column;gap:4px;max-width:88%;}
 .chat-msg.user{align-self:flex-end;align-items:flex-end;}
 .chat-msg.bot{align-self:flex-start;align-items:flex-start;}
-.chat-bubble{padding:10px 14px;font-size:13px;line-height:1.55;border-radius:2px;}
-.chat-msg.user .chat-bubble{background:var(--gold);color:var(--obsidian);font-weight:500;}
-.chat-msg.bot .chat-bubble{background:var(--card2);color:var(--text);border:1px solid var(--border);}
+.chat-bubble{
+  padding:10px 14px;font-size:13px;line-height:1.55;
+  border-radius:2px;
+}
+.chat-msg.user .chat-bubble{
+  background:var(--gold);color:var(--obsidian);font-weight:500;
+}
+.chat-msg.bot .chat-bubble{
+  background:var(--card2);color:var(--text);border:1px solid var(--border);
+}
 .chat-time{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.05em;}
 
 .typing-indicator{display:flex;align-items:center;gap:5px;padding:10px 14px;background:var(--card2);border:1px solid var(--border);align-self:flex-start;}
@@ -655,7 +666,8 @@ footer a{color:var(--gold);text-decoration:none;}
 .chat-input{
   flex:1;background:var(--dark);border:1px solid var(--border);
   color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;
-  padding:9px 14px;outline:none;transition:border-color .2s;border-radius:2px;
+  padding:9px 14px;outline:none;transition:border-color .2s;
+  border-radius:2px;
 }
 .chat-input::placeholder{color:var(--muted);}
 .chat-input:focus{border-color:rgba(56,189,248,.5);}
@@ -823,7 +835,7 @@ footer a{color:var(--gold);text-decoration:none;}
   <div class="experience-list stagger">
     <div class="exp-card">
       <div class="exp-header"><div class="exp-company">Sood Agency</div><div class="exp-period">Apr 2024 – Jan 2026</div></div>
-      <div class="exp-role">Associate Product Manager - AI-Augmented Product & Growth</div>
+      <div class="exp-role">Technical Business Manager - AI-Augmented Product & Growth</div>
       <div class="exp-location">Liverpool, UK</div>
       <ul class="exp-bullets">
         <li>Owned product features end-to-end: discovery → PRD → sprint → QA → launch — <strong>100% client retention</strong></li>
@@ -959,7 +971,7 @@ footer a{color:var(--gold);text-decoration:none;}
   <h2 class="section-title reveal">The journey<br>so far.</h2>
   <div class="timeline-list stagger">
     <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">2025</div><div class="timeline-org">AI Product Specialist - Independent</div><div class="timeline-role">Product Builder · Base44</div><div class="timeline-notes">Shipped 2 live apps: New Year Resolution Tracker + Shaadi Sync Plan. From idea to deployed product, independently.</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Apr 2024 – Jan 2026</div><div class="timeline-org">Sood Agency</div><div class="timeline-role">Associate Product Manager - AI-Augmented Product & Growth · Liverpool, UK</div><div class="timeline-notes">£10K+ contracts · 100% client retention · AI tooling integration · A/B testing · GTM launches</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Apr 2024 – Jan 2026</div><div class="timeline-org">Sood Agency</div><div class="timeline-role">Technical Business Manager - AI-Augmented Product & Growth · Liverpool, UK</div><div class="timeline-notes">£10K+ contracts · 100% client retention · AI tooling integration · A/B testing · GTM launches</div></div>
     <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Sep 2023 – Sep 2024</div><div class="timeline-org">University of Liverpool</div><div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management - Distinction · Liverpool, UK</div><div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy</div></div>
     <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Feb 2022 – Sep 2023</div><div class="timeline-org">CLO Virtual Fashion Inc.</div><div class="timeline-role">IT Consultant - Product Owner & Technical PM · Bengaluru + Seoul</div><div class="timeline-notes">3 integrations shipped · Key Contributor ×3 · Seoul deployment · 30% performance uplift</div></div>
     <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Jun 2021 – Dec 2021</div><div class="timeline-org">Accenture</div><div class="timeline-role">Transaction Processing Associate · Bengaluru</div><div class="timeline-notes">AWS cloud workflows · 100% compliance · Automated reporting</div></div>
@@ -1037,26 +1049,98 @@ footer a{color:var(--gold);text-decoration:none;}
 
 <script>
 /* ════════════════════════════════════
-   VECTOR DATABASE — TF-IDF + Cosine Similarity
+   VECTOR DATABASE (in-memory, cosine similarity)
+   
+   HOW IT WORKS:
+   Instead of sequential search (loop through every chunk looking for keywords),
+   we build a VECTOR INDEX. Each chunk of Rishabh's data is converted to a 
+   numeric vector using TF-IDF weights. When a query arrives, it's also 
+   vectorised and we find the chunks whose vectors are most similar 
+   (cosine similarity). This is exactly how Pinecone, Weaviate, Chroma work — 
+   just those use GPU-accelerated HNSW indexes at scale.
+   
+   SEQUENTIAL vs VECTOR:
+   Sequential: "does this chunk contain the word X?" — O(n*m) string matching
+   Vector:     "which chunks are semantically closest to this query?" — O(n) dot products
+   
+   This demo implements TF-IDF vectorisation + cosine similarity natively in JS.
 ════════════════════════════════════ */
 
+// ── 1. KNOWLEDGE BASE (chunks of Rishabh's data) ──
 const KNOWLEDGE_BASE = [
-  { id:'identity', topic:'profile', text:"Rishabh Kumar is an AI Product Manager based in Bengaluru, India with 4+ years of experience. He specializes in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows. He is AI-native, using Claude, ChatGPT, and Perplexity daily. He is actively looking for PM, AI PM, and Technical PM roles in Bengaluru, Mumbai, Pune, Gurugram, and Noida." },
-  { id:'sood', topic:'experience', text:"At Sood Agency (Apr 2024 – Jan 2026, Liverpool UK) as Associate Product Manager - AI-Augmented Product & Growth, Rishabh owned product features end-to-end: discovery, PRD, sprint, QA, launch with 100% client retention. He integrated AI tools including OpenAI GPT-4o and automation platforms into workflows. He generated £10,000+ in new B2B contracts. He used Google Analytics for funnel analysis and ran A/B experiments." },
-  { id:'clo', topic:'experience', text:"At CLO Virtual Fashion Inc (Feb 2022 – Sep 2023, Bengaluru and Seoul) as IT Consultant - Product Owner & Technical PM, Rishabh shipped 3 concurrent enterprise integrations at 100% on-time delivery: WFX, Centric PLM, and Modern Mirror. He resolved a 5-year critical legacy issue via first-principles root-cause analysis achieving 30% performance uplift. He received the Key Contributor award 3 times and was selected for the Seoul Korea deployment." },
-  { id:'accenture', topic:'experience', text:"At Accenture (Jun 2021 – Dec 2021, Bengaluru) as Transaction Processing Associate, Rishabh worked on AWS cloud workflows, maintained 100% compliance, and built automated reporting pipelines for senior stakeholders." },
-  { id:'products', topic:'products', text:"Rishabh independently shipped two live AI-powered apps. New Year Resolution Tracker at new-year-resolution-tracker-d0aa1e0b.base44.app: users set resolutions, break them into milestones, track weekly progress with visualisation. Shaadi Sync Plan at shaadi-sync-plan.base44.app: wedding planning platform tailored to Indian multi-day weddings with event timeline management, vendor tracker, guest list, and budget management. Both built on Base44, from idea to deployed URL independently without an engineering team." },
-  { id:'education', topic:'education', text:"Rishabh holds an MSc in Entrepreneurship and Innovation Management with Distinction from the University of Liverpool (Sep 2023 - Sep 2024). His dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his cohort. He has a BE in Mechanical Engineering from HKBK College of Engineering Bengaluru (2016-2020) where he was basketball captain and part of the E-Go-Kart team that ranked 8th out of 200 nationally." },
-  { id:'certs', topic:'certifications', text:"Rishabh holds a Generative AI Skills for Product Managers certification from IBM (Credential ID: CEGAIPM1, issued May 2026) covering LLM architectures, agentic systems, and feature prioritisation. He also holds an N8N Workflow Automation Certification from AcceleratorX (May 2026) covering multi-step AI pipelines, API integrations, and process automation." },
-  { id:'achievements', topic:'achievements', text:"Rishabh's key achievements: Best Negotiator Award at University of Liverpool (Jan 2024) for structuring a sponsorship deal delivering 25% higher brand value. Dragon's Den Best Elevated Pitch (Mar 2024). 1st Place in Business Simulation leading a 6-member team outperforming 20+ university teams. 81% highest cohort score on Information Overload dissertation. Key Contributor Award x3 at CLO Virtual Fashion. Global PM rank 410 out of 179,216 on LearnTube.ai (top 0.23%). AI Strategy Consultancy for Mando Agency as a university live challenge." },
-  { id:'skills', topic:'skills', text:"Rishabh's skills: AI Product Management including AI Tools Integration, Agentic Workflows, LLM-Powered Use Cases, AI Roadmapping, Feature Prioritisation, Product Prototyping. Product Execution including End-to-End Ownership, PRD and User Stories, Backlog Prioritisation, Sprint Execution, A/B Testing, Discovery and Research. Analytical Thinking including First-Principles Decomposition, Google Analytics, Funnel and Cohort Analysis, KPI and OKR Frameworks. Tools: JIRA, Google Analytics, AWS, Base44, SQL, ChatGPT, Claude, CRM, ERP, PLM, MS Excel, N8N workflow automation." },
-  { id:'metrics', topic:'metrics', text:"Key metrics and proof points: £10K+ in new B2B contracts at Sood Agency with 100% client retention. 30% legacy system performance uplift at CLO Virtual Fashion. 35% revenue growth in 7 weeks through GTM execution. 81% highest cohort dissertation score at University of Liverpool. Global PM rank 410 out of 179,216 worldwide (top 0.23%) on LearnTube.ai. 3 Key Contributor awards at CLO. 100% on-time delivery for 3 concurrent enterprise integrations." },
-  { id:'contact', topic:'contact', text:"Rishabh Kumar can be reached at email rishabhukrishabh@gmail.com, phone +91 8660127783, LinkedIn at linkedin.com/in/rishabh-rishabhh. He is based in Bengaluru India and is open to PM, AI PM, and Technical PM roles across Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is actively job searching." },
-  { id:'mixpanel', topic:'case_study', text:"Rishabh's Mixpanel Product Teardown case study is live at rishabhrishabhh.github.io/mixpanel-product-teardown. It covers 6 personas, Jobs-to-be-Done methodology, 5 Whys analysis, and two high-ROI feature proposals: AI Analytics Assistant and Guided Onboarding Wizard. It deconstructs Mixpanel's user onboarding and core analytics funnel to identify friction points and structural optimization opportunities." },
-  { id:'n8n', topic:'automation', text:"Rishabh is certified in N8N workflow automation and has hands-on experience building multi-step AI pipelines, API integrations, and agentic automation loops. He approaches automation with an engineering mindset despite being a PM." },
-  { id:'why_hire', topic:'value_prop', text:"Why hire Rishabh: He ships real products independently without an engineering team. He has a proven track record across B2B SaaS, enterprise integrations, and AI-native products. He delivers quantified outcomes: £10K contracts, 30% performance uplift, 100% client retention, 100% on-time delivery. He is AI-native not AI-curious, using AI tools daily in his workflow. He holds relevant certifications from IBM and AcceleratorX. He frames himself as high ownership with zero dependency on hand-holding." }
+  {
+    id: 'identity',
+    text: "Rishabh Kumar is an AI Product Manager based in Bengaluru, India with 4+ years of experience. He specializes in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows. He is AI-native, using Claude, ChatGPT, and Perplexity daily. He is actively looking for PM, AI PM, and Technical PM roles in Bengaluru, Mumbai, Pune, Gurugram, and Noida.",
+    topic: 'profile'
+  },
+  {
+    id: 'sood',
+    text: "At Sood Agency (Apr 2024 – Jan 2026, Liverpool UK) as Technical Business Manager - AI-Augmented Product & Growth, Rishabh owned product features end-to-end: discovery, PRD, sprint, QA, launch with 100% client retention. He integrated AI tools including OpenAI GPT-4o and automation platforms into workflows. He generated £10,000+ in new B2B contracts. He used Google Analytics for funnel analysis and ran A/B experiments.",
+    topic: 'experience'
+  },
+  {
+    id: 'clo',
+    text: "At CLO Virtual Fashion Inc (Feb 2022 – Sep 2023, Bengaluru and Seoul) as IT Consultant - Product Owner & Technical PM, Rishabh shipped 3 concurrent enterprise integrations at 100% on-time delivery: WFX, Centric PLM, and Modern Mirror. He resolved a 5-year critical legacy issue via first-principles root-cause analysis achieving 30% performance uplift. He received the Key Contributor award 3 times and was selected for the Seoul Korea deployment.",
+    topic: 'experience'
+  },
+  {
+    id: 'accenture',
+    text: "At Accenture (Jun 2021 – Dec 2021, Bengaluru) as Transaction Processing Associate, Rishabh worked on AWS cloud workflows, maintained 100% compliance, and built automated reporting pipelines for senior stakeholders.",
+    topic: 'experience'
+  },
+  {
+    id: 'products',
+    text: "Rishabh independently shipped two live AI-powered apps. New Year Resolution Tracker at new-year-resolution-tracker-d0aa1e0b.base44.app: users set resolutions, break them into milestones, track weekly progress with visualisation. Shaadi Sync Plan at shaadi-sync-plan.base44.app: wedding planning platform tailored to Indian multi-day weddings with event timeline management, vendor tracker, guest list, and budget management. Both built on Base44 / Lovable, from idea to deployed URL independently without an engineering team.",
+    topic: 'products'
+  },
+  {
+    id: 'education',
+    text: "Rishabh holds an MSc in Entrepreneurship and Innovation Management with Distinction from the University of Liverpool (Sep 2023 - Sep 2024). His dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his cohort. He has a BE in Mechanical Engineering from HKBK College of Engineering Bengaluru (2016-2020) where he was basketball captain and part of the E-Go-Kart team that ranked 8th out of 200 nationally.",
+    topic: 'education'
+  },
+  {
+    id: 'certs',
+    text: "Rishabh holds a Generative AI Skills for Product Managers certification from IBM (Credential ID: CEGAIPM1, issued May 2026) covering LLM architectures, agentic systems, and feature prioritisation. He also holds an N8N Workflow Automation Certification from AcceleratorX (May 2026) covering multi-step AI pipelines, API integrations, and process automation. He has an AI PM certification from AcceleratorX.",
+    topic: 'certifications'
+  },
+  {
+    id: 'achievements',
+    text: "Rishabh's key achievements: Best Negotiator Award at University of Liverpool (Jan 2024) for structuring a sponsorship deal delivering 25% higher brand value. Dragon's Den Best Elevated Pitch (Mar 2024). 1st Place in Business Simulation leading a 6-member team outperforming 20+ university teams. 81% highest cohort score on Information Overload dissertation. Key Contributor Award x3 at CLO Virtual Fashion. Global PM rank 410 out of 179,216 on LearnTube.ai (top 0.23%). AI Strategy Consultancy for Mando Agency as a university live challenge.",
+    topic: 'achievements'
+  },
+  {
+    id: 'skills',
+    text: "Rishabh's skills: AI Product Management including AI Tools Integration, Agentic Workflows, LLM-Powered Use Cases, AI Roadmapping, Feature Prioritisation, Product Prototyping. Product Execution including End-to-End Ownership, PRD and User Stories, Backlog Prioritisation, Sprint Execution, A/B Testing, Discovery and Research. Analytical Thinking including First-Principles Decomposition, Google Analytics, Funnel and Cohort Analysis, KPI and OKR Frameworks. Tools: JIRA, Google Analytics, AWS, Base44, SQL, ChatGPT, Claude, CRM, ERP, PLM, MS Excel, N8N workflow automation.",
+    topic: 'skills'
+  },
+  {
+    id: 'metrics',
+    text: "Key metrics and proof points: £10K+ in new B2B contracts at Sood Agency with 100% client retention. 30% legacy system performance uplift at CLO Virtual Fashion. 35% revenue growth in 7 weeks through GTM execution. 81% highest cohort dissertation score at University of Liverpool. Global PM rank 410 out of 179,216 worldwide (top 0.23%) on LearnTube.ai. 3 Key Contributor awards at CLO. 100% on-time delivery for 3 concurrent enterprise integrations.",
+    topic: 'metrics'
+  },
+  {
+    id: 'contact',
+    text: "Rishabh Kumar can be reached at email rishabhukrishabh@gmail.com, phone +91 8660127783, LinkedIn at linkedin.com/in/rishabh-rishabhh. He is based in Bengaluru India and is open to PM, AI PM, and Technical PM roles across Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is actively job searching.",
+    topic: 'contact'
+  },
+  {
+    id: 'mixpanel',
+    text: "Rishabh's Mixpanel Product Teardown case study is live at rishabhrishabhh.github.io/mixpanel-product-teardown. It covers 6 personas, Jobs-to-be-Done methodology, 5 Whys analysis, and two high-ROI feature proposals: AI Analytics Assistant and Guided Onboarding Wizard. It deconstructs Mixpanel's user onboarding and core analytics funnel to identify friction points and structural optimization opportunities.",
+    topic: 'case_study'
+  },
+  {
+    id: 'n8n',
+    text: "Rishabh is certified in N8N workflow automation and has hands-on experience building multi-step AI pipelines, API integrations, and agentic automation loops. He built automated cold outreach infrastructure including a contact spreadsheet, spintax email widget, and consolidated cold email guide. He approaches automation with an engineering mindset despite being a PM.",
+    topic: 'automation'
+  },
+  {
+    id: 'why_hire',
+    text: "Why hire Rishabh: He ships real products independently without an engineering team. He has a proven track record across B2B SaaS, enterprise integrations, and AI-native products. He delivers quantified outcomes: £10K contracts, 30% performance uplift, 100% client retention, 100% on-time delivery. He is AI-native not AI-curious, using AI tools daily in his workflow. He holds relevant certifications from IBM and AcceleratorX. He frames himself as high ownership with zero dependency on hand-holding.",
+    topic: 'value_prop'
+  }
 ];
 
+/* ── 2. VECTOR ENGINE: TF-IDF + Cosine Similarity ── */
 class VectorDB {
   constructor(docs) {
     this.docs = docs;
@@ -1065,59 +1149,95 @@ class VectorDB {
     this.docVectors = [];
     this._build();
   }
+
   _tokenize(text) {
-    const stopwords = new Set(['a','an','the','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','shall','can','need','dare','ought','used','to','of','in','on','at','by','for','with','from','about','into','through','during','he','she','it','they','we','his','her','its','their','our','this','that','these','those','and','or','but','if','because','as','until','while','after','before','since','i','my','me']);
-    return text.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w=>w.length>2&&!stopwords.has(w));
+    // Lowercase, remove punctuation, split, remove stopwords
+    const stopwords = new Set(['a','an','the','is','are','was','were','be','been','being',
+      'have','has','had','do','does','did','will','would','could','should','may','might',
+      'shall','can','need','dare','ought','used','to','of','in','on','at','by','for',
+      'with','from','about','into','through','during','he','she','it','they','we',
+      'his','her','its','their','our','this','that','these','those','and','or','but',
+      'if','because','as','until','while','after','before','since','i','my','me']);
+    return text.toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 2 && !stopwords.has(w));
   }
+
   _tf(tokens) {
-    const freq={};
-    tokens.forEach(t=>freq[t]=(freq[t]||0)+1);
-    const max=Math.max(...Object.values(freq));
-    Object.keys(freq).forEach(k=>freq[k]=freq[k]/max);
+    const freq = {};
+    tokens.forEach(t => freq[t] = (freq[t] || 0) + 1);
+    const max = Math.max(...Object.values(freq));
+    Object.keys(freq).forEach(k => freq[k] = freq[k] / max);
     return freq;
   }
+
   _build() {
-    const allTokens=this.docs.map(d=>this._tokenize(d.text));
-    allTokens.forEach(tokens=>tokens.forEach(t=>this.vocabulary.add(t)));
-    const vocab=[...this.vocabulary];
-    const N=this.docs.length;
-    vocab.forEach(term=>{
-      const df=allTokens.filter(tokens=>tokens.includes(term)).length;
-      this.idf[term]=Math.log((N+1)/(df+1))+1;
+    // Collect all terms
+    const allTokens = this.docs.map(d => this._tokenize(d.text));
+    allTokens.forEach(tokens => tokens.forEach(t => this.vocabulary.add(t)));
+    const vocab = [...this.vocabulary];
+    const N = this.docs.length;
+
+    // Compute IDF
+    vocab.forEach(term => {
+      const df = allTokens.filter(tokens => tokens.includes(term)).length;
+      this.idf[term] = Math.log((N + 1) / (df + 1)) + 1;
     });
-    this.docVectors=allTokens.map(tokens=>{
-      const tf=this._tf(tokens);
-      const vec={};
-      vocab.forEach(term=>{if(tf[term])vec[term]=tf[term]*this.idf[term];});
+
+    // Build TF-IDF vectors
+    this.docVectors = allTokens.map(tokens => {
+      const tf = this._tf(tokens);
+      const vec = {};
+      vocab.forEach(term => {
+        if (tf[term]) vec[term] = tf[term] * this.idf[term];
+      });
       return vec;
     });
   }
-  _cosineSim(vecA,vecB) {
-    const keys=new Set([...Object.keys(vecA),...Object.keys(vecB)]);
-    let dot=0,magA=0,magB=0;
-    keys.forEach(k=>{const a=vecA[k]||0,b=vecB[k]||0;dot+=a*b;magA+=a*a;magB+=b*b;});
-    if(!magA||!magB)return 0;
-    return dot/(Math.sqrt(magA)*Math.sqrt(magB));
+
+  _cosineSim(vecA, vecB) {
+    const keys = new Set([...Object.keys(vecA), ...Object.keys(vecB)]);
+    let dot = 0, magA = 0, magB = 0;
+    keys.forEach(k => {
+      const a = vecA[k] || 0;
+      const b = vecB[k] || 0;
+      dot += a * b;
+      magA += a * a;
+      magB += b * b;
+    });
+    if (!magA || !magB) return 0;
+    return dot / (Math.sqrt(magA) * Math.sqrt(magB));
   }
-  search(query,topK=3) {
-    const qTokens=this._tokenize(query);
-    const qTF=this._tf(qTokens);
-    const qVec={};
-    qTokens.forEach(t=>{if(this.idf[t])qVec[t]=qTF[t]*this.idf[t];});
-    const scores=this.docVectors.map((docVec,i)=>({doc:this.docs[i],score:this._cosineSim(qVec,docVec)}));
-    return scores.sort((a,b)=>b.score-a.score).slice(0,topK).filter(r=>r.score>0).map(r=>r.doc.text);
+
+  search(query, topK = 3) {
+    const qTokens = this._tokenize(query);
+    const qTF = this._tf(qTokens);
+    const qVec = {};
+    qTokens.forEach(t => {
+      if (this.idf[t]) qVec[t] = qTF[t] * this.idf[t];
+    });
+
+    const scores = this.docVectors.map((docVec, i) => ({
+      doc: this.docs[i],
+      score: this._cosineSim(qVec, docVec)
+    }));
+
+    return scores
+      .sort((a, b) => b.score - a.score)
+      .slice(0, topK)
+      .filter(r => r.score > 0)
+      .map(r => r.doc.text);
   }
 }
 
+// Initialise the vector database
 const vectorDB = new VectorDB(KNOWLEDGE_BASE);
 
-/* ── CHAT STATE ── */
+/* ── 3. CHAT STATE ── */
 let chatOpen = false;
 let chatHistory = [];
 const EMAIL = 'rishabhukrishabh@gmail.com';
-
-// ── YOUR CLOUDFLARE WORKER URL (Claude API proxy) ──
-const PROXY_URL = 'https://my-api.rishabhukrishabh.workers.dev';
 
 function toggleChat() {
   chatOpen = !chatOpen;
@@ -1130,7 +1250,8 @@ function handleKey(e) {
 }
 
 function sendSuggestion(btn) {
-  document.getElementById('chatInput').value = btn.textContent;
+  const text = btn.textContent;
+  document.getElementById('chatInput').value = text;
   document.getElementById('chatSuggestions').style.display = 'none';
   sendMessage();
 }
@@ -1146,6 +1267,7 @@ function appendMsg(role, text) {
   div.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div><div class="chat-time">${getTime()}</div>`;
   messages.appendChild(div);
   messages.scrollTop = messages.scrollHeight;
+  return div;
 }
 
 function showTyping() {
@@ -1163,48 +1285,144 @@ function hideTyping() {
   if (el) el.remove();
 }
 
+/*
+  ══════════════════════════════════════════════════════
+  GEMINI API — SELF-HOSTING SETUP (GitHub Pages)
+  ══════════════════════════════════════════════════════
+  Uses Google Gemini 2.0 Flash (free tier: 1,500 req/day).
+  Key must never be in public HTML → use a Cloudflare Worker proxy.
+
+  CLOUDFLARE WORKER CODE (paste this at workers.cloudflare.com):
+  ─────────────────────────────────────────────────────
+  const GEMINI_KEY = "AIza-YOUR_KEY_HERE"; // from aistudio.google.com
+  const GEMINI_MODEL = "gemini-2.0-flash";
+
+  export default {
+    async fetch(req) {
+      if (req.method === "OPTIONS") {
+        return new Response(null, { headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS"
+        }});
+      }
+      const body = await req.text();
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body
+      });
+      const data = await resp.text();
+      return new Response(data, { headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }});
+    }
+  };
+  ─────────────────────────────────────────────────────
+
+  HOW TO GET A FREE GEMINI KEY:
+  1. Go to https://aistudio.google.com/app/apikey
+  2. Click "Create API Key" → copy it
+  3. Paste into the Worker above where it says AIza-YOUR_KEY_HERE
+  4. Deploy Worker → copy the Worker URL
+  5. Paste Worker URL into PROXY_URL below → push to GitHub
+
+  GEMINI API FORMAT (different from Anthropic):
+  - System prompt goes inside contents as a "user" turn (Gemini handles it as context)
+  - Messages use { role: "user"/"model", parts: [{ text: "..." }] } not { role, content }
+  - Response is at data.candidates[0].content.parts[0].text
+  ══════════════════════════════════════════════════════
+*/
+// ─────────────────────────────────────────────────────────────
+// CONFIGURATION — only these 2 lines ever need changing
+// ─────────────────────────────────────────────────────────────
+const GEMINI_API_KEY = ''; // ← paste your Gemini key here for LOCAL testing
+                            //   e.g. 'AIzaSyB3xkMn7qP2vR9wL4tE6uJ8cF1dK0hG5aZ'
+                            //   (safe for local file:// use, NOT for GitHub Pages)
+
+const PROXY_URL = 'https://my-api.rishabhukrishabh.workers.dev';       // ← paste your Cloudflare Worker URL here for GITHUB PAGES
+                            //   e.g. 'https://rishabh-ai.yourname.workers.dev'
+                            //   when set, this is used instead of the key above
+// ─────────────────────────────────────────────────────────────
+
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const query = input.value.trim();
   if (!query) return;
 
+  // Decide which endpoint to use
+  let apiURL, useProxy;
+  if (PROXY_URL) {
+    // Production: go through Cloudflare Worker (key hidden server-side)
+    apiURL = PROXY_URL;
+    useProxy = true;
+  } else if (GEMINI_API_KEY) {
+    // Local testing: call Gemini directly with key in URL
+    apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    useProxy = false;
+  } else {
+    // Neither set — show helpful setup message
+    appendMsg('user', query);
+    appendMsg('bot', `⚙️ <strong>Setup needed:</strong> Open portfolio.html and either:<br>
+      • Set <code>GEMINI_API_KEY</code> for local testing, or<br>
+      • Set <code>PROXY_URL</code> (your Cloudflare Worker) for GitHub Pages.<br><br>
+      See the comments in the JS for step-by-step instructions.<br>
+      Or email Rishabh at <a href="mailto:${EMAIL}" style="color:var(--gold)">${EMAIL}</a>`);
+    return;
+  }
+
   input.value = '';
   document.getElementById('chatSend').disabled = true;
   appendMsg('user', query);
-  chatHistory.push({ role: 'user', content: query });
+  chatHistory.push({ role: 'user', text: query });
   showTyping();
 
-  // Vector search — find top 3 relevant knowledge chunks
+  // ── VECTOR SEARCH: find top 3 relevant chunks ──
   const relevantChunks = vectorDB.search(query, 3);
   const context = relevantChunks.length > 0
     ? relevantChunks.join('\n\n')
-    : 'Rishabh Kumar is an AI PM based in Bengaluru with 4+ years of experience.';
+    : 'General profile: Rishabh Kumar is an AI PM based in Bengaluru with 4+ years of experience.';
 
-  const systemPrompt = `You are Rishabh Kumar's personal AI assistant on his portfolio website. Answer questions about Rishabh using ONLY the context below. Be concise, confident, and helpful. Speak about Rishabh in third person. If the question is not covered by the context, say you don't have that detail and invite the visitor to email Rishabh at ${EMAIL}. Never invent facts.
+  const systemPrompt = `You are Rishabh Kumar's personal AI assistant embedded on his portfolio website. Answer questions about Rishabh using ONLY the context below. Be concise, confident, and helpful. Speak about Rishabh in third person. If a question is not covered by the context, say you don't have that detail and invite the visitor to email Rishabh at ${EMAIL}. Never invent facts.
 
-CONTEXT (retrieved via TF-IDF vector similarity):
+CONTEXT (retrieved via TF-IDF vector similarity search):
 ${context}`;
 
-  // Claude API format (Anthropic)
+  const geminiContents = [
+    { role: 'user', parts: [{ text: systemPrompt }] },
+    { role: 'model', parts: [{ text: 'Understood. I will answer questions about Rishabh using only the provided context.' }] },
+    ...chatHistory.slice(-6).map(m => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.text }]
+    }))
+  ];
+
   const requestBody = {
-    model: 'claude-haiku-4-5',
-    max_tokens: 800,
-    system: systemPrompt,
-    messages: chatHistory.slice(-6)
+    systemInstruction: { parts: [{ text: systemPrompt }] },
+    contents: geminiContents,
+    generationConfig: { maxOutputTokens: 800, temperature: 0.7 }
   };
 
   try {
-    const response = await fetch(PROXY_URL, {
+    const response = await fetch(apiURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody)
     });
 
+    // ── FULL ERROR VISIBILITY ──
+    // If response is not OK, extract and show the real error message
     if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
+      const errData = await response.json().catch(() => ({ error: { message: 'Unknown error — check browser Console (F12)' } }));
+      const errMsg = errData?.error?.message || `HTTP ${response.status}`;
       hideTyping();
-      appendMsg('bot', `API Error ${response.status}: ${errData?.error?.message || 'Check browser Console (F12) for details.'}`);
-      console.error('Claude API error:', response.status, errData);
+      // Show in chat UI
+      appendMsg('bot', `🔴 <strong>API Error (${response.status}):</strong> ${errMsg}<br><br>
+        <span style="font-size:11px;color:var(--muted)">Open browser Console (F12 → Console tab) to see full details.</span>`);
+      // Also log full response to console for debugging
+      console.error('Gemini API error:', response.status, errData);
       document.getElementById('chatSend').disabled = false;
       input.focus();
       return;
@@ -1212,18 +1430,26 @@ ${context}`;
 
     const data = await response.json();
     hideTyping();
-    console.log('Claude response:', data);
 
-    const reply = data.content?.[0]?.text
-      || 'Empty response — please try again or email Rishabh directly.';
+    // Log successful response to console so you can inspect it
+    console.log('Gemini response:', data);
 
-    chatHistory.push({ role: 'assistant', content: reply });
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
+      || '⚠️ Gemini returned an empty response. Check Console (F12) for the raw data.';
+
+    chatHistory.push({ role: 'model', text: reply });
     appendMsg('bot', reply);
 
   } catch (err) {
     hideTyping();
-    appendMsg('bot', `Network error: ${err.message}<br>Please email Rishabh at <a href="mailto:${EMAIL}" style="color:var(--gold)">${EMAIL}</a>`);
-    console.error('Chat error:', err);
+    // Show the actual JS error in the chat
+    appendMsg('bot', `🔴 <strong>Network error:</strong> ${err.message}<br><br>
+      Common causes:<br>
+      • Opening as a local file (file://) with no API key set<br>
+      • CORS block — use the Cloudflare Worker proxy instead<br>
+      • Incorrect PROXY_URL or GEMINI_API_KEY<br><br>
+      <span style="font-size:11px;color:var(--muted)">Full error in Console (F12 → Console tab)</span>`);
+    console.error('Chat fetch error:', err);
   }
 
   document.getElementById('chatSend').disabled = false;
@@ -1237,6 +1463,7 @@ function copyEmail() {
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2500);
   }).catch(() => {
+    // Fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = EMAIL;
     document.body.appendChild(ta);
@@ -1250,8 +1477,8 @@ function copyEmail() {
 }
 
 /* ═══ CUSTOM CURSOR ═══ */
-const cursor=document.getElementById('cursor');
-const ring=document.getElementById('cursorRing');
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
 function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
@@ -1271,7 +1498,7 @@ class Particle{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y
 for(let i=0;i<120;i++)particles.push(new Particle());
 let mouseX=W/2,mouseY=H/2;
 document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
-function drawConnections(){for(let i=0;i<particles.length;i++){const p=particles[i];const dx=mouseX-p.x,dy=mouseY-p.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouseX,mouseY);ctx.strokeStyle=`rgba(56,189,248,${(1-dist/120)*.2})`;ctx.lineWidth=.5;ctx.stroke();}for(let j=i+1;j<particles.length;j++){const p2=particles[j];const d=Math.sqrt((p.x-p2.x)**2+(p.y-p2.y)**2);if(d<80){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=`rgba(56,189,248,${(1-d/80)*.08})`;ctx.lineWidth=.4;ctx.stroke();}}}}
+function drawConnections(){for(let i=0;i<particles.length;i++){const p=particles[i];const dx=mouseX-p.x,dy=mouseY-p.y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouseX,mouseY);ctx.strokeStyle=`rgba(56,189,248,${(1-dist/120)*.2})`;ctx.lineWidth=.5;ctx.stroke();}for(let j=i+1;j<particles.length;j++){const p2=particles[j];const d=Math.sqrt((p.x-p2.x)**2+(p.y-p2.y)**2);if(d<80){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=`rgba(56,189,248,${(1-d/80)*.08})`;ctx.lineWidth=.4;ctx.stroke();}}}}
 function animParticles(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});drawConnections();requestAnimationFrame(animParticles);}
 animParticles();
 
