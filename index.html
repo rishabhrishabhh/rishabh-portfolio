@@ -1295,7 +1295,7 @@ function hideTyping() {
   CLOUDFLARE WORKER CODE (paste this at workers.cloudflare.com):
   ─────────────────────────────────────────────────────
   const GEMINI_KEY = "AIza-YOUR_KEY_HERE"; // from aistudio.google.com
-  const GEMINI_MODEL = "gemini-2.0-flash";
+  const GEMINI_MODEL = "gemini-2.5-flash";
 
   export default {
     async fetch(req) {
@@ -1360,7 +1360,7 @@ async function sendMessage() {
     useProxy = true;
   } else if (GEMINI_API_KEY) {
     // Local testing: call Gemini directly with key in URL
-    apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
     useProxy = false;
   } else {
     // Neither set — show helpful setup message
