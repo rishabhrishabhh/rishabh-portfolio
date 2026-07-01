@@ -1067,10 +1067,12 @@ footer a{color:var(--gold);text-decoration:none;}
 ════════════════════════════════════ */
 
 // ── 1. KNOWLEDGE BASE (chunks of Rishabh's data) ──
-const KNOWLEDGE_BASE = [
+  const KNOWLEDGE_BASE = [
+  // ── EXISTING ENTRIES (kept intact, updated where needed) ──────────────────
+
   {
     id: 'identity',
-    text: "Rishabh Kumar is an AI Product Manager based in Bengaluru, India with 4+ years of experience. He specializes in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows. He is AI-native, using Claude, ChatGPT, and Perplexity daily. He is actively looking for PM, AI PM, and Technical PM roles in Bengaluru, Mumbai, Pune, Gurugram, and Noida.",
+    text: "Rishabh Kumar is an AI Product Manager based in Bengaluru, India with 4+ years of experience. He specializes in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows. He is AI-native, using Claude, ChatGPT, and Perplexity daily. He is actively looking for PM, AI PM, and Technical PM roles in Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is available immediately with a notice period of zero days.",
     topic: 'profile'
   },
   {
@@ -1080,7 +1082,7 @@ const KNOWLEDGE_BASE = [
   },
   {
     id: 'clo',
-    text: "At CLO Virtual Fashion Inc (Feb 2022 – Sep 2023, Bengaluru and Seoul) as IT Consultant - Product Owner & Technical PM, Rishabh shipped 3 concurrent enterprise integrations at 100% on-time delivery: WFX, Centric PLM, and Modern Mirror. He resolved a 5-year critical legacy issue via first-principles root-cause analysis achieving 30% performance uplift. He received the Key Contributor award 3 times and was selected for the Seoul Korea deployment.",
+    text: "At CLO Virtual Fashion Inc (Feb 2022 – Sep 2023, Bengaluru and Seoul) as IT Consultant - Product Owner & Technical PM, Rishabh shipped 3 concurrent enterprise integrations at 100% on-time delivery: WFX, Centric PLM, and Modern Mirror. He resolved a 5-year critical legacy issue via first-principles root-cause analysis achieving 30% performance uplift. He received the Key Contributor award 3 times and was selected for the Seoul Korea deployment. He owned the Shape module end-to-end and used a dependency matrix approach to manage resource conflicts across concurrent integrations.",
     topic: 'experience'
   },
   {
@@ -1089,28 +1091,23 @@ const KNOWLEDGE_BASE = [
     topic: 'experience'
   },
   {
-    id: 'products',
-    text: "Rishabh independently shipped two live AI-powered apps. New Year Resolution Tracker at new-year-resolution-tracker-d0aa1e0b.base44.app: users set resolutions, break them into milestones, track weekly progress with visualisation. Shaadi Sync Plan at shaadi-sync-plan.base44.app: wedding planning platform tailored to Indian multi-day weddings with event timeline management, vendor tracker, guest list, and budget management. Both built on Base44 / Lovable, from idea to deployed URL independently without an engineering team.",
-    topic: 'products'
-  },
-  {
     id: 'education',
-    text: "Rishabh holds an MSc in Entrepreneurship and Innovation Management with Distinction from the University of Liverpool (Sep 2023 - Sep 2024). His dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his cohort. He has a BE in Mechanical Engineering from HKBK College of Engineering Bengaluru (2016-2020) where he was basketball captain and part of the E-Go-Kart team that ranked 8th out of 200 nationally.",
+    text: "Rishabh holds an MSc in Entrepreneurship and Innovation Management with Distinction from the University of Liverpool (Sep 2023 – Sep 2024). His dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his cohort. He has a BE in Mechanical Engineering from HKBK College of Engineering Bengaluru (2016–2020) where he was basketball captain and part of the E-Go-Kart team that ranked 8th out of 200 nationally.",
     topic: 'education'
   },
   {
     id: 'certs',
-    text: "Rishabh holds a Generative AI Skills for Product Managers certification from IBM (Credential ID: CEGAIPM1, issued May 2026) covering LLM architectures, agentic systems, and feature prioritisation. He also holds an N8N Workflow Automation Certification from AcceleratorX (May 2026) covering multi-step AI pipelines, API integrations, and process automation. He has an AI PM certification from AcceleratorX.",
+    text: "Rishabh holds a Generative AI Skills for Product Managers certification from IBM (Credential ID: CEGAIPM1, issued May 2026) covering LLM architectures, agentic systems, and feature prioritisation. He also holds an N8N Workflow Automation Certification from AcceleratorX (May 2026) covering multi-step AI pipelines, API integrations, and process automation. He has an AI PM certification from AcceleratorX under mentor Digvijay Singh Chauhan.",
     topic: 'certifications'
   },
   {
     id: 'achievements',
-    text: "Rishabh's key achievements: Best Negotiator Award at University of Liverpool (Jan 2024) for structuring a sponsorship deal delivering 25% higher brand value. Dragon's Den Best Elevated Pitch (Mar 2024). 1st Place in Business Simulation leading a 6-member team outperforming 20+ university teams. 81% highest cohort score on Information Overload dissertation. Key Contributor Award x3 at CLO Virtual Fashion. Global PM rank 410 out of 179,216 on LearnTube.ai (top 0.23%). AI Strategy Consultancy for Mando Agency as a university live challenge.",
+    text: "Rishabh's key achievements: Best Negotiator Award at University of Liverpool (Jan 2024) for structuring a sponsorship deal delivering 25% higher brand value. Dragon's Den Best Elevated Pitch (Mar 2024). 1st Place in Business Simulation leading a 6-member team outperforming 20+ university teams. 81% highest cohort score on Information Overload dissertation. Key Contributor Award x3 at CLO Virtual Fashion. Global PM rank 410 out of 179,216 on LearnTube.ai (top 0.23%). AI Strategy Consultancy for Mando Agency as a university live challenge. 3-time District-Level Chess Champion.",
     topic: 'achievements'
   },
   {
     id: 'skills',
-    text: "Rishabh's skills: AI Product Management including AI Tools Integration, Agentic Workflows, LLM-Powered Use Cases, AI Roadmapping, Feature Prioritisation, Product Prototyping. Product Execution including End-to-End Ownership, PRD and User Stories, Backlog Prioritisation, Sprint Execution, A/B Testing, Discovery and Research. Analytical Thinking including First-Principles Decomposition, Google Analytics, Funnel and Cohort Analysis, KPI and OKR Frameworks. Tools: JIRA, Google Analytics, AWS, Base44, SQL, ChatGPT, Claude, CRM, ERP, PLM, MS Excel, N8N workflow automation.",
+    text: "Rishabh's skills: AI Product Management including AI Tools Integration, Agentic Workflows, LLM-Powered Use Cases, AI Roadmapping, Feature Prioritisation, Product Prototyping. Product Execution including End-to-End Ownership, PRD and User Stories, Backlog Prioritisation, Sprint Execution, A/B Testing, Discovery and Research. Analytical Thinking including First-Principles Decomposition, Google Analytics, Funnel and Cohort Analysis, KPI and OKR Frameworks. Tools: JIRA, Google Analytics, AWS, Base44, SQL, ChatGPT, Claude, CRM, ERP, PLM, MS Excel, N8N workflow automation, Cloudflare Vectorize, Python backend scripting.",
     topic: 'skills'
   },
   {
@@ -1120,7 +1117,7 @@ const KNOWLEDGE_BASE = [
   },
   {
     id: 'contact',
-    text: "Rishabh Kumar can be reached at email rishabhukrishabh@gmail.com, phone +91 8660127783, LinkedIn at linkedin.com/in/rishabh-rishabhh. He is based in Bengaluru India and is open to PM, AI PM, and Technical PM roles across Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is actively job searching.",
+    text: "Rishabh Kumar can be reached at email rishabhukrishabh@gmail.com, phone +91 8660127783, LinkedIn at linkedin.com/in/rishabh-rishabhh. He is based in Bengaluru India and is open to PM, AI PM, and Technical PM roles across Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is immediately available. Current CTC: 12 LPA. Expected CTC: 15+ LPA.",
     topic: 'contact'
   },
   {
@@ -1136,6 +1133,99 @@ const KNOWLEDGE_BASE = [
   {
     id: 'why_hire',
     text: "Why hire Rishabh: He ships real products independently without an engineering team. He has a proven track record across B2B SaaS, enterprise integrations, and AI-native products. He delivers quantified outcomes: £10K contracts, 30% performance uplift, 100% client retention, 100% on-time delivery. He is AI-native not AI-curious, using AI tools daily in his workflow. He holds relevant certifications from IBM and AcceleratorX. He frames himself as high ownership with zero dependency on hand-holding.",
+    topic: 'value_prop'
+  },
+
+  // ── NEW ENTRIES ────────────────────────────────────────────────────────────
+
+  {
+    id: 'all_four_products',
+    text: "Rishabh has independently shipped 4 live AI-powered products: (1) RK-Jarvis — an AI chatbot built on Cloudflare Vectorize, a standalone SaaS product currently in development, demonstrating his ability to work with vector databases and semantic search. (2) Agentic Voice Chatbot — built using ElevenLabs and shipped in just 72 hours on Lovable, showcasing rapid prototyping and agentic AI design. (3) New Year Resolution Tracker — an app where users set resolutions, break them into milestones, and track weekly progress with visualisations, live at new-year-resolution-tracker-d0aa1e0b.base44.app. (4) Shaadi Sync Plan — a wedding planning platform tailored to Indian multi-day weddings with event timeline management, vendor tracker, guest list, and budget management, live at shaadi-sync-plan.base44.app. All four were built independently without an engineering team.",
+    topic: 'products'
+  },
+  {
+    id: 'what_makes_him_sharp',
+    text: "What makes Rishabh exceptionally sharp as a product manager: He holds a top 0.23% global ranking among 179,216 PMs worldwide on LearnTube.ai. He is a 3-time District-Level Chess Champion, which reflects deep strategic thinking, pattern recognition, and the ability to think several moves ahead — qualities that directly translate into roadmap planning and competitive product strategy. He scored 81% on his dissertation, the highest in his entire university cohort. He won Best Negotiator at the University of Liverpool. He resolved a 5-year-old critical legacy issue at CLO Virtual Fashion in his first stint using first-principles root-cause analysis. He routinely applies frameworks like the 5 Whys, Jobs-to-be-Done, RICE scoring, and OKRs from first principles rather than by rote. His Mechanical Engineering background gives him structural problem-solving ability that most PMs lack. He does not wait for engineers to build things — he ships products himself. He runs AI tools daily as a core part of his workflow, not as a novelty.",
+    topic: 'strengths'
+  },
+  {
+    id: 'strongest_pm_skills',
+    text: "Rishabh's strongest PM skills are: (1) End-to-end product ownership — he has owned entire features from discovery through to post-launch at Sood Agency and CLO, with zero hand-holding. (2) Enterprise integration management — he delivered WFX, Centric PLM, and Modern Mirror concurrently at 100% on-time delivery, a rare achievement requiring cross-functional coordination and dependency mapping. (3) AI product thinking — he designs LLM-powered use cases, agentic workflows, and RAG systems, not just describing what AI can do but shipping it independently. (4) First-principles analysis — demonstrated by solving a 5-year legacy issue at CLO and producing the highest-scoring dissertation in his cohort on a cognitive psychology topic. (5) Stakeholder communication and negotiation — Best Negotiator award, B2B sales experience generating £10K+ contracts, and 100% client retention. (6) Data-driven decision making — Google Analytics, funnel analysis, cohort analysis, A/B testing, KPI and OKR frameworks. (7) Rapid prototyping — shipped an agentic voice chatbot in 72 hours from scratch.",
+    topic: 'strengths'
+  },
+  {
+    id: 'chess_and_mindset',
+    text: "Rishabh is a 3-time District-Level Chess Champion. Chess is not just a hobby for him — it is a thinking system. Chess trained him to see multiple moves ahead, to recognise patterns quickly, to stay calm under pressure, and to make high-stakes decisions with incomplete information. These same instincts show up in how he approaches product roadmaps, stakeholder negotiations, and competitive strategy. He treats product management the way a chess player treats a game: with preparation, pattern recognition, and the willingness to sacrifice short-term comfort for long-term position.",
+    topic: 'personal'
+  },
+  {
+    id: 'non_traditional_path_as_strength',
+    text: "Rishabh's path into product management is deliberately non-traditional, and that is his advantage. He studied Mechanical Engineering (systems thinking, first principles), worked at Accenture on cloud and data pipelines (technical depth), consulted at CLO Virtual Fashion across enterprise integrations and product ownership (execution), earned an MSc in Entrepreneurship with Distinction at Liverpool (business and innovation strategy), ran B2B sales and business development at Sood Agency and Helix in the UK (commercial acumen), and returned to Bengaluru as an AI-native PM shipping products independently. Most PMs come from a single lane. Rishabh has operated at the intersection of technology, business, and AI — which makes him unusually equipped for roles that sit at exactly that intersection.",
+    topic: 'strengths'
+  },
+  {
+    id: 'ai_native_identity',
+    text: "Rishabh is AI-native, not AI-curious. He uses Claude, ChatGPT, and Perplexity daily as core productivity tools, not as experiments. He has built 4 live AI products independently. He holds an IBM GenAI PM certification and an N8N Automation certification. He designed agentic workflows and RAG-based chatbot systems. He understands LLM architectures, vector databases, prompt engineering, and the practical limitations of AI systems from a PM lens. When companies hire him, they are not getting someone who has read about AI — they are getting someone who has shipped it.",
+    topic: 'value_prop'
+  },
+  {
+    id: 'helix_sheadyt',
+    text: "Rishabh also has experience at Helix (Liverpool, UK) in B2B sales leadership and at SHEDyt where he worked on marketplace development. These roles gave him exposure to GTM strategy, client acquisition, and the operational complexity of marketplace products — experience that complements his product management background.",
+    topic: 'experience'
+  },
+  {
+    id: 'mando_agency',
+    text: "As part of a University of Liverpool live challenge, Rishabh delivered an AI Strategy Consultancy for Mando Agency. This involved diagnosing their current workflow, identifying AI integration opportunities, and presenting a structured AI adoption roadmap. It demonstrates his ability to apply AI product thinking in a real consulting context under time pressure.",
+    topic: 'experience'
+  },
+  {
+    id: 'dissertation_significance',
+    text: "Rishabh's MSc dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his entire cohort. The subject itself is deeply relevant to product management: it explores how excessive options and information overwhelm users and degrade decision quality. Rishabh applied this research directly to how he thinks about feature design, onboarding flows, and dashboard UX — particularly for data-heavy B2B SaaS where information overload is a structural problem. His academic work and his professional work reinforce each other in ways that are rare.",
+    topic: 'education'
+  },
+  {
+    id: 'ownership_philosophy',
+    text: "Rishabh operates with a high-ownership mindset. He does not wait for permission to solve problems. At CLO, he independently identified and resolved a 5-year legacy issue. At Sood Agency, he owned features end-to-end with no engineering dependency. As an individual, he has shipped 4 AI products without a team. His philosophy is: if a problem exists and you can see the solution, the gap between insight and execution should be as small as possible. He does not treat 'I am not an engineer' as an excuse — he learns what he needs to ship what he needs to ship.",
+    topic: 'personal'
+  },
+  {
+    id: 'gtm_and_commercial',
+    text: "Rishabh has strong commercial instincts alongside his product instincts. At Sood Agency he generated £10,000+ in new B2B contracts. He achieved 35% revenue growth in 7 weeks through GTM execution. He has hands-on experience in B2B sales, client retention, and contract negotiation, which gives him an unusually sharp understanding of how product decisions connect to revenue outcomes. He does not just think about what to build — he thinks about who will pay for it and why.",
+    topic: 'experience'
+  },
+  {
+    id: 'acceleratorx',
+    text: "Rishabh is enrolled in the AcceleratorX AI PM career placement programme under mentor Digvijay Singh Chauhan. The programme covers AI product management, agentic systems, and career strategy for AI-first roles. He has completed the AI PM certification and the N8N Workflow Automation certification through AcceleratorX. He references AcceleratorX as part of his professional development narrative when applying to roles.",
+    topic: 'certifications'
+  },
+  {
+    id: 'cloudflare_rk_jarvis',
+    text: "RK-Jarvis is Rishabh's fourth and most technically sophisticated AI product. It is an AI chatbot built on Cloudflare Vectorize, Cloudflare's vector database for semantic search and RAG (Retrieval-Augmented Generation). It powers his personal portfolio chatbot, allowing visitors to ask natural language questions and receive answers grounded in his actual professional knowledge base. He built the Cloudflare Worker as a secure API proxy, integrated Gemini as the LLM backend, and is developing it as a standalone SaaS product. This demonstrates real technical depth: vector databases, RAG architecture, serverless infrastructure, and LLM integration.",
+    topic: 'products'
+  },
+  {
+    id: 'how_he_approaches_product',
+    text: "Rishabh's product approach combines three thinking layers: (1) Strategic — he uses first-principles decomposition and frameworks like Jobs-to-be-Done and 5 Whys to understand root problems before proposing solutions. (2) Analytical — he anchors every decision in data: funnel analysis, cohort analysis, A/B tests, KPIs, and OKRs. (3) Executional — he moves fast from insight to artifact, writing PRDs, grooming backlogs, running sprints, and validating in production. He has done this across enterprise B2B SaaS (CLO), AI-augmented agency products (Sood), and independently shipped consumer and AI tools. He applies chess-player thinking to product: patient on strategy, decisive on moves.",
+    topic: 'strengths'
+  },
+  {
+    id: 'interview_readiness',
+    text: "Rishabh is actively interviewing for PM, AI PM, and TPM roles. He has prepared deeply for behavioural and technical interviews with STAR-format answers grounded in real CLO Virtual Fashion experience including the Shape module, dependency matrix methodology, and the WFX and Modern Mirror integrations. He has experience with product case study formats, live coding logic assessments like Bryq, and telephonic technical screens including Google TPM rounds. He is sharp under pressure and does not over-rehearse — he adapts his answers to the specific context of the interviewer's question.",
+    topic: 'job_search'
+  },
+  {
+    id: 'what_he_is_looking_for',
+    text: "Rishabh is targeting AI PM, Product Manager, and Technical PM roles in Bengaluru (preferred), with openness to Mumbai, Pune, Gurugram, and Noida. He is looking for roles at companies building with AI at the core — not just AI as a feature, but companies where AI is the product or central to the product strategy. He is excited by agentic systems, LLM-powered workflows, data-heavy B2B SaaS, and enterprise platforms. His expected CTC is 15+ LPA. He is immediately available — notice period is zero.",
+    topic: 'job_search'
+  },
+  {
+    id: 'personality_and_values',
+    text: "Rishabh approaches his work and life with a high-ambition, ownership-oriented mindset. He has strong interests in Hindu philosophy and spirituality, which grounds his thinking about long-term purpose, wealth creation, and contribution. He is drawn to first-principles reasoning not just in product work but in how he navigates his career. He is entrepreneurial by nature — he has shipped his own products, run his own consulting work, and continually builds while he searches. He values directness, specificity, and boldness in communication, and brings the same energy to conversations that he brings to chess: prepared, strategic, and genuinely engaged.",
+    topic: 'personal'
+  },
+  {
+    id: 'key_differentiators_summary',
+    text: "What makes Rishabh different from other PM candidates: (1) He ships AI products independently — 4 live products with real URLs. (2) He is top 0.23% globally among 179,216 PMs on LearnTube.ai. (3) He has genuine enterprise integration delivery experience — 3 concurrent projects, 100% on-time. (4) He won Best Negotiator at a postgraduate business school. (5) He resolved a 5-year legacy issue through first-principles thinking. (6) He is a 3-time chess champion who thinks systematically under pressure. (7) He scored the highest dissertation grade in his cohort on a topic directly relevant to UX and product design. (8) He is available immediately at 15+ LPA CTC. (9) He does not just talk about AI — he has built with Cloudflare Vectorize, ElevenLabs, Base44, N8N, and Gemini.",
     topic: 'value_prop'
   }
 ];
