@@ -1048,286 +1048,24 @@ footer a{color:var(--gold);text-decoration:none;}
 </div>
 
 <script>
-/* ════════════════════════════════════
-   VECTOR DATABASE (in-memory, cosine similarity)
-   
-   HOW IT WORKS:
-   Instead of sequential search (loop through every chunk looking for keywords),
-   we build a VECTOR INDEX. Each chunk of Rishabh's data is converted to a 
-   numeric vector using TF-IDF weights. When a query arrives, it's also 
-   vectorised and we find the chunks whose vectors are most similar 
-   (cosine similarity). This is exactly how Pinecone, Weaviate, Chroma work — 
-   just those use GPU-accelerated HNSW indexes at scale.
-   
-   SEQUENTIAL vs VECTOR:
-   Sequential: "does this chunk contain the word X?" — O(n*m) string matching
-   Vector:     "which chunks are semantically closest to this query?" — O(n) dot products
-   
-   This demo implements TF-IDF vectorisation + cosine similarity natively in JS.
-════════════════════════════════════ */
+/*
+  ══════════════════════════════════════════════════════
+  RK-JARVIS CHATBOT — Pinecone + Gemini RAG (via Cloudflare Worker)
+  ══════════════════════════════════════════════════════
+  All AI logic (embedding the query, searching Pinecone, calling
+  Gemini) happens INSIDE your Cloudflare Worker. This frontend only
+  sends { query, history } to the Worker and displays the answer.
+  No API keys live in this file.
 
-// ── 1. KNOWLEDGE BASE (chunks of Rishabh's data) ──
-  const KNOWLEDGE_BASE = [
-  // ── EXISTING ENTRIES (kept intact, updated where needed) ──────────────────
+  Set your deployed Worker URL below.
+  ══════════════════════════════════════════════════════
+*/
+const PROXY_URL = 'https://my-api.rishabhukrishabh.workers.dev'; // ← your Cloudflare Worker URL
+const EMAIL = 'rishabhukrishabh@gmail.com';
 
-  {
-    id: 'identity',
-    text: "Rishabh Kumar is an AI Product Manager based in Bengaluru, India with 4+ years of experience. He specializes in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows. He is AI-native, using Claude, ChatGPT, and Perplexity daily. He is actively looking for PM, AI PM, and Technical PM roles in Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is available immediately with a notice period of zero days.",
-    topic: 'profile'
-  },
-  {
-    id: 'sood',
-    text: "At Sood Agency (Apr 2024 – Jan 2026, Liverpool UK) as Technical Business Manager - AI-Augmented Product & Growth, Rishabh owned product features end-to-end: discovery, PRD, sprint, QA, launch with 100% client retention. He integrated AI tools including OpenAI GPT-4o and automation platforms into workflows. He generated £10,000+ in new B2B contracts. He used Google Analytics for funnel analysis and ran A/B experiments.",
-    topic: 'experience'
-  },
-  {
-    id: 'clo',
-    text: "At CLO Virtual Fashion Inc (Feb 2022 – Sep 2023, Bengaluru and Seoul) as IT Consultant - Product Owner & Technical PM, Rishabh shipped 3 concurrent enterprise integrations at 100% on-time delivery: WFX, Centric PLM, and Modern Mirror. He resolved a 5-year critical legacy issue via first-principles root-cause analysis achieving 30% performance uplift. He received the Key Contributor award 3 times and was selected for the Seoul Korea deployment. He owned the Shape module end-to-end and used a dependency matrix approach to manage resource conflicts across concurrent integrations.",
-    topic: 'experience'
-  },
-  {
-    id: 'accenture',
-    text: "At Accenture (Jun 2021 – Dec 2021, Bengaluru) as Transaction Processing Associate, Rishabh worked on AWS cloud workflows, maintained 100% compliance, and built automated reporting pipelines for senior stakeholders.",
-    topic: 'experience'
-  },
-  {
-    id: 'education',
-    text: "Rishabh holds an MSc in Entrepreneurship and Innovation Management with Distinction from the University of Liverpool (Sep 2023 – Sep 2024). His dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his cohort. He has a BE in Mechanical Engineering from HKBK College of Engineering Bengaluru (2016–2020) where he was basketball captain and part of the E-Go-Kart team that ranked 8th out of 200 nationally.",
-    topic: 'education'
-  },
-  {
-    id: 'certs',
-    text: "Rishabh holds a Generative AI Skills for Product Managers certification from IBM (Credential ID: CEGAIPM1, issued May 2026) covering LLM architectures, agentic systems, and feature prioritisation. He also holds an N8N Workflow Automation Certification from AcceleratorX (May 2026) covering multi-step AI pipelines, API integrations, and process automation. He has an AI PM certification from AcceleratorX under mentor Digvijay Singh Chauhan.",
-    topic: 'certifications'
-  },
-  {
-    id: 'achievements',
-    text: "Rishabh's key achievements: Best Negotiator Award at University of Liverpool (Jan 2024) for structuring a sponsorship deal delivering 25% higher brand value. Dragon's Den Best Elevated Pitch (Mar 2024). 1st Place in Business Simulation leading a 6-member team outperforming 20+ university teams. 81% highest cohort score on Information Overload dissertation. Key Contributor Award x3 at CLO Virtual Fashion. Global PM rank 410 out of 179,216 on LearnTube.ai (top 0.23%). AI Strategy Consultancy for Mando Agency as a university live challenge. 3-time District-Level Chess Champion.",
-    topic: 'achievements'
-  },
-  {
-    id: 'skills',
-    text: "Rishabh's skills: AI Product Management including AI Tools Integration, Agentic Workflows, LLM-Powered Use Cases, AI Roadmapping, Feature Prioritisation, Product Prototyping. Product Execution including End-to-End Ownership, PRD and User Stories, Backlog Prioritisation, Sprint Execution, A/B Testing, Discovery and Research. Analytical Thinking including First-Principles Decomposition, Google Analytics, Funnel and Cohort Analysis, KPI and OKR Frameworks. Tools: JIRA, Google Analytics, AWS, Base44, SQL, ChatGPT, Claude, CRM, ERP, PLM, MS Excel, N8N workflow automation, Cloudflare Vectorize, Python backend scripting.",
-    topic: 'skills'
-  },
-  {
-    id: 'metrics',
-    text: "Key metrics and proof points: £10K+ in new B2B contracts at Sood Agency with 100% client retention. 30% legacy system performance uplift at CLO Virtual Fashion. 35% revenue growth in 7 weeks through GTM execution. 81% highest cohort dissertation score at University of Liverpool. Global PM rank 410 out of 179,216 worldwide (top 0.23%) on LearnTube.ai. 3 Key Contributor awards at CLO. 100% on-time delivery for 3 concurrent enterprise integrations.",
-    topic: 'metrics'
-  },
-  {
-    id: 'contact',
-    text: "Rishabh Kumar can be reached at email rishabhukrishabh@gmail.com, phone +91 8660127783, LinkedIn at linkedin.com/in/rishabh-rishabhh. He is based in Bengaluru India and is open to PM, AI PM, and Technical PM roles across Bengaluru, Mumbai, Pune, Gurugram, and Noida. He is immediately available. Current CTC: 12 LPA. Expected CTC: 15+ LPA.",
-    topic: 'contact'
-  },
-  {
-    id: 'mixpanel',
-    text: "Rishabh's Mixpanel Product Teardown case study is live at rishabhrishabhh.github.io/mixpanel-product-teardown. It covers 6 personas, Jobs-to-be-Done methodology, 5 Whys analysis, and two high-ROI feature proposals: AI Analytics Assistant and Guided Onboarding Wizard. It deconstructs Mixpanel's user onboarding and core analytics funnel to identify friction points and structural optimization opportunities.",
-    topic: 'case_study'
-  },
-  {
-    id: 'n8n',
-    text: "Rishabh is certified in N8N workflow automation and has hands-on experience building multi-step AI pipelines, API integrations, and agentic automation loops. He built automated cold outreach infrastructure including a contact spreadsheet, spintax email widget, and consolidated cold email guide. He approaches automation with an engineering mindset despite being a PM.",
-    topic: 'automation'
-  },
-  {
-    id: 'why_hire',
-    text: "Why hire Rishabh: He ships real products independently without an engineering team. He has a proven track record across B2B SaaS, enterprise integrations, and AI-native products. He delivers quantified outcomes: £10K contracts, 30% performance uplift, 100% client retention, 100% on-time delivery. He is AI-native not AI-curious, using AI tools daily in his workflow. He holds relevant certifications from IBM and AcceleratorX. He frames himself as high ownership with zero dependency on hand-holding.",
-    topic: 'value_prop'
-  },
-
-  // ── NEW ENTRIES ────────────────────────────────────────────────────────────
-
-  {
-    id: 'all_four_products',
-    text: "Rishabh has independently shipped 4 live AI-powered products: (1) RK-Jarvis — an AI chatbot built on Cloudflare Vectorize, a standalone SaaS product currently in development, demonstrating his ability to work with vector databases and semantic search. (2) Agentic Voice Chatbot — built using ElevenLabs and shipped in just 72 hours on Lovable, showcasing rapid prototyping and agentic AI design. (3) New Year Resolution Tracker — an app where users set resolutions, break them into milestones, and track weekly progress with visualisations, live at new-year-resolution-tracker-d0aa1e0b.base44.app. (4) Shaadi Sync Plan — a wedding planning platform tailored to Indian multi-day weddings with event timeline management, vendor tracker, guest list, and budget management, live at shaadi-sync-plan.base44.app. All four were built independently without an engineering team.",
-    topic: 'products'
-  },
-  {
-    id: 'what_makes_him_sharp',
-    text: "What makes Rishabh exceptionally sharp as a product manager: He holds a top 0.23% global ranking among 179,216 PMs worldwide on LearnTube.ai. He is a 3-time District-Level Chess Champion, which reflects deep strategic thinking, pattern recognition, and the ability to think several moves ahead — qualities that directly translate into roadmap planning and competitive product strategy. He scored 81% on his dissertation, the highest in his entire university cohort. He won Best Negotiator at the University of Liverpool. He resolved a 5-year-old critical legacy issue at CLO Virtual Fashion in his first stint using first-principles root-cause analysis. He routinely applies frameworks like the 5 Whys, Jobs-to-be-Done, RICE scoring, and OKRs from first principles rather than by rote. His Mechanical Engineering background gives him structural problem-solving ability that most PMs lack. He does not wait for engineers to build things — he ships products himself. He runs AI tools daily as a core part of his workflow, not as a novelty.",
-    topic: 'strengths'
-  },
-  {
-    id: 'strongest_pm_skills',
-    text: "Rishabh's strongest PM skills are: (1) End-to-end product ownership — he has owned entire features from discovery through to post-launch at Sood Agency and CLO, with zero hand-holding. (2) Enterprise integration management — he delivered WFX, Centric PLM, and Modern Mirror concurrently at 100% on-time delivery, a rare achievement requiring cross-functional coordination and dependency mapping. (3) AI product thinking — he designs LLM-powered use cases, agentic workflows, and RAG systems, not just describing what AI can do but shipping it independently. (4) First-principles analysis — demonstrated by solving a 5-year legacy issue at CLO and producing the highest-scoring dissertation in his cohort on a cognitive psychology topic. (5) Stakeholder communication and negotiation — Best Negotiator award, B2B sales experience generating £10K+ contracts, and 100% client retention. (6) Data-driven decision making — Google Analytics, funnel analysis, cohort analysis, A/B testing, KPI and OKR frameworks. (7) Rapid prototyping — shipped an agentic voice chatbot in 72 hours from scratch.",
-    topic: 'strengths'
-  },
-  {
-    id: 'chess_and_mindset',
-    text: "Rishabh is a 3-time District-Level Chess Champion. Chess is not just a hobby for him — it is a thinking system. Chess trained him to see multiple moves ahead, to recognise patterns quickly, to stay calm under pressure, and to make high-stakes decisions with incomplete information. These same instincts show up in how he approaches product roadmaps, stakeholder negotiations, and competitive strategy. He treats product management the way a chess player treats a game: with preparation, pattern recognition, and the willingness to sacrifice short-term comfort for long-term position.",
-    topic: 'personal'
-  },
-  {
-    id: 'non_traditional_path_as_strength',
-    text: "Rishabh's path into product management is deliberately non-traditional, and that is his advantage. He studied Mechanical Engineering (systems thinking, first principles), worked at Accenture on cloud and data pipelines (technical depth), consulted at CLO Virtual Fashion across enterprise integrations and product ownership (execution), earned an MSc in Entrepreneurship with Distinction at Liverpool (business and innovation strategy), ran B2B sales and business development at Sood Agency and Helix in the UK (commercial acumen), and returned to Bengaluru as an AI-native PM shipping products independently. Most PMs come from a single lane. Rishabh has operated at the intersection of technology, business, and AI — which makes him unusually equipped for roles that sit at exactly that intersection.",
-    topic: 'strengths'
-  },
-  {
-    id: 'ai_native_identity',
-    text: "Rishabh is AI-native, not AI-curious. He uses Claude, ChatGPT, and Perplexity daily as core productivity tools, not as experiments. He has built 4 live AI products independently. He holds an IBM GenAI PM certification and an N8N Automation certification. He designed agentic workflows and RAG-based chatbot systems. He understands LLM architectures, vector databases, prompt engineering, and the practical limitations of AI systems from a PM lens. When companies hire him, they are not getting someone who has read about AI — they are getting someone who has shipped it.",
-    topic: 'value_prop'
-  },
-  {
-    id: 'helix_sheadyt',
-    text: "Rishabh also has experience at Helix (Liverpool, UK) in B2B sales leadership and at SHEDyt where he worked on marketplace development. These roles gave him exposure to GTM strategy, client acquisition, and the operational complexity of marketplace products — experience that complements his product management background.",
-    topic: 'experience'
-  },
-  {
-    id: 'mando_agency',
-    text: "As part of a University of Liverpool live challenge, Rishabh delivered an AI Strategy Consultancy for Mando Agency. This involved diagnosing their current workflow, identifying AI integration opportunities, and presenting a structured AI adoption roadmap. It demonstrates his ability to apply AI product thinking in a real consulting context under time pressure.",
-    topic: 'experience'
-  },
-  {
-    id: 'dissertation_significance',
-    text: "Rishabh's MSc dissertation on The Paradox of Choice and Information Overload scored 81%, the highest in his entire cohort. The subject itself is deeply relevant to product management: it explores how excessive options and information overwhelm users and degrade decision quality. Rishabh applied this research directly to how he thinks about feature design, onboarding flows, and dashboard UX — particularly for data-heavy B2B SaaS where information overload is a structural problem. His academic work and his professional work reinforce each other in ways that are rare.",
-    topic: 'education'
-  },
-  {
-    id: 'ownership_philosophy',
-    text: "Rishabh operates with a high-ownership mindset. He does not wait for permission to solve problems. At CLO, he independently identified and resolved a 5-year legacy issue. At Sood Agency, he owned features end-to-end with no engineering dependency. As an individual, he has shipped 4 AI products without a team. His philosophy is: if a problem exists and you can see the solution, the gap between insight and execution should be as small as possible. He does not treat 'I am not an engineer' as an excuse — he learns what he needs to ship what he needs to ship.",
-    topic: 'personal'
-  },
-  {
-    id: 'gtm_and_commercial',
-    text: "Rishabh has strong commercial instincts alongside his product instincts. At Sood Agency he generated £10,000+ in new B2B contracts. He achieved 35% revenue growth in 7 weeks through GTM execution. He has hands-on experience in B2B sales, client retention, and contract negotiation, which gives him an unusually sharp understanding of how product decisions connect to revenue outcomes. He does not just think about what to build — he thinks about who will pay for it and why.",
-    topic: 'experience'
-  },
-  {
-    id: 'acceleratorx',
-    text: "Rishabh is enrolled in the AcceleratorX AI PM career placement programme under mentor Digvijay Singh Chauhan. The programme covers AI product management, agentic systems, and career strategy for AI-first roles. He has completed the AI PM certification and the N8N Workflow Automation certification through AcceleratorX. He references AcceleratorX as part of his professional development narrative when applying to roles.",
-    topic: 'certifications'
-  },
-  {
-    id: 'cloudflare_rk_jarvis',
-    text: "RK-Jarvis is Rishabh's fourth and most technically sophisticated AI product. It is an AI chatbot built on Cloudflare Vectorize, Cloudflare's vector database for semantic search and RAG (Retrieval-Augmented Generation). It powers his personal portfolio chatbot, allowing visitors to ask natural language questions and receive answers grounded in his actual professional knowledge base. He built the Cloudflare Worker as a secure API proxy, integrated Gemini as the LLM backend, and is developing it as a standalone SaaS product. This demonstrates real technical depth: vector databases, RAG architecture, serverless infrastructure, and LLM integration.",
-    topic: 'products'
-  },
-  {
-    id: 'how_he_approaches_product',
-    text: "Rishabh's product approach combines three thinking layers: (1) Strategic — he uses first-principles decomposition and frameworks like Jobs-to-be-Done and 5 Whys to understand root problems before proposing solutions. (2) Analytical — he anchors every decision in data: funnel analysis, cohort analysis, A/B tests, KPIs, and OKRs. (3) Executional — he moves fast from insight to artifact, writing PRDs, grooming backlogs, running sprints, and validating in production. He has done this across enterprise B2B SaaS (CLO), AI-augmented agency products (Sood), and independently shipped consumer and AI tools. He applies chess-player thinking to product: patient on strategy, decisive on moves.",
-    topic: 'strengths'
-  },
-  {
-    id: 'interview_readiness',
-    text: "Rishabh is actively interviewing for PM, AI PM, and TPM roles. He has prepared deeply for behavioural and technical interviews with STAR-format answers grounded in real CLO Virtual Fashion experience including the Shape module, dependency matrix methodology, and the WFX and Modern Mirror integrations. He has experience with product case study formats, live coding logic assessments like Bryq, and telephonic technical screens including Google TPM rounds. He is sharp under pressure and does not over-rehearse — he adapts his answers to the specific context of the interviewer's question.",
-    topic: 'job_search'
-  },
-  {
-    id: 'what_he_is_looking_for',
-    text: "Rishabh is targeting AI PM, Product Manager, and Technical PM roles in Bengaluru (preferred), with openness to Mumbai, Pune, Gurugram, and Noida. He is looking for roles at companies building with AI at the core — not just AI as a feature, but companies where AI is the product or central to the product strategy. He is excited by agentic systems, LLM-powered workflows, data-heavy B2B SaaS, and enterprise platforms. His expected CTC is 15+ LPA. He is immediately available — notice period is zero.",
-    topic: 'job_search'
-  },
-  {
-    id: 'personality_and_values',
-    text: "Rishabh approaches his work and life with a high-ambition, ownership-oriented mindset. He has strong interests in Hindu philosophy and spirituality, which grounds his thinking about long-term purpose, wealth creation, and contribution. He is drawn to first-principles reasoning not just in product work but in how he navigates his career. He is entrepreneurial by nature — he has shipped his own products, run his own consulting work, and continually builds while he searches. He values directness, specificity, and boldness in communication, and brings the same energy to conversations that he brings to chess: prepared, strategic, and genuinely engaged.",
-    topic: 'personal'
-  },
-  {
-    id: 'key_differentiators_summary',
-    text: "What makes Rishabh different from other PM candidates: (1) He ships AI products independently — 4 live products with real URLs. (2) He is top 0.23% globally among 179,216 PMs on LearnTube.ai. (3) He has genuine enterprise integration delivery experience — 3 concurrent projects, 100% on-time. (4) He won Best Negotiator at a postgraduate business school. (5) He resolved a 5-year legacy issue through first-principles thinking. (6) He is a 3-time chess champion who thinks systematically under pressure. (7) He scored the highest dissertation grade in his cohort on a topic directly relevant to UX and product design. (8) He is available immediately at 15+ LPA CTC. (9) He does not just talk about AI — he has built with Cloudflare Vectorize, ElevenLabs, Base44, N8N, and Gemini.",
-    topic: 'value_prop'
-  }
-];
-
-/* ── 2. VECTOR ENGINE: TF-IDF + Cosine Similarity ── */
-class VectorDB {
-  constructor(docs) {
-    this.docs = docs;
-    this.vocabulary = new Set();
-    this.idf = {};
-    this.docVectors = [];
-    this._build();
-  }
-
-  _tokenize(text) {
-    // Lowercase, remove punctuation, split, remove stopwords
-    const stopwords = new Set(['a','an','the','is','are','was','were','be','been','being',
-      'have','has','had','do','does','did','will','would','could','should','may','might',
-      'shall','can','need','dare','ought','used','to','of','in','on','at','by','for',
-      'with','from','about','into','through','during','he','she','it','they','we',
-      'his','her','its','their','our','this','that','these','those','and','or','but',
-      'if','because','as','until','while','after','before','since','i','my','me']);
-    return text.toLowerCase()
-      .replace(/[^a-z0-9\s]/g, ' ')
-      .split(/\s+/)
-      .filter(w => w.length > 2 && !stopwords.has(w));
-  }
-
-  _tf(tokens) {
-    const freq = {};
-    tokens.forEach(t => freq[t] = (freq[t] || 0) + 1);
-    const max = Math.max(...Object.values(freq));
-    Object.keys(freq).forEach(k => freq[k] = freq[k] / max);
-    return freq;
-  }
-
-  _build() {
-    // Collect all terms
-    const allTokens = this.docs.map(d => this._tokenize(d.text));
-    allTokens.forEach(tokens => tokens.forEach(t => this.vocabulary.add(t)));
-    const vocab = [...this.vocabulary];
-    const N = this.docs.length;
-
-    // Compute IDF
-    vocab.forEach(term => {
-      const df = allTokens.filter(tokens => tokens.includes(term)).length;
-      this.idf[term] = Math.log((N + 1) / (df + 1)) + 1;
-    });
-
-    // Build TF-IDF vectors
-    this.docVectors = allTokens.map(tokens => {
-      const tf = this._tf(tokens);
-      const vec = {};
-      vocab.forEach(term => {
-        if (tf[term]) vec[term] = tf[term] * this.idf[term];
-      });
-      return vec;
-    });
-  }
-
-  _cosineSim(vecA, vecB) {
-    const keys = new Set([...Object.keys(vecA), ...Object.keys(vecB)]);
-    let dot = 0, magA = 0, magB = 0;
-    keys.forEach(k => {
-      const a = vecA[k] || 0;
-      const b = vecB[k] || 0;
-      dot += a * b;
-      magA += a * a;
-      magB += b * b;
-    });
-    if (!magA || !magB) return 0;
-    return dot / (Math.sqrt(magA) * Math.sqrt(magB));
-  }
-
-  search(query, topK = 3) {
-    const qTokens = this._tokenize(query);
-    const qTF = this._tf(qTokens);
-    const qVec = {};
-    qTokens.forEach(t => {
-      if (this.idf[t]) qVec[t] = qTF[t] * this.idf[t];
-    });
-
-    const scores = this.docVectors.map((docVec, i) => ({
-      doc: this.docs[i],
-      score: this._cosineSim(qVec, docVec)
-    }));
-
-    return scores
-      .sort((a, b) => b.score - a.score)
-      .slice(0, topK)
-      .filter(r => r.score > 0)
-      .map(r => r.doc.text);
-  }
-}
-
-// Initialise the vector database
-const vectorDB = new VectorDB(KNOWLEDGE_BASE);
-
-/* ── 3. CHAT STATE ── */
+/* ── CHAT STATE ── */
 let chatOpen = false;
 let chatHistory = [];
-const EMAIL = 'rishabhukrishabh@gmail.com';
 
 function toggleChat() {
   chatOpen = !chatOpen;
@@ -1375,90 +1113,14 @@ function hideTyping() {
   if (el) el.remove();
 }
 
-/*
-  ══════════════════════════════════════════════════════
-  GEMINI API — SELF-HOSTING SETUP (GitHub Pages)
-  ══════════════════════════════════════════════════════
-  Uses Google Gemini 2.0 Flash (free tier: 1,500 req/day).
-  Key must never be in public HTML → use a Cloudflare Worker proxy.
-
-  CLOUDFLARE WORKER CODE (paste this at workers.cloudflare.com):
-  ─────────────────────────────────────────────────────
-  const GEMINI_KEY = "AIza-YOUR_KEY_HERE"; // from aistudio.google.com
-  const GEMINI_MODEL = "gemini-2.5-flash";
-
-  export default {
-    async fetch(req) {
-      if (req.method === "OPTIONS") {
-        return new Response(null, { headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
-        }});
-      }
-      const body = await req.text();
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-      const resp = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body
-      });
-      const data = await resp.text();
-      return new Response(data, { headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }});
-    }
-  };
-  ─────────────────────────────────────────────────────
-
-  HOW TO GET A FREE GEMINI KEY:
-  1. Go to https://aistudio.google.com/app/apikey
-  2. Click "Create API Key" → copy it
-  3. Paste into the Worker above where it says AIza-YOUR_KEY_HERE
-  4. Deploy Worker → copy the Worker URL
-  5. Paste Worker URL into PROXY_URL below → push to GitHub
-
-  GEMINI API FORMAT (different from Anthropic):
-  - System prompt goes inside contents as a "user" turn (Gemini handles it as context)
-  - Messages use { role: "user"/"model", parts: [{ text: "..." }] } not { role, content }
-  - Response is at data.candidates[0].content.parts[0].text
-  ══════════════════════════════════════════════════════
-*/
-// ─────────────────────────────────────────────────────────────
-// CONFIGURATION — only these 2 lines ever need changing
-// ─────────────────────────────────────────────────────────────
-const GEMINI_API_KEY = ''; // ← paste your Gemini key here for LOCAL testing
-                            //   (safe for local file:// use, NOT for GitHub Pages)
-
-const PROXY_URL = 'https://my-api.rishabhukrishabh.workers.dev';       // ← paste your Cloudflare Worker URL here for GITHUB PAGES
-                            //   e.g. 'https://rishabh-ai.yourname.workers.dev'
-                            //   when set, this is used instead of the key above
-// ─────────────────────────────────────────────────────────────
-
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const query = input.value.trim();
   if (!query) return;
 
-  // Decide which endpoint to use
-  let apiURL, useProxy;
-  if (PROXY_URL) {
-    // Production: go through Cloudflare Worker (key hidden server-side)
-    apiURL = PROXY_URL;
-    useProxy = true;
-  } else if (GEMINI_API_KEY) {
-    // Local testing: call Gemini directly with key in URL
-    apiURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-    useProxy = false;
-  } else {
-    // Neither set — show helpful setup message
+  if (!PROXY_URL) {
     appendMsg('user', query);
-    appendMsg('bot', `⚙️ <strong>Setup needed:</strong> Open portfolio.html and either:<br>
-      • Set <code>GEMINI_API_KEY</code> for local testing, or<br>
-      • Set <code>PROXY_URL</code> (your Cloudflare Worker) for GitHub Pages.<br><br>
-      See the comments in the JS for step-by-step instructions.<br>
-      Or email Rishabh at <a href="mailto:${EMAIL}" style="color:var(--gold)">${EMAIL}</a>`);
+    appendMsg('bot', `⚙️ Set <code>PROXY_URL</code> to your Cloudflare Worker URL in the script.<br>Or email Rishabh at <a href="mailto:${EMAIL}" style="color:var(--gold)">${EMAIL}</a>`);
     return;
   }
 
@@ -1468,75 +1130,31 @@ async function sendMessage() {
   chatHistory.push({ role: 'user', text: query });
   showTyping();
 
-  // ── VECTOR SEARCH: find top 3 relevant chunks ──
-  const relevantChunks = vectorDB.search(query, 3);
-  const context = relevantChunks.length > 0
-    ? relevantChunks.join('\n\n')
-    : 'General profile: Rishabh Kumar is an AI PM based in Bengaluru with 4+ years of experience.';
-
-  const systemPrompt = `You are Rishabh Kumar's personal AI assistant embedded on his portfolio website. Answer questions about Rishabh using ONLY the context below. Be concise, confident, and helpful. Speak about Rishabh in third person. If a question is not covered by the context, say you don't have that detail and invite the visitor to email Rishabh at ${EMAIL}. Never invent facts.
-
-CONTEXT (retrieved via TF-IDF vector similarity search):
-${context}`;
-
-  const geminiContents = [
-    { role: 'user', parts: [{ text: systemPrompt }] },
-    { role: 'model', parts: [{ text: 'Understood. I will answer questions about Rishabh using only the provided context.' }] },
-    ...chatHistory.slice(-6).map(m => ({
-      role: m.role === 'user' ? 'user' : 'model',
-      parts: [{ text: m.text }]
-    }))
-  ];
-
-  const requestBody = {
-    systemInstruction: { parts: [{ text: systemPrompt }] },
-    contents: geminiContents,
-    generationConfig: { maxOutputTokens: 800, temperature: 0.7 }
-  };
-
   try {
-    const response = await fetch(apiURL, {
+    const response = await fetch(PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify({ query, history: chatHistory.slice(-6) })
     });
-
-    // ── FULL ERROR VISIBILITY ──
-    // If response is not OK, extract and show the real error message
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({ error: { message: 'Unknown error — check browser Console (F12)' } }));
-      const errMsg = errData?.error?.message || `HTTP ${response.status}`;
-      hideTyping();
-      // Show in chat UI
-      appendMsg('bot', `🔴 <strong>API Error (${response.status}):</strong> ${errMsg}<br><br>
-        <span style="font-size:11px;color:var(--muted)">Open browser Console (F12 → Console tab) to see full details.</span>`);
-      // Also log full response to console for debugging
-      console.error('Gemini API error:', response.status, errData);
-      document.getElementById('chatSend').disabled = false;
-      input.focus();
-      return;
-    }
 
     const data = await response.json();
     hideTyping();
 
-    // Log successful response to console so you can inspect it
-    console.log('Gemini response:', data);
-
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
-      || '⚠️ Gemini returned an empty response. Check Console (F12) for the raw data.';
-
-    chatHistory.push({ role: 'model', text: reply });
-    appendMsg('bot', reply);
+    if (!response.ok || data.error) {
+      const errMsg = data.error || `HTTP ${response.status}`;
+      appendMsg('bot', `🔴 <strong>Error:</strong> ${errMsg}<br><span style="font-size:11px;color:var(--muted)">Check your Cloudflare Worker logs, or open browser Console (F12) for details.</span>`);
+      console.error('Worker error:', data);
+    } else {
+      chatHistory.push({ role: 'model', text: data.answer });
+      appendMsg('bot', data.answer);
+    }
 
   } catch (err) {
     hideTyping();
-    // Show the actual JS error in the chat
     appendMsg('bot', `🔴 <strong>Network error:</strong> ${err.message}<br><br>
       Common causes:<br>
-      • Opening as a local file (file://) with no API key set<br>
-      • CORS block — use the Cloudflare Worker proxy instead<br>
-      • Incorrect PROXY_URL or GEMINI_API_KEY<br><br>
+      • Incorrect <code>PROXY_URL</code><br>
+      • Worker not deployed or CORS misconfigured<br><br>
       <span style="font-size:11px;color:var(--muted)">Full error in Console (F12 → Console tab)</span>`);
     console.error('Chat fetch error:', err);
   }
@@ -1552,7 +1170,6 @@ function copyEmail() {
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2500);
   }).catch(() => {
-    // Fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = EMAIL;
     document.body.appendChild(ta);
