@@ -2,1305 +2,337 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rishabh Kumar · AI Product Manager</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #38BDF8;
-  --gold-light: #0EA5E9;
-  --gold-dim: rgba(56,189,248,0.06);
-  --obsidian: #0F172A;
-  --dark: #1E293B;
-  --card: #1E293B;
-  --card2: #334155;
-  --cream: #F8FAFC;
-  --muted: #94A3B8;
-  --border: rgba(56,189,248,0.15);
-  --text: #CBD5E1;
-  .chat-bubble ul{margin:6px 0;padding-left:18px;}
-  .chat-bubble li{margin-bottom:4px;}
-  .chat-bubble p{margin-bottom:8px;}
-  .chat-bubble p:last-child{margin-bottom:0;}
-  .chat-bubble strong{color:var(--gold);}
-}
+:root{--ar:1.774;
+--c:#38BDF8;--v:#A855F7;--bg:#04060f;--tx:#CBD5E1;--cr:#F8FAFC;--mu:#94A3B8;--bd:rgba(56,189,248,.28)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font:15px/1.65 Manrope,sans-serif}
+h1,h2,h3,h4{font-family:Sora,sans-serif;color:var(--cr)}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--c);outline-offset:3px}
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+.stage{position:absolute;left:50%;top:calc((100vh - max(100vh,100vw/var(--ar)))*.3);width:max(100vw,calc(100vh*var(--ar)));aspect-ratio:var(--ar);transform:translateX(-50%)}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 35%,rgba(4,6,15,.75) 100%)}
 
-body{
-  background:var(--obsidian);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
-  line-height:1.7;
-  overflow-x:hidden;
-}
+.stage{container-type:inline-size}
+.field{position:absolute;inset:0;font-size:max(6px,.94cqw);pointer-events:none}
+.tile{--c2:hsl(var(--h) 95% 62%);position:absolute;left:var(--x);top:var(--y);width:var(--w);display:block;text-align:left;height:12%;overflow:hidden;padding:.7em .85em .85em;background:linear-gradient(160deg,rgba(6,30,48,.72),rgba(6,12,30,.8));border:1px solid hsl(var(--h) 95% 60%/.55);box-shadow:inset 0 0 1.5em hsl(var(--h) 95% 55%/.14),0 0 1em hsl(var(--h) 95% 55%/.2);backdrop-filter:blur(5px);color:var(--cr);font-size:1em;opacity:0;visibility:hidden;pointer-events:none;scale:.5;transform:translate(calc(var(--mx,0)*var(--d)*1px),calc(var(--my,0)*var(--d)*1px)) rotate(var(--r))}
+.field.show .tile{opacity:1;visibility:visible;pointer-events:all;scale:1;transition:opacity .6s calc(var(--i)*.14s),scale .7s calc(var(--i)*.14s) cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s}
+.field.done .tile{transition:box-shadow .25s,border-color .25s,scale .25s}
+.tile::before,.tile::after{content:"";position:absolute;width:1em;height:1em;border:2px solid var(--c2);pointer-events:none}
+.tile::before{left:-3px;top:-3px;border-right:0;border-bottom:0}
+.tile::after{right:-3px;bottom:-3px;border-left:0;border-top:0}
+.field.show .tile:hover,.field.show .tile:focus-visible{scale:1.07;border-color:var(--c2);box-shadow:inset 0 0 2em hsl(var(--h) 95% 55%/.3),0 0 2.4em hsl(var(--h) 95% 60%/.6)}
+.th{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid hsl(var(--h) 95% 60%/.3);padding-bottom:.4em;margin-bottom:.5em}
+.th b{font:600 .95em/1.2 Sora,sans-serif}
+.dot{width:.4em;height:.4em;border-radius:50%;background:var(--c2);box-shadow:0 0 .6em var(--c2)}
+.tb{display:flex;gap:.6em;align-items:center}
+.tb.col{flex-direction:column;align-items:stretch;gap:.4em}
+.tg{list-style:none;font-size:.74em;line-height:1.4;color:#a9bdd3}
+.tg li:first-child{color:var(--cr)}
+.tv{width:3.5em;height:3.5em;flex:none;display:block}
+.tv.d{width:3.5em;height:3.5em;flex:none}
+.tv .f{fill:var(--c2);opacity:.85}
+.tv .s{fill:none;stroke:var(--c2);stroke-width:2;stroke-linejoin:round}
+.tv .tr{fill:none;stroke:rgba(255,255,255,.14);stroke-width:3}
+.tv .fg{fill:none;stroke:var(--c2);stroke-width:4;stroke-linecap:round}
+.tv text{fill:var(--cr);font:600 8px Sora,sans-serif;text-anchor:middle}
+.sw{transform-origin:30px 30px;animation:sp 4s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* the invisible click target sits on the "CLICK TO OPEN" button baked into the video at 2s */
+#go{position:absolute;left:35.5%;top:52%;width:18%;height:8.5%;background:none;border:2px solid #38BDF8;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 0 20px rgba(56,189,248,.7)}
+#go.on{opacity:1;pointer-events:all;animation:pg 1.4s ease-in-out infinite}
+@keyframes pg{50%{box-shadow:0 0 36px #38BDF8;scale:1.06}}
+#go:hover{background:rgba(56,189,248,.18)}
+#sk,.hint button{background:none;border:none;color:var(--mu);font-size:12px;text-decoration:underline}
+#sk{position:fixed;left:20px;bottom:22px;z-index:5}
+body.on #sk{display:none}
+#st{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;padding:14px 26px;background:var(--c);border:none;color:#04060f;font:600 15px Sora,sans-serif}
+#st.on{display:block}
+.hint{opacity:0;transition:opacity .8s}
+body.on .id,body.on .hint{opacity:1}
+#mm{display:none}
+.tile.mini{height:auto;padding:.5em .85em}.mini .th{border:0;margin:0;padding:0;gap:.8em}.mini small{font-size:.74em;color:#a9bdd3}
+.id{position:absolute;left:49.5%;top:18.2%;transform:translate(-50%,-50%);z-index:5;text-align:center;white-space:nowrap;pointer-events:none;opacity:0;scale:.6;transition:opacity .6s .1s,scale .8s .1s cubic-bezier(.22,1,.36,1)}
+body.on .id{opacity:1;scale:1}
+.id h1{font-size:2.5cqw;line-height:1;padding:.25em .6em;background:rgba(4,10,24,.62);border:1px solid rgba(56,189,248,.45);box-shadow:0 0 1.6cqw rgba(56,189,248,.35)}
+.id p{position:absolute;bottom:100%;left:0;right:0;margin-bottom:.4cqw;color:#a9bdd3;font-size:.95cqw}
+.id p::after{display:none}
+@keyframes bl{50%{opacity:0}}
+.hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);font-size:12px;color:var(--mu);z-index:5;white-space:nowrap}
 
-/* ═══ CURSOR ═══ */
-.cursor{
-  position:fixed;width:12px;height:12px;
-  background:var(--gold);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform .1s,width .2s,height .2s,opacity .2s;
-  mix-blend-mode:screen;
-}
-.cursor-ring{
-  position:fixed;width:36px;height:36px;
-  border:1px solid rgba(56,189,248,.5);border-radius:50%;
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:transform .18s ease,width .2s,height .2s;
-}
-.cursor.hovering{width:0;height:0;opacity:0;}
-.cursor-ring.hovering{width:56px;height:56px;border-color:var(--gold);}
+/* floating window */
+.back{position:fixed;inset:0;background:rgba(4,6,15,.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:20}
+.win{position:fixed;left:50%;top:50%;width:min(980px,92vw);max-height:84vh;display:flex;flex-direction:column;background:rgba(10,16,34,.92);border:1px solid var(--c);box-shadow:0 0 60px rgba(56,189,248,.25);transform:translate(-50%,-46%) scale(.94);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.22,1,.36,1);z-index:21}
+body.open .back{opacity:1;pointer-events:all}
+body.open .win{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid var(--bd)}
+.bar h2{font-size:20px}
+.bar button{background:none;border:1px solid var(--bd);width:34px;height:34px}
+.bar button:hover{border-color:var(--c);color:var(--c)}
+.body{padding:24px;overflow-y:auto;scrollbar-width:thin}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{border:1px solid var(--bd);padding:20px;background:rgba(56,189,248,.04)}
+.card header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}
+.card h3{font-size:17px}
+.badge{font-size:11px;padding:2px 9px;border:1px solid var(--bd);color:var(--c);white-space:nowrap}
+.card h4{font-size:12px;color:var(--c);margin:12px 0 2px}
+.card p,.card li{font-size:13.5px}
+.card ul{margin-top:12px;padding-left:18px}
+.card li{margin-bottom:5px}
+.card li::marker{color:var(--c)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.tags i{font-style:normal;font-size:11px;padding:2px 9px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);color:var(--c)}
+.card a,.lnk{color:var(--c);font-size:13px;display:inline-block;margin:4px 0;background:none;border:none;text-decoration:underline;word-break:break-all}
+.big{font:700 30px Sora,sans-serif;color:var(--c);line-height:1}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:20px 0}
+.stats div{border-left:2px solid var(--c);padding-left:12px;font-size:12px;color:var(--mu)}
+.stats .big{display:block;font-size:26px;margin-bottom:4px}
+.quote{border-left:2px solid var(--c);padding:12px 18px;font-style:italic;color:var(--cr);margin-top:18px}
+.about p{margin-bottom:14px;max-width:70ch}
+.tl{border-left:1px solid var(--c);padding-left:22px}
+.tl div{position:relative;margin-bottom:22px}
+.tl div::before{content:"";position:absolute;left:-27px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.tl small{color:var(--c)}
+.mail{font:600 clamp(18px,3vw,28px) Sora,sans-serif;color:var(--c);background:none;border:none;text-align:left;word-break:break-all}
+#toast{color:var(--c);font-size:12px;height:18px}
 
-/* ═══ CANVAS ═══ */
-#particleCanvas{
-  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;
-}
+/* chatbot */
+#ct{position:fixed;right:24px;bottom:24px;z-index:30;width:56px;height:56px;border-radius:50%;border:none;background:var(--c);color:#04060f;font:700 13px Sora,sans-serif;box-shadow:0 0 30px rgba(56,189,248,.6)}
+#cp{position:fixed;right:24px;bottom:92px;z-index:30;width:min(380px,calc(100vw - 32px));background:#0a1022;border:1px solid var(--bd);display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#cp.on{display:flex}
+.ch{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font:600 14px Sora,sans-serif;color:var(--cr)}
+.ch button{background:none;border:none}
+#cm{height:300px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:88%;padding:9px 13px;font-size:13px;line-height:1.5;border:1px solid var(--bd)}
+.m.u{align-self:flex-end;background:var(--c);color:#04060f;border-color:var(--c)}
+.m.b{align-self:flex-start;background:#16203a}
+.m ul{margin:6px 0;padding-left:18px}.m p{margin-bottom:6px}.m strong{color:var(--c)}.m.u strong{color:inherit}
+#cs{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+#cs button{font-size:11px;padding:4px 9px;background:none;border:1px solid var(--bd);color:var(--c)}
+.ci{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--bd)}
+.ci input{flex:1;background:#04060f;border:1px solid var(--bd);color:var(--cr);padding:8px 12px;font:inherit;font-size:13px}
+.ci button{background:var(--c);border:none;color:#04060f;padding:0 14px;font-weight:600}
+.ci button:disabled{opacity:.4}
 
-/* ═══ GRAIN ═══ */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:998;opacity:.35;
-}
+/* hologram cursor (mouse devices only) */
+@media(pointer:fine){body,button{cursor:none}
+#cd,#cr{position:fixed;left:0;top:0;pointer-events:none;z-index:99;border-radius:50%;transform:translate(-50%,-50%)}
+#cd{width:8px;height:8px;background:var(--c);box-shadow:0 0 14px var(--c)}
+#cr{width:34px;height:34px;border:1px solid var(--c);transition:width .2s,height .2s,background .2s}
+#cr.h{width:54px;height:54px;background:rgba(56,189,248,.12)}}
+@media(pointer:coarse){#cd,#cr{display:none}}
 
-/* ═══ PROGRESS BAR ═══ */
-#progress{
-  position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--gold),#7C3AED);
-  z-index:200;width:0%;transition:width .05s linear;
-}
+/* phones: video stays as backdrop, sections become a tappable menu */
+@media(max-width:760px){.stage{left:0;top:50%;width:100%;aspect-ratio:var(--ar);transform:translateY(-50%)}.field{display:none}
+#mm.show{display:grid;position:fixed;left:12px;right:12px;bottom:92px;grid-template-columns:1fr 1fr;gap:8px;z-index:6}
+#mm button{background:rgba(8,14,32,.85);border:1px solid var(--bd);padding:12px;color:var(--cr);font:600 14px Sora,sans-serif;text-align:left}
+.hint{display:none}#ct{right:14px;bottom:20px}#cp{right:16px;bottom:88px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 
-/* ═══ NAV ═══ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 60px;
-  background:rgba(15,23,42,0);
-  backdrop-filter:blur(0px);
-  border-bottom:1px solid transparent;
-  transition:all .4s ease;
-}
-nav.scrolled{
-  background:rgba(15,23,42,.9);
-  backdrop-filter:blur(20px);
-  border-bottom-color:var(--border);
-}
-.nav-logo{
-  font-family:'Playfair Display',serif;font-size:18px;
-  color:var(--gold);letter-spacing:.05em;
-  opacity:0;animation:fadeDown .8s .2s forwards;
-}
-.nav-links{display:flex;gap:36px;list-style:none;}
-.nav-links a{
-  text-decoration:none;color:var(--muted);font-size:13px;
-  letter-spacing:.1em;text-transform:uppercase;font-weight:500;
-  transition:color .2s;position:relative;
-  opacity:0;animation:fadeDown .8s forwards;
-}
-.nav-links li:nth-child(1) a{animation-delay:.3s;}
-.nav-links li:nth-child(2) a{animation-delay:.38s;}
-.nav-links li:nth-child(3) a{animation-delay:.46s;}
-.nav-links li:nth-child(4) a{animation-delay:.54s;}
-.nav-links li:nth-child(5) a{animation-delay:.62s;}
-.nav-links li:nth-child(6) a{animation-delay:.7s;}
-.nav-links li:nth-child(7) a{animation-delay:.78s;}
-.nav-links li:nth-child(8) a{animation-delay:.86s;}
-.nav-links li:nth-child(9) a{animation-delay:.94s;}
-.nav-links a::after{
-  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
-  background:var(--gold);transition:width .3s;
-}
-.nav-links a:hover{color:var(--gold);}
-.nav-links a:hover::after{width:100%;}
-
-@keyframes fadeDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
-/* ═══ HERO ═══ */
-.hero{
-  min-height:100vh;display:flex;align-items:center;
-  position:relative;padding:120px 60px 60px;overflow:hidden;
-}
-.hero-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 60% at 70% 50%,rgba(56,189,248,.07) 0%,transparent 70%),
-    radial-gradient(ellipse 40% 80% at 10% 50%,rgba(15,23,42,.4) 0%,transparent 60%);
-}
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(56,189,248,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%);
-  animation:gridPan 20s linear infinite;
-}
-@keyframes gridPan{0%{background-position:0 0;}100%{background-position:60px 60px;}}
-
-.blob{
-  position:absolute;border-radius:50%;filter:blur(80px);
-  animation:blobMove 12s ease-in-out infinite alternate;
-  pointer-events:none;
-}
-.blob1{width:400px;height:400px;background:rgba(56,189,248,.06);top:-10%;left:60%;animation-delay:0s;}
-.blob2{width:300px;height:300px;background:rgba(124,58,237,.06);top:40%;left:70%;animation-delay:-4s;}
-.blob3{width:250px;height:250px;background:rgba(56,189,248,.04);top:60%;left:30%;animation-delay:-8s;}
-@keyframes blobMove{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,30px) scale(1.1);}}
-
-.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%;}
-.hero-split-container{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:50px;width:100%;
-}
-.hero-left{flex:1.2;min-width:0;}
-.hero-right{flex:.8;display:flex;justify-content:flex-end;align-items:flex-start;min-width:0;}
-
-.hero-image-frame{
-  width:100%;max-width:340px;position:relative;
-  background:var(--card);border:1px solid var(--border);padding:12px;
-  box-sizing:border-box;margin-top:15px;
-  opacity:0;animation:revealFrame .9s 1s cubic-bezier(.22,1,.36,1) forwards;
-}
-.hero-image-frame::before{
-  content:'';position:absolute;inset:-1px;
-  background:linear-gradient(135deg,var(--gold),transparent,#7C3AED);
-  z-index:-1;opacity:0;transition:opacity .4s;border-radius:2px;
-}
-.hero-image-frame:hover::before{opacity:1;}
-.hero-image-frame:hover{transform:translateY(-4px);transition:transform .3s;}
-@keyframes revealFrame{
-  from{opacity:0;transform:translateX(30px);}
-  to{opacity:1;transform:translateX(0);}
-}
-
-.hero-avatar{width:100%;height:auto;display:block;object-fit:cover;border-radius:2px;}
-
-.hero-eyebrow{
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:20px;
-  display:flex;align-items:center;gap:8px;
-  opacity:0;animation:fadeUp .7s .5s forwards;
-}
-.eyebrow-dot{
-  width:6px;height:6px;background:var(--gold);border-radius:50%;
-  box-shadow:0 0 8px var(--gold);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
-
-.hero-name{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(52px,7vw,96px);font-weight:900;line-height:1;
-  color:var(--cream);letter-spacing:-.02em;margin-bottom:16px;
-  overflow:hidden;
-}
-.hero-name .line{
-  display:block;opacity:0;transform:translateY(100%);
-  animation:slideUp .8s cubic-bezier(.22,1,.36,1) forwards;
-}
-.hero-name .line:nth-child(1){animation-delay:.6s;}
-.hero-name .line:nth-child(2){animation-delay:.75s;color:var(--gold);}
-@keyframes slideUp{to{opacity:1;transform:translateY(0);}}
-
-.hero-tagline{
-  font-size:18px;color:var(--muted);font-weight:300;
-  margin-bottom:40px;max-width:600px;line-height:1.6;
-  opacity:0;animation:fadeUp .7s .95s forwards;
-}
-.hero-tagline strong{color:var(--cream);font-weight:500;}
-
-/* ─── METRICS ─── */
-.hero-metrics{
-  display:flex;flex-direction:row;justify-content:space-between;
-  gap:15px;margin-top:40px;margin-bottom:36px;flex-wrap:nowrap;width:100%;
-}
-.metric-item{
-  display:flex;flex-direction:column;flex:1;
-  border-left:1px solid rgba(56,189,248,.2);padding-left:12px;
-  opacity:0;animation:fadeUp .6s forwards;
-  transition:border-color .3s;
-}
-.metric-item:hover{border-left-color:var(--gold);}
-.metric-item:nth-child(1){animation-delay:1.1s;}
-.metric-item:nth-child(2){animation-delay:1.2s;}
-.metric-item:nth-child(3){animation-delay:1.3s;}
-.metric-item:nth-child(4){animation-delay:1.4s;}
-.metric-item:nth-child(5){animation-delay:1.5s;}
-.metric-item:nth-child(6){animation-delay:1.6s;}
-
-.metric-num{
-  font-family:'Playfair Display',serif;font-size:24px;font-weight:700;
-  color:var(--gold);line-height:1;
-}
-.metric-label{
-  font-size:9px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);margin-top:4px;white-space:nowrap;
-}
-
-/* ─── CTA BUTTONS ─── FIX: no overflow, wrap cleanly ─── */
-.hero-cta{
-  display:flex;flex-direction:row;align-items:center;
-  gap:10px;flex-wrap:wrap;width:100%;
-  opacity:0;animation:fadeUp .7s 1.7s forwards;
-}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:13px 22px;background:var(--gold);
-  color:var(--obsidian);font-family:'DM Sans',sans-serif;
-  font-weight:600;font-size:12px;letter-spacing:.07em;
-  text-transform:uppercase;text-decoration:none;
-  transition:all .25s;white-space:nowrap;position:relative;overflow:hidden;flex-shrink:0;
-}
-.btn-primary::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-  transform:translateX(-100%);transition:transform .4s;
-}
-.btn-primary:hover::before{transform:translateX(100%);}
-.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 12px 32px rgba(56,189,248,.3);}
-
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:13px 20px;border:1px solid var(--border);
-  color:var(--text);font-size:12px;letter-spacing:.07em;
-  text-transform:uppercase;text-decoration:none;font-weight:500;
-  transition:all .25s;white-space:nowrap;flex-shrink:0;
-}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
-
-.hero-scroll{
-  position:absolute;bottom:40px;left:60px;
-  display:flex;align-items:center;gap:12px;
-  color:var(--muted);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
-  opacity:0;animation:fadeIn 1s 2s forwards;
-}
-.hero-scroll::before{
-  content:'';display:block;width:1px;height:48px;
-  background:linear-gradient(to bottom,transparent,var(--muted));
-  animation:scrollPulse 2s ease-in-out infinite;
-}
-@keyframes scrollPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
-
-/* ═══ GLOBAL SECTIONS ═══ */
-section{padding:100px 60px;max-width:1100px;margin:0 auto;}
-
-.section-label{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:12px;
-  display:flex;align-items:center;gap:10px;
-}
-.section-label::after{
-  content:'';display:block;width:40px;height:1px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-}
-.section-title{
-  font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);
-  font-weight:700;color:var(--cream);line-height:1.1;
-  margin-bottom:48px;letter-spacing:-.02em;
-}
-
-/* ─── REVEAL ─── */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
-.reveal.in{opacity:1;transform:translateY(0);}
-.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease;}
-.reveal-left.in{opacity:1;transform:translateX(0);}
-.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease;}
-.reveal-right.in{opacity:1;transform:translateX(0);}
-
-.stagger > *{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease;}
-.stagger.in > *:nth-child(1){opacity:1;transform:none;transition-delay:.05s;}
-.stagger.in > *:nth-child(2){opacity:1;transform:none;transition-delay:.15s;}
-.stagger.in > *:nth-child(3){opacity:1;transform:none;transition-delay:.25s;}
-.stagger.in > *:nth-child(4){opacity:1;transform:none;transition-delay:.35s;}
-.stagger.in > *:nth-child(5){opacity:1;transform:none;transition-delay:.45s;}
-.stagger.in > *:nth-child(6){opacity:1;transform:none;transition-delay:.55s;}
-
-/* ═══ ABOUT ═══ */
-#about{border-top:1px solid var(--border);}
-.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start;}
-.about-text p{color:var(--text);line-height:1.8;margin-bottom:20px;font-size:15px;}
-.about-text p strong{color:var(--cream);font-weight:600;}
-.about-quote{
-  margin-top:32px;padding:24px 28px;border-left:2px solid var(--gold);
-  background:var(--card);font-family:'Playfair Display',serif;
-  font-style:italic;color:var(--cream);font-size:16px;line-height:1.7;
-  position:relative;overflow:hidden;
-}
-.about-quote::before{
-  content:'';position:absolute;top:0;left:0;width:2px;height:0;
-  background:var(--gold);transition:height .6s .3s;
-}
-.reveal.in .about-quote::before{height:100%;}
-.about-aside{display:flex;flex-direction:column;gap:24px;}
-.stat-card{
-  background:var(--card);border:1px solid var(--border);
-  padding:24px;display:flex;flex-direction:column;gap:6px;
-  transition:border-color .25s,transform .25s,background .25s;
-  position:relative;overflow:hidden;
-}
-.stat-card::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(56,189,248,.04),transparent);
-  opacity:0;transition:opacity .3s;
-}
-.stat-card:hover{border-color:var(--gold);transform:translateX(6px);background:var(--card2);}
-.stat-card:hover::after{opacity:1;}
-.stat-card-num{
-  font-family:'Playfair Display',serif;font-size:36px;font-weight:700;
-  color:var(--gold);line-height:1;
-}
-.stat-card-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
-.stat-card-desc{font-size:13px;color:var(--text);margin-top:4px;}
-
-/* ═══ PRODUCTS ═══ */
-#products{border-top:1px solid var(--border);}
-.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-.product-card{
-  background:var(--card);border:1px solid var(--border);
-  padding:32px;position:relative;overflow:hidden;
-  transition:all .35s cubic-bezier(.22,1,.36,1);
-}
-.product-card::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
-  background:linear-gradient(90deg,var(--gold),#7C3AED);
-  transform:scaleX(0);transition:transform .4s cubic-bezier(.22,1,.36,1);
-  transform-origin:left;
-}
-.product-card::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at top left,rgba(56,189,248,.05),transparent 60%);
-  opacity:0;transition:opacity .4s;
-}
-.product-card:hover{border-color:rgba(56,189,248,.4);transform:translateY(-6px);box-shadow:0 24px 64px rgba(0,0,0,.5);}
-.product-card:hover::before{transform:scaleX(1);}
-.product-card:hover::after{opacity:1;}
-.product-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
-.product-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);}
-.product-badge{
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;
-  text-transform:uppercase;padding:4px 10px;
-  background:var(--gold-dim);color:var(--gold);border:1px solid var(--border);
-  animation:badgePulse 3s ease-in-out infinite;
-}
-@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(56,189,248,.3);}50%{box-shadow:0 0 0 4px rgba(56,189,248,0);}}
-.product-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.ptag{
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 10px;background:rgba(56,189,248,.08);
-  color:var(--gold);border:1px solid rgba(56,189,248,.2);
-}
-.product-url{
-  font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);
-  text-decoration:none;display:block;margin-bottom:20px;
-  opacity:.8;transition:opacity .2s;
-}
-.product-url:hover{opacity:1;}
-.product-section{margin-bottom:12px;}
-.product-section-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px;}
-.product-section p{font-size:13px;color:var(--text);line-height:1.6;}
-.product-bullets{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px;}
-.product-bullets li{font-size:13px;color:var(--text);display:flex;gap:10px;line-height:1.5;}
-.product-bullets li::before{content:'▸';color:var(--gold);flex-shrink:0;margin-top:1px;}
-
-/* ═══ EXPERIENCE ═══ */
-#experience{border-top:1px solid var(--border);}
-.experience-list{display:flex;flex-direction:column;gap:2px;}
-.exp-card{
-  background:var(--card);border:1px solid var(--border);
-  padding:28px 32px;position:relative;overflow:hidden;
-  cursor:default;transition:all .3s;
-}
-.exp-card::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:0;
-  background:linear-gradient(180deg,var(--gold),#7C3AED);
-  transition:width .3s;
-}
-.exp-card:hover{border-color:rgba(56,189,248,.4);background:var(--card2);padding-left:40px;}
-.exp-card:hover::before{width:3px;}
-.exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
-.exp-company{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);}
-.exp-period{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.05em;}
-.exp-role{font-size:13px;color:var(--gold);margin-bottom:4px;font-weight:500;}
-.exp-location{font-size:12px;color:var(--muted);margin-bottom:16px;}
-.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.exp-bullets li{
-  font-size:13px;color:var(--text);
-  padding-left:20px;position:relative;
-  line-height:1.65;word-break:normal;overflow-wrap:break-word;
-}
-.exp-bullets li::before{
-  content:'▸';color:var(--gold);
-  position:absolute;left:0;top:0;
-}
-.exp-bullets li strong{color:var(--cream);font-weight:600;white-space:nowrap;}
-
-/* ═══ ACHIEVEMENTS ═══ */
-#achievements{border-top:1px solid var(--border);}
-.achievements-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
-.ach-card{
-  background:var(--card);border:1px solid var(--border);
-  padding:24px;transition:all .3s;position:relative;overflow:hidden;
-}
-.ach-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at top left,rgba(56,189,248,.08),transparent 60%);
-  opacity:0;transition:opacity .3s;
-}
-.ach-card:hover{border-color:var(--gold);background:var(--card2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4);}
-.ach-card:hover::before{opacity:1;}
-.ach-icon{font-size:22px;margin-bottom:12px;display:block;animation:float 4s ease-in-out infinite;}
-.ach-card:nth-child(2) .ach-icon{animation-delay:-.5s;}
-.ach-card:nth-child(3) .ach-icon{animation-delay:-1s;}
-.ach-card:nth-child(4) .ach-icon{animation-delay:-1.5s;}
-.ach-card:nth-child(5) .ach-icon{animation-delay:-2s;}
-.ach-card:nth-child(6) .ach-icon{animation-delay:-2.5s;}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-.ach-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--cream);margin-bottom:4px;line-height:1.3;}
-.ach-meta{font-size:11px;color:var(--gold);font-family:'DM Mono',monospace;margin-bottom:10px;}
-.ach-desc{font-size:12px;color:var(--muted);line-height:1.6;}
-
-/* ═══ CERTIFICATIONS ═══ */
-#certifications{border-top:1px solid var(--border);}
-
-/* ═══ SKILLS ═══ */
-#skills{border-top:1px solid var(--border);}
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-.skill-group{background:var(--card);border:1px solid var(--border);padding:24px;transition:border-color .3s;}
-.skill-group:hover{border-color:rgba(56,189,248,.3);}
-.skill-group-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
-.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
-.skill-tag{
-  font-size:12px;padding:5px 12px;
-  background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15);
-  color:var(--text);transition:all .2s;cursor:default;
-}
-.skill-tag:hover{background:rgba(56,189,248,.14);border-color:rgba(56,189,248,.5);color:var(--gold);transform:translateY(-2px);}
-
-/* ═══ TIMELINE ═══ */
-#timeline{border-top:1px solid var(--border);}
-.timeline-list{position:relative;padding-left:40px;}
-.timeline-list::before{
-  content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;
-  background:linear-gradient(to bottom,var(--gold),rgba(124,58,237,.5),transparent);
-}
-.timeline-item{position:relative;padding-bottom:36px;}
-.timeline-item:last-child{padding-bottom:0;}
-.timeline-dot{
-  position:absolute;left:-44px;top:6px;
-  width:8px;height:8px;background:var(--gold);border-radius:50%;
-  box-shadow:0 0 0 0 rgba(56,189,248,.4);
-  animation:sonarPulse 2.5s ease-out infinite;
-}
-.timeline-item:nth-child(2) .timeline-dot{animation-delay:-.4s;}
-.timeline-item:nth-child(3) .timeline-dot{animation-delay:-.8s;}
-.timeline-item:nth-child(4) .timeline-dot{animation-delay:-1.2s;}
-.timeline-item:nth-child(5) .timeline-dot{animation-delay:-1.6s;}
-.timeline-item:nth-child(6) .timeline-dot{animation-delay:-2s;}
-@keyframes sonarPulse{
-  0%{box-shadow:0 0 0 0 rgba(56,189,248,.5);}
-  70%{box-shadow:0 0 0 10px rgba(56,189,248,0);}
-  100%{box-shadow:0 0 0 0 rgba(56,189,248,0);}
-}
-.timeline-period{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.1em;margin-bottom:4px;}
-.timeline-org{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:2px;}
-.timeline-role{font-size:13px;color:var(--muted);margin-bottom:6px;}
-.timeline-notes{font-size:12px;color:var(--text);line-height:1.6;}
-
-/* ═══ CONTACT ═══ */
-#contact{border-top:1px solid var(--border);text-align:center;}
-.contact-inner{max-width:600px;margin:0 auto;}
-.contact-inner .section-label{justify-content:center;}
-.contact-inner .section-label::after{display:none;}
-
-/* FIX: click-to-copy email */
-.contact-email{
-  font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);
-  text-decoration:none;display:block;width:100%;text-align:center;
-  margin-bottom:12px;transition:all .3s;position:relative;cursor:pointer;
-  border:none;background:none;
-}
-.contact-email::after{
-  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
-  background:var(--gold);transition:width .4s;
-}
-.contact-email:hover::after{width:100%;}
-.contact-email:hover{letter-spacing:.02em;}
-
-.copy-hint{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:8px;
-  display:block;transition:opacity .3s;
-}
-.copy-toast{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'DM Mono',monospace;font-size:11px;
-  color:var(--gold);background:rgba(56,189,248,.1);
-  border:1px solid var(--border);padding:6px 14px;
-  opacity:0;transition:opacity .3s;pointer-events:none;margin-bottom:16px;
-}
-.copy-toast.show{opacity:1;}
-
-.contact-links{display:flex;justify-content:center;gap:24px;margin-top:24px;}
-.contact-link{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.05em;transition:color .2s;}
-.contact-link:hover{color:var(--gold);}
-
-/* ═══ FOOTER ═══ */
-footer{
-  border-top:1px solid var(--border);padding:28px 60px;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:12px;color:var(--muted);
-}
-footer a{color:var(--gold);text-decoration:none;}
-
-/* ═══ TYPED CURSOR ═══ */
-.typed-cursor{
-  display:inline-block;width:2px;height:1em;
-  background:var(--gold);margin-left:2px;vertical-align:text-bottom;
-  animation:blink .8s step-end infinite;
-}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-
-/* ═══ COUNT UP ═══ */
-.count-up{display:inline;}
-
-/* ═══════════════════════════════════
-   AI CHATBOT
-═══════════════════════════════════ */
-#chatbot-trigger{
-  position:fixed;bottom:32px;right:32px;z-index:500;
-  width:56px;height:56px;background:var(--gold);
-  border-radius:50%;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 8px 32px rgba(56,189,248,.4);
-  transition:all .3s;
-  animation:chatPulse 3s ease-in-out infinite;
-}
-#chatbot-trigger:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(56,189,248,.6);}
-@keyframes chatPulse{
-  0%,100%{box-shadow:0 8px 32px rgba(56,189,248,.4);}
-  50%{box-shadow:0 8px 48px rgba(56,189,248,.7),0 0 0 8px rgba(56,189,248,.1);}
-}
-#chatbot-trigger svg{width:24px;height:24px;fill:var(--obsidian);}
-.chat-badge{
-  position:absolute;top:-2px;right:-2px;
-  width:16px;height:16px;background:#7C3AED;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;color:#fff;font-weight:700;
-}
-
-#chatbot-panel{
-  position:fixed;bottom:100px;right:32px;z-index:500;
-  width:400px;max-height:600px;
-  background:var(--dark);border:1px solid var(--border);
-  display:flex;flex-direction:column;
-  box-shadow:0 32px 80px rgba(0,0,0,.6);
-  transform:translateY(20px) scale(.95);opacity:0;pointer-events:none;
-  transition:all .3s cubic-bezier(.22,1,.36,1);
-}
-#chatbot-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
-
-.chat-header{
-  padding:16px 20px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--card);flex-shrink:0;
-}
-.chat-header-left{display:flex;align-items:center;gap:12px;}
-.chat-avatar{
-  width:36px;height:36px;background:var(--gold);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
-.chat-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--cream);}
-.chat-subtitle{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;}
-.chat-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
-.chat-status-dot{width:6px;height:6px;background:#22C55E;border-radius:50%;animation:pulse 2s infinite;}
-.chat-close{
-  background:none;border:none;color:var(--muted);cursor:pointer;
-  font-size:18px;transition:color .2s;padding:4px;
-}
-.chat-close:hover{color:var(--cream);}
-
-.chat-messages{
-  flex:1;overflow-y:auto;padding:16px;
-  display:flex;flex-direction:column;gap:12px;min-height:280px;max-height:380px;
-  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
-}
-.chat-messages::-webkit-scrollbar{width:4px;}
-.chat-messages::-webkit-scrollbar-track{background:transparent;}
-.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-
-.chat-msg{display:flex;flex-direction:column;gap:4px;max-width:88%;}
-.chat-msg.user{align-self:flex-end;align-items:flex-end;}
-.chat-msg.bot{align-self:flex-start;align-items:flex-start;}
-.chat-bubble{
-  padding:10px 14px;font-size:13px;line-height:1.55;
-  border-radius:2px;
-}
-.chat-msg.user .chat-bubble{
-  background:var(--gold);color:var(--obsidian);font-weight:500;
-}
-.chat-msg.bot .chat-bubble{
-  background:var(--card2);color:var(--text);border:1px solid var(--border);
-}
-.chat-time{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.05em;}
-
-.typing-indicator{display:flex;align-items:center;gap:5px;padding:10px 14px;background:var(--card2);border:1px solid var(--border);align-self:flex-start;}
-.typing-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:typingBounce 1.2s ease-in-out infinite;}
-.typing-dot:nth-child(2){animation-delay:.2s;}
-.typing-dot:nth-child(3){animation-delay:.4s;}
-@keyframes typingBounce{0%,80%,100%{transform:translateY(0);opacity:.5;}40%{transform:translateY(-6px);opacity:1;}}
-
-.chat-suggestions{
-  padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--border);flex-shrink:0;
-}
-.chat-suggestion{
-  font-size:11px;padding:5px 10px;
-  background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);
-  color:var(--gold);cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'DM Mono',monospace;
-}
-.chat-suggestion:hover{background:rgba(56,189,248,.15);border-color:var(--gold);}
-
-.chat-input-row{
-  padding:12px 16px;border-top:1px solid var(--border);
-  display:flex;gap:10px;align-items:center;flex-shrink:0;background:var(--card);
-}
-.chat-input{
-  flex:1;background:var(--dark);border:1px solid var(--border);
-  color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;
-  padding:9px 14px;outline:none;transition:border-color .2s;
-  border-radius:2px;
-}
-.chat-input::placeholder{color:var(--muted);}
-.chat-input:focus{border-color:rgba(56,189,248,.5);}
-.chat-send{
-  width:38px;height:38px;background:var(--gold);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;flex-shrink:0;border-radius:2px;
-}
-.chat-send:hover{background:var(--gold-light);transform:scale(1.05);}
-.chat-send:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-.chat-send svg{width:16px;height:16px;fill:var(--obsidian);}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1024px){
-  nav{padding:14px 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .hero-split-container{flex-direction:column-reverse;gap:35px;}
-  .hero-right{margin-top:0;justify-content:flex-start;}
-  .hero-metrics{flex-wrap:wrap;gap:20px;}
-  .hero-cta{flex-wrap:wrap;}
-  section{padding:60px 20px;}
-  .about-grid{grid-template-columns:1fr;gap:40px;}
-  .products-grid{grid-template-columns:1fr;}
-  .achievements-grid{grid-template-columns:1fr 1fr;}
-  .skills-grid{grid-template-columns:1fr;}
-  footer{padding:20px;flex-direction:column;gap:8px;text-align:center;}
-  #chatbot-panel{width:calc(100vw - 32px);right:16px;bottom:90px;}
-  #chatbot-trigger{right:16px;bottom:20px;}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
-}
+.win{--c:hsl(var(--h,199) 90% 60%)}
+.bar h2{font-size:22px}
+.card{position:relative;overflow:hidden;animation:up .5s both;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,var(--c),transparent)}
+.card:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.card:nth-child(2){animation-delay:.08s}.card:nth-child(3){animation-delay:.16s}.card:nth-child(n+4){animation-delay:.24s}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.card ul{padding-left:0}.card li{list-style:none;padding-left:18px;position:relative}.card li::before{content:"▸";position:absolute;left:0;color:var(--c)}
+.ic{font-size:30px;display:block;margin-bottom:6px}
+.stats .big{font-size:34px}
+.stats div{background:rgba(56,189,248,.05);padding:14px 14px 14px 16px}
+.win[data-k=experience] .grid{grid-template-columns:1fr;border-left:2px solid var(--c);padding-left:20px;gap:18px}
+.win[data-k=experience] .card::after{content:"";position:absolute;left:-27px;top:22px;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c)}
+.win[data-k=certs] .card::after{content:"✓";position:absolute;right:16px;bottom:14px;width:34px;height:34px;border-radius:50%;border:2px solid var(--c);display:grid;place-items:center;color:var(--c)}
+.chart{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.3);padding:16px}
+.tick{display:flex;gap:12px;align-items:baseline;font:600 15px Sora,sans-serif;color:var(--cr)}
+.up{color:#22c55e;font-size:13px}
+.chart svg{width:100%;height:auto;margin-top:8px}
+.chart text{fill:var(--mu);font-size:11px}
+.pt{fill:#04060f;stroke:#22c55e;stroke-width:3;cursor:pointer;transition:r .2s}
+.pt:hover,.pt.on{fill:#22c55e;r:9}
+.tld{margin-top:14px;padding:14px 16px;border-left:3px solid #22c55e;background:rgba(34,197,94,.07);min-height:96px;animation:up .4s both}
+.tld small{color:#22c55e}
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<canvas id="particleCanvas"></canvas>
-<div id="progress"></div>
-
-<nav id="nav">
-  <div class="nav-logo">Rishabh Kumar</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#products">Products</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#caseStudy">Case Study</a></li>
-    <li><a href="#achievements">Achievements</a></li>
-    <li><a href="#certifications">Certifications</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#timeline">Timeline</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
-  <div class="hero-content">
-    <div class="hero-split-container">
-      <div class="hero-left">
-        <div class="hero-eyebrow">
-          <span class="eyebrow-dot"></span>
-          AI Product Manager · Bengaluru, India
-        </div>
-        <h1 class="hero-name">
-          <span class="line">Rishabh</span>
-          <span class="line">Kumar</span>
-        </h1>
-        <p class="hero-tagline">
-          <strong id="typedText"></strong><span class="typed-cursor"></span><br>
-          Product Manager specializing in UI/UX architectures for data-heavy B2B SaaS and Generative AI workflows.
-        </p>
-        <div class="hero-metrics">
-          <div class="metric-item"><span class="metric-num" data-target="4" data-suffix="+">0</span><span class="metric-label">Yrs Experience</span></div>
-          <div class="metric-item"><span class="metric-num" data-target="4">0</span><span class="metric-label">Apps Shipped</span></div>
-          <div class="metric-item"><span class="metric-num" data-prefix="£" data-target="10" data-suffix="K+">0</span><span class="metric-label">Contracts Won</span></div>
-          <div class="metric-item"><span class="metric-num" data-target="3" data-suffix="×">0</span><span class="metric-label">Key Contributor</span></div>
-          <div class="metric-item"><span class="metric-num" data-target="100" data-suffix="%">0</span><span class="metric-label">Client Retention</span></div>
-          <div class="metric-item"><span class="metric-num" data-target="81" data-suffix="%">0</span><span class="metric-label">Cohort Top Score</span></div>
-        </div>
-        <div class="hero-cta">
-          <a href="#contact" class="btn-primary">↗ Get in Touch</a>
-          <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="btn-ghost">LinkedIn ↗</a>
-          <a href="#products" class="btn-ghost">View Products ↓</a>
-          <a href="#certifications" class="btn-ghost">Certifications ↓</a>
-          <a href="#caseStudy" class="btn-ghost">Case Study ↓</a>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-image-frame">
-          <img src="profile.jpeg" alt="Rishabh Kumar" class="hero-avatar">
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll">Scroll</div>
+<div class="stage" id="stage">
+  <video id="v" src="hero.mp4" muted playsinline preload="auto"></video>
+  <nav class="field" id="holo" aria-label="Portfolio sections"></nav>
+  <div class="id"><h1>Rishabh Kumar</h1><p id="ty"></p></div>
+  <button id="go" aria-label="Click to open Rishabh Kumar's portfolio"></button>
 </div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label reveal">About</div>
-  <h2 class="section-title reveal">High Ownership AI PM.<br>Built to ship.</h2>
-  <div class="about-grid">
-    <div class="about-text reveal-left">
-      <p><strong>AI Product Manager</strong> with <strong>4+ years of experience</strong> taking products from ambiguous problems to shipped, measurable outcomes across enterprise software, AI powered platforms, and consumer apps.</p>
-      <p>I hold a Generative AI Skills for Product Managers certification from IBM and an N8N Workflow Automation certification from AcceleratorX. My <strong>M.Sc. in Entrepreneurship and Innovation Management (Distinction)</strong> is from the University of Liverpool.</p>
-      <p>I break ambiguous problems into first principles, write sharp PRDs, and work directly with engineering and design to move fast with full ownership. Outside full time work, I've built and shipped four live AI applications solo, including RK Jarvis, a production RAG chatbot, proving I can take an idea to a deployed product without an engineering team.</p>
-      <div class="about-quote">"I use AI not to replace thinking, but to move from thinking to shipping, faster."</div>
-    </div>
-    <div class="about-aside stagger">
-      <div class="stat-card"><span class="stat-card-num">£10K+</span><span class="stat-card-label">New B2B Contracts</span><span class="stat-card-desc">Generated through crisp, data-backed product proposals at Sood Agency</span></div>
-      <div class="stat-card"><span class="stat-card-num">30%</span><span class="stat-card-label">System Performance Uplift</span><span class="stat-card-desc">Resolved a 5 year critical issue via first-principles root-cause analysis at CLO</span></div>
-      <div class="stat-card"><span class="stat-card-num">35%</span><span class="stat-card-label">Revenue Growth</span><span class="stat-card-desc">Driven in just 7 weeks through structured product and GTM execution</span></div>
-      <div class="stat-card"><span class="stat-card-num">81%</span><span class="stat-card-label">Highest Cohort Score</span><span class="stat-card-desc">Research on "Information Overload & Decision-Making," directly relevant to AI product design</span></div>
-    </div>
-  </div>
+<div class="shade"></div>
+<nav id="mm" aria-label="Portfolio sections"></nav>
+<button id="sk">Skip intro</button>
+<button id="st">Tap to start</button>
+<div class="hint"><button id="rp">Replay intro</button> · select a section on the screen</div>
+<div class="back" id="back"></div>
+<section class="win" id="win" role="dialog" aria-modal="true" aria-labelledby="wt">
+  <div class="bar"><h2 id="wt"></h2><button id="wx" aria-label="Close">✕</button></div>
+  <div class="body" id="wb"></div>
 </section>
 
-<!-- PRODUCTS -->
-<section id="products">
-  <div class="section-label reveal">Products Shipped</div>
-  <h2 class="section-title reveal">Autonomous Project Sandbox.<br>Deployed. Live.</h2>
-  <div class="products-grid stagger">
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">RK Jarvis</div><div class="product-badge">Live ↗</div></div>
-      <div class="product-tags"><span class="ptag">RAG Architecture</span><span class="ptag">Vector Search</span><span class="ptag">AI Chatbot</span></div>
-      <a href="#" onclick="toggleChat();return false;" class="product-url">↗ Try it now, bottom right of this page</a>
-      <div class="product-section"><div class="product-section-label">Problem</div><p>A portfolio page can only show what's written on it, with no way for a visitor to ask a follow up question about my experience or projects.</p></div>
-      <div class="product-section"><div class="product-section-label">Solution</div><p>A production RAG chatbot built directly into this site that answers questions about my experience, skills, and projects in real time.</p></div>
-      <ul class="product-bullets">
-        <li>Designed and deployed a production RAG pipeline using Pinecone for vector retrieval and Gemini for response generation</li>
-        <li>Achieved sub-200ms p99 query latency and 100% response accuracy across 70+ test queries, including graceful out of scope rejection handling</li>
-        <li>Live in production with zero downtime for over a month</li>
-      </ul>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">New Year Resolution Tracker</div><div class="product-badge">Live ↗</div></div>
-      <div class="product-tags"><span class="ptag">Productivity</span><span class="ptag">Habit Tracking</span><span class="ptag">Personal Growth</span></div>
-      <a href="https://new-year-resolution-tracker-d0aa1e0b.base44.app" target="_blank" class="product-url">↗ new-year-resolution-tracker-d0aa1e0b.base44.app</a>
-      <div class="product-section"><div class="product-section-label">Problem</div><p>Most people set resolutions but have no structured system to track, measure, and stay accountable, leading to abandonment within weeks.</p></div>
-      <div class="product-section"><div class="product-section-label">Solution</div><p>A clean, goal oriented web app where users set resolutions, break them into milestones, track weekly progress, and stay accountable through visualisation.</p></div>
-      <ul class="product-bullets">
-        <li>Built and shipped the app solo, from user research and PRD through launch</li>
-        <li>AI features include personalised milestone suggestions, progress adaptive check ins, and smart inactivity triggered reminders</li>
-        <li>Adopted by 20+ users across my personal network</li>
-        <li>Live in production for 5 months with zero reported issues</li>
-      </ul>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Shaadi Sync Plan</div><div class="product-badge">Live ↗</div></div>
-      <div class="product-tags"><span class="ptag">Event Management</span><span class="ptag">Wedding Tech</span><span class="ptag">Coordination</span></div>
-      <a href="https://shaadi-sync-plan.base44.app" target="_blank" class="product-url">↗ shaadi-sync-plan.base44.app</a>
-      <div class="product-section"><div class="product-section-label">Problem</div><p>Indian wedding planning involves coordinating dozens of vendors, guests, events, and budgets across weeks, and generic event tools fail this complexity completely.</p></div>
-      <div class="product-section"><div class="product-section-label">Solution</div><p>Wedding planning platform tailored to Indian weddings: event timeline management, vendor tracker, guest list, and budget management in one place.</p></div>
-      <ul class="product-bullets">
-        <li>Built the full product solo across three user flows: couple, coordinator, and vendor</li>
-        <li>AI features include a vendor recommendation engine, automated task generation, and smart budget allocation</li>
-        <li>Piloted free with a wedding planning company for 5 to 6 months</li>
-        <li>Adopted for end-to-end event tracking across their combined workflows</li>
-      </ul>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Agentic Voice Chatbot</div><div class="product-badge">In Progress</div></div>
-      <div class="product-tags"><span class="ptag">Conversational AI</span><span class="ptag">Voice UX</span><span class="ptag">Human-in-the-Loop</span></div>
-      <div class="product-section"><div class="product-section-label">Problem</div><p>Customer support voice interfaces often feel robotic and give users no way to escalate to a human when the bot gets stuck.</p></div>
-      <div class="product-section"><div class="product-section-label">Solution</div><p>An agentic voice interface built on ElevenLabs Conversational AI with real time speech to text and text to speech, plus a human in the loop escalation path.</p></div>
-      <ul class="product-bullets">
-        <li>Designed the escalation logic and validated it through live testing</li>
-        <li>Currently iterating on intent recognition accuracy</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-label reveal">Work Experience</div>
-  <h2 class="section-title reveal">Where I've<br>shipped.</h2>
-  <div class="experience-list stagger">
-    <div class="exp-card">
-      <div class="exp-header"><div class="exp-company">Sood Agency</div><div class="exp-period">Apr 2024 – Jan 2026</div></div>
-      <div class="exp-role">Technical Business Manager · AI-Augmented Product & Growth</div>
-      <div class="exp-location">Liverpool, UK</div>
-      <ul class="exp-bullets">
-        <li>Owned product features end to end from discovery through launch, maintaining <strong>100% client retention</strong></li>
-        <li>Integrated AI tools including OpenAI GPT-4o and N8N automation pipelines, generating <strong>£10,000+ in new B2B contracts</strong></li>
-        <li>Deployed ReachInbox AI for cold outreach, running a 550 lead campaign with a 13.8% reply rate that converted 2 new clients</li>
-        <li>Ran A/B experiments across onboarding and messaging using Google Analytics, tracking CAC and retention</li>
-      </ul>
-    </div>
-    <div class="exp-card">
-      <div class="exp-header"><div class="exp-company">CLO Virtual Fashion Inc.</div><div class="exp-period">Feb 2022 – Sep 2023</div></div>
-      <div class="exp-role">IT Consultant · Product Owner & Technical PM</div>
-      <div class="exp-location">Bengaluru, India · Seoul, South Korea</div>
-      <ul class="exp-bullets">
-        <li>Owned three concurrent enterprise integrations (WFX, Centric PLM, Modern Mirror), achieving <strong>100% on time delivery</strong></li>
-        <li>Resolved a 5 year critical legacy issue through first principles root cause analysis, unlocking a <strong>30% performance uplift</strong></li>
-        <li>Wrote Python scripts for backend API endpoints supporting the integration workflows</li>
-        <li><strong>Key Contributor ×3</strong> · Selected for Seoul deployment · Coached cross-functional teams</li>
-      </ul>
-    </div>
-    <div class="exp-card">
-      <div class="exp-header"><div class="exp-company">Accenture</div><div class="exp-period">Jun 2021 – Dec 2021</div></div>
-      <div class="exp-role">Transaction Processing Associate</div>
-      <div class="exp-location">Bengaluru, India</div>
-      <ul class="exp-bullets">
-        <li>AWS cloud workflows · <strong>100% compliance</strong> · Automated reporting pipelines for senior stakeholders</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- CASE STUDY -->
-<section id="caseStudy">
-  <div class="section-label reveal">Case Study</div>
-  <h2 class="section-title reveal">Detailed Case Study.<br>Live.</h2>
-  <div class="products-grid stagger">
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Mixpanel Product Teardown</div><div class="product-badge">Analysis ↗</div></div>
-      <div class="product-tags"><span class="ptag">Product Analytics</span><span class="ptag">User Retention</span><span class="ptag">UX Deconstruction</span></div>
-      <a href="https://rishabhrishabhh.github.io/mixpanel-product-teardown/" target="_blank" class="product-url">↗ rishabhrishabhh.github.io/mixpanel-product-teardown</a>
-      <div class="product-section"><div class="product-section-label">Objective</div><p>Deconstructing Mixpanel's user onboarding and core analytics funnel to identify friction points and structural optimization opportunities for retention.</p></div>
-      <div class="product-section"><div class="product-section-label">Execution</div><p>Mapped six user personas across Mixpanel's 29,000+ company user base and traced the full analytics workflow using Jobs to be Done framing and 5 Whys analysis.</p></div>
-      <ul class="product-bullets">
-        <li>Prioritised two high ROI bets: an AI Analytics Assistant for plain-English insight queries and a Guided Onboarding Wizard</li>
-        <li>Structured a 9 month phased delivery plan across three quarters</li>
-        <li>Set a North Star of 10% uplift in Weekly Active Accounts within six months</li>
-        <li>Supporting metrics: 30% onboarding completion and 25% weekly AI assistant adoption</li>
-      </ul>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Dissertation: Paradox of Choice</div><div class="product-badge">Research ↗</div></div>
-      <div class="product-tags"><span class="ptag">Information Overload</span><span class="ptag">Decision Architecture</span><span class="ptag">AI UX Strategy</span></div>
-      <a href="https://rishabhrishabhh.github.io/Paradox-of-Choice-Information-Overload/" target="_blank" class="product-url">↗ rishabhrishabhh.github.io/Paradox-of-Choice-Information-Overload</a>
-      <div class="product-section"><div class="product-section-label">Problem</div><p>An overflow of data and options paralyzes user decision-making. Generic systems present raw volume instead of contextual clarity.</p></div>
-      <div class="product-section"><div class="product-section-label">Solution / Core Insight</div><p>A structured academic framework analyzing how intentional information curation cuts noise, directly translating to how agentic AI UI/UX should surface signals.</p></div>
-      <ul class="product-bullets">
-        <li>Awarded 81%, the highest score in the University of Liverpool cohort</li>
-        <li>Decomposed cognitive barriers preventing users from making high confidence choices</li>
-        <li>Established foundational guidelines for designing clean, high signal AI user interfaces</li>
-        <li>Metric: Academic distinction validating deep data driven user psychology expertise</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ACHIEVEMENTS -->
-<section id="achievements">
-  <div class="section-label reveal">Achievements</div>
-  <h2 class="section-title reveal">Proof of<br>product thinking.</h2>
-  <div class="achievements-grid stagger">
-    <div class="ach-card"><div class="ach-icon">🤖</div><div class="ach-title">AI Strategy Consultancy · Mando Agency</div><div class="ach-meta">Jan–Mar 2024 · University Live Challenge</div><div class="ach-desc">Delivered a full AI integration roadmap identifying how agentic AI tools could automate workflows and unlock enterprise value.</div></div>
-    <div class="ach-card"><div class="ach-icon">🏆</div><div class="ach-title">Best Negotiator Award</div><div class="ach-meta">Jan 2024 · University of Liverpool</div><div class="ach-desc">Won by structuring a sponsorship deal delivering 25% higher brand value through first-principles data analysis.</div></div>
-    <div class="ach-card"><div class="ach-icon">🎤</div><div class="ach-title">Dragon's Den · Best Elevated Pitch</div><div class="ach-meta">Mar 2024 · Enterprise Challenge</div><div class="ach-desc">Built and presented a full investor-ready business concept end-to-end under competition pressure.</div></div>
-    <div class="ach-card"><div class="ach-icon">🥇</div><div class="ach-title">1st Place Business Simulation</div><div class="ach-meta">Mar 2024 · Board Director & Strategic Manager</div><div class="ach-desc">Led 6 member team to 1st place, outperforming 20+ university teams under real-time strategic ambiguity.</div></div>
-    <div class="ach-card"><div class="ach-icon">📚</div><div class="ach-title">81% · Highest in Cohort</div><div class="ach-meta">Sep 2024 · University of Liverpool</div><div class="ach-desc">Research on "The Impact of Information Overload on Decision-Making," foundational to AI UX design philosophy.</div></div>
-    <div class="ach-card"><div class="ach-icon">⭐</div><div class="ach-title">Key Contributor Award ×3</div><div class="ach-meta">2022–2023 · CLO Virtual Fashion</div><div class="ach-desc">Recognised three consecutive times for mastering new technologies and delivering 30% performance improvement.</div></div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="section-label reveal">Certifications</div>
-  <h2 class="section-title reveal">Validated Tech.<br>Continuous Iteration.</h2>
-  <div class="products-grid stagger">
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Generative AI Skills for Product Managers</div><div class="product-badge">IBM</div></div>
-      <div class="product-tags"><span class="ptag">LLM Product Design</span><span class="ptag">Agentic Systems</span><span class="ptag">Feature Prioritisation</span></div>
-      <p class="product-url">Credential ID: CEGAIPM1 · Issued May 2026</p>
-      <div class="product-section"><p>Advanced validation in framing enterprise opportunities using LLM architectures, managing output risks, and evaluating prompt sensitivity patterns.</p></div>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">N8N Workflow Automation Certification</div><div class="product-badge">AcceleratorX</div></div>
-      <div class="product-tags"><span class="ptag">Multi-Step AI Pipelines</span><span class="ptag">API Integrations</span><span class="ptag">Process Automation</span></div>
-      <p class="product-url">Issued May 2026</p>
-      <div class="product-section"><p>Hands-on engineering logic for stringing together foundational AI models, API keys, and enterprise databases into high availability agentic loops.</p></div>
-    </div>
-    <div class="product-card">
-      <div class="product-header"><div class="product-name">Project Management Assessment</div><div class="product-badge">LearnTube.ai</div></div>
-      <div class="product-tags"><span class="ptag">Top 0.23% Globally</span><span class="ptag">Score 100%</span></div>
-      <p class="product-url">Rank 410 of 179,216 · Issued Feb 2026</p>
-      <div class="product-section"><p>Ranked in the top 0.23% worldwide with a perfect score, validating structured project planning and delivery fundamentals.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label reveal">Skills</div>
-  <h2 class="section-title reveal">What I bring<br>to the table.</h2>
-  <div class="skills-grid stagger">
-    <div class="skill-group">
-      <div class="skill-group-label">AI Product Management</div>
-      <div class="skill-tags">
-        <span class="skill-tag">AI Tools Integration</span><span class="skill-tag">Agentic Workflows</span><span class="skill-tag">LLM-Powered Use Cases</span><span class="skill-tag">AI Roadmapping</span><span class="skill-tag">Feature Prioritisation</span><span class="skill-tag">Product Prototyping</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Product Execution</div>
-      <div class="skill-tags">
-        <span class="skill-tag">End-to-End Ownership</span><span class="skill-tag">PRD & User Stories</span><span class="skill-tag">Backlog Prioritisation</span><span class="skill-tag">Sprint Execution</span><span class="skill-tag">A/B Testing</span><span class="skill-tag">Discovery & Research</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Analytical Thinking</div>
-      <div class="skill-tags">
-        <span class="skill-tag">First-Principles Decomposition</span><span class="skill-tag">Google Analytics</span><span class="skill-tag">Funnel & Cohort Analysis</span><span class="skill-tag">KPI / OKR Frameworks</span><span class="skill-tag">Data Driven Decisions</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-label">Tools & Platforms</div>
-      <div class="skill-tags">
-        <span class="skill-tag">JIRA</span><span class="skill-tag">Google Analytics</span><span class="skill-tag">AWS</span><span class="skill-tag">Base44</span><span class="skill-tag">SQL</span><span class="skill-tag">ChatGPT</span><span class="skill-tag">Claude</span><span class="skill-tag">CRM / ERP / PLM</span><span class="skill-tag">MS Excel</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-label reveal">Timeline</div>
-  <h2 class="section-title reveal">The journey<br>so far.</h2>
-  <div class="timeline-list stagger">
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">2025 – 2026</div><div class="timeline-org">AI Product Specialist · Independent</div><div class="timeline-role">Product Builder · Base44, Pinecone, ElevenLabs</div><div class="timeline-notes">Shipped 4 live AI apps solo, alongside full time work at Sood Agency: New Year Resolution Tracker, Shaadi Sync Plan, RK Jarvis, and Agentic Voice Chatbot.</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Apr 2024 – Jan 2026</div><div class="timeline-org">Sood Agency</div><div class="timeline-role">Technical Business Manager · AI Augmented Product & Growth · Liverpool, UK</div><div class="timeline-notes">£10K+ contracts · 100% client retention · AI tooling integration · A/B testing · GTM launches</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Sep 2023 – Sep 2024</div><div class="timeline-org">University of Liverpool</div><div class="timeline-role">M.Sc. Entrepreneurship & Innovation Management · Distinction · Liverpool, UK</div><div class="timeline-notes">Best Negotiator · Best Elevated Pitch · 1st Place Business Simulation · 81% Top Score · AI Strategy Consultancy</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Feb 2022 – Sep 2023</div><div class="timeline-org">CLO Virtual Fashion Inc.</div><div class="timeline-role">IT Consultant · Product Owner & Technical PM · Bengaluru + Seoul</div><div class="timeline-notes">3 integrations shipped · Key Contributor ×3 · Seoul deployment · 30% performance uplift</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Jun 2021 – Dec 2021</div><div class="timeline-org">Accenture</div><div class="timeline-role">Transaction Processing Associate · Bengaluru</div><div class="timeline-notes">AWS cloud workflows · 100% compliance · Automated reporting</div></div>
-    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">2016 – 2020</div><div class="timeline-org">HKBK College of Engineering</div><div class="timeline-role">B.E. Mechanical Engineering · Bengaluru</div><div class="timeline-notes">Basketball captain · E-Go-Kart team 8th/200 nationally · Built analytical foundations</div></div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner reveal">
-    <div class="section-label">Contact</div>
-    <h2 class="section-title">Human in the loop<br>Agentic in execution.</h2>
-    <span class="copy-hint">↓ click email to copy</span>
-    <button class="contact-email" id="copyEmailBtn" onclick="copyEmail()">rishabhukrishabh@gmail.com</button>
-    <div class="copy-toast" id="copyToast">✓ Copied to clipboard</div>
-    <p style="color:var(--muted);font-size:14px;">+91 8660127783 · Bengaluru, India</p>
-    <div class="contact-links">
-      <a href="https://linkedin.com/in/rishabh-rishabhh" target="_blank" class="contact-link">LinkedIn ↗</a>
-      <a href="https://new-year-resolution-tracker-d0aa1e0b.base44.app" target="_blank" class="contact-link">App 1 ↗</a>
-      <a href="https://shaadi-sync-plan.base44.app" target="_blank" class="contact-link">App 2 ↗</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <span>© 2026 Rishabh Kumar · AI Product Manager</span>
-  <span>Built with product thinking · <a href="mailto:rishabhukrishabh@gmail.com">Get in touch</a></span>
-</footer>
-
-<!-- ═══════════════════════════════════
-     AI CHATBOT WIDGET
-════════════════════════════════════ -->
-<button id="chatbot-trigger" onclick="toggleChat()" title="Chat with Rishabh's AI">
-  <span class="chat-badge">AI</span>
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.06L2 22l4.94-1.37C8.42 21.5 10.15 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.66 0-3.21-.47-4.53-1.28l-.32-.19-3.37.94.94-3.37-.19-.32C3.47 15.21 3 13.66 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9zm4.5-6.5c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.23-.17-.48-.29z"/>
-  </svg>
-</button>
-
-<div id="chatbot-panel">
-  <div class="chat-header">
-    <div class="chat-header-left">
-      <div class="chat-avatar">🤖</div>
-      <div>
-        <div class="chat-title">Ask RK-JARVIS AI</div>
-        <div class="chat-subtitle">Powered by RK-JARVIS · Vector Search</div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div class="chat-status"><span class="chat-status-dot"></span>Online</div>
-      <button class="chat-close" onclick="toggleChat()">✕</button>
-    </div>
-  </div>
-
-  <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg bot">
-      <div class="chat-bubble">Hi! I'm Rishabh's AI assistant. I know everything about HIM. Experience, skills, and projects. What would you like to know? 👋</div>
-      <div class="chat-time">Just now</div>
-    </div>
-  </div>
-
-  <div class="chat-suggestions" id="chatSuggestions">
-    <button class="chat-suggestion" onclick="sendSuggestion(this)">How is he so smart?</button>
-    <button class="chat-suggestion" onclick="sendSuggestion(this)">What's his strongest skill?</button>
-    <button class="chat-suggestion" onclick="sendSuggestion(this)">What products did he ship?</button>
-  </div>
-
-  <div class="chat-input-row">
-    <input type="text" class="chat-input" id="chatInput" placeholder="Ask anything about Rishabh..." onkeydown="handleKey(event)">
-    <button class="chat-send" id="chatSend" onclick="sendMessage()">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-    </button>
-  </div>
+<button id="ct" aria-label="Chat with RK Jarvis">Jarvis</button>
+<div id="cp">
+  <div class="ch"><span>Ask RK Jarvis</span><button id="cx" aria-label="Close chat">✕</button></div>
+  <div id="cm"><div class="m b">Hi, I'm Rishabh's AI assistant. Ask me about his experience, skills or projects.</div></div>
+  <div id="cs"><button>What products did he ship?</button><button>What's his strongest skill?</button><button>How is he so smart?</button></div>
+  <div class="ci"><input id="cin" placeholder="Ask anything about Rishabh..." aria-label="Your question"><button id="csend">Send</button></div>
 </div>
+<div id="cd"></div><div id="cr"></div>
 
 <script>
-/*
-  ══════════════════════════════════════════════════════
-  RK-JARVIS CHATBOT · Pinecone + Gemini RAG (via Cloudflare Worker)
-  ══════════════════════════════════════════════════════
-  All AI logic (embedding the query, searching Pinecone, calling
-  Gemini) happens INSIDE your Cloudflare Worker. This frontend only
-  sends { query, history } to the Worker and displays the answer.
-  No API keys live in this file.
+const PROXY_URL='https://my-api.rishabhukrishabh.workers.dev';
+const EMAIL='rishabhukrishabh@gmail.com';
 
-  Set your deployed Worker URL below.
-  ══════════════════════════════════════════════════════
-*/
-const PROXY_URL = 'https://my-api.rishabhukrishabh.workers.dev'; // ← your Cloudflare Worker URL
-const EMAIL = 'rishabhukrishabh@gmail.com';
+/* ===== YesPM: fill these in (I did not have your YesPM details) ===== */
+const YESPM={name:'Yes PM',badge:'Live',tags:['RAG Platform','Pinecone','Cloudflare Workers'],link:'', /* paste your live Yes PM URL here */
+ prob:'When a PM faces a hard product problem, they usually start from scratch, with no structured, searchable record of how real PM decisions played out.',
+ sol:'A deployed RAG platform built around product management case studies: a searchable, structured knowledge base of real PM decisions that lets a PM pull up relevant precedents instead of starting from zero.',
+ tabs:'Get Unstuck (describe a problem, retrieve the most relevant past cases) · Browse & Learn (explore the case library) · Submit a Case (grow the corpus over time)',
+ schema:'Situation · Stakes · Diagnosis · Decision · Outcome · Precedent. A custom structure that makes cases comparable and retrieval more meaningful than free-form text.',
+ bul:['Serverless, low-cost stack: frontend on GitHub Pages, a Cloudflare Worker with three endpoints (ingest, query, browse), and a Pinecone index using integrated llama-text-embed-v2 embeddings (1024 dimensions), so no separate embedding API','Fully deployed and tested end to end, with a Netflix/Qwikster case study as the first upload','Next step: pagination on the browse endpoint once the library passes roughly 100 cases']};
 
-/* ── CHAT STATE ── */
-let chatOpen = false;
-let chatHistory = [];
+/* ===== content helpers ===== */
+const card=(n,b,tags,link,rows,bul)=>`<article class="card"><header><h3>${n}</h3><span class="badge">${b}</span></header><div class="tags">${tags.map(t=>`<i>${t}</i>`).join('')}</div>${link||''}${rows.map(r=>`<h4>${r[0]}</h4><p>${r[1]}</p>`).join('')}${bul?`<ul>${bul.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</article>`;
+const a=(u,t)=>u?`<a href="${u}" target="_blank" rel="noopener">${t||u.replace('https://','')}</a>`:'';
+const G=h=>`<div class="grid">${h}</div>`;
+const PR=(l1,t1)=>[['Problem',l1],['Solution',t1]];
 
-function toggleChat() {
-  chatOpen = !chatOpen;
-  document.getElementById('chatbot-panel').classList.toggle('open', chatOpen);
-  if (chatOpen) setTimeout(() => document.getElementById('chatInput').focus(), 300);
-}
+const TL=[['2016','2016 – 2020','HKBK College of Engineering','B.E. Mechanical Engineering · Bengaluru. Basketball captain, E-Go-Kart team 8th of 200 nationally.',10],
+['2021','Jun – Dec 2021','Accenture','Transaction Processing Associate · Bengaluru. AWS cloud workflows, 100% compliance, automated reporting.',24],
+['2022','Feb 2022 – Sep 2023','CLO Virtual Fashion Inc.','IT Consultant · Bengaluru and Seoul. 3 integrations shipped, Key Contributor ×3, Seoul deployment, 30% performance uplift.',45],
+['2023','Sep 2023 – Sep 2024','University of Liverpool','M.Sc. Entrepreneurship & Innovation Management · Distinction. Best Negotiator, Best Elevated Pitch, 1st Place Business Simulation, 81% top score, AI Strategy Consultancy.',62],
+['2024','Apr 2024 – Jan 2026','Sood Agency','Technical Business Manager · Liverpool, UK. £10K+ contracts, 100% client retention, AI tooling integration, A/B testing, GTM launches.',80],
+['2025','2025 – 2026','AI Product Specialist · Independent','Product Builder · Base44, Pinecone, ElevenLabs. Shipped live AI apps solo, alongside full time work at Sood Agency.',96]];
+const gx=i=>50+i*100,gy=v=>190-v*1.6;
+const tlD=i=>`<small>${TL[i][1]}</small><h3>${TL[i][2]}</h3><p style="font-size:13.5px">${TL[i][3]}</p>`;
+const tlHtml=()=>{const pts=TL.map((p,i)=>gx(i)+','+gy(p[4])).join(' ');return `<div class="chart"><div class="tick">RK · career <span class="up">▲ rising · select a point (scope and impact, illustrative)</span></div><svg viewBox="0 0 600 220">${[40,80,120,160].map(y=>`<line x1="30" x2="580" y1="${y}" y2="${y}" stroke="rgba(148,163,184,.15)"/>`).join('')}<polygon points="${gx(0)},200 ${pts} ${gx(5)},200" fill="rgba(34,197,94,.14)"/><polyline points="${pts}" fill="none" stroke="#22c55e" stroke-width="3" stroke-linejoin="round"/>${TL.map((p,i)=>`<circle class="pt${i==5?' on':''}" tabindex="0" role="button" aria-label="${p[2]}" data-i="${i}" cx="${gx(i)}" cy="${gy(p[4])}" r="6"/><text x="${gx(i)}" y="214" text-anchor="middle">${p[0]}</text>`).join('')}</svg></div><div class="tld" id="tld">${tlD(5)}</div>`};
+const S={
+about:{t:'About',s:'Who I am',h:`<div class="about"><p><strong>AI Product Manager</strong> with <strong>4+ years of experience</strong> taking products from ambiguous problems to shipped, measurable outcomes across enterprise software, AI powered platforms, and consumer apps.</p><p>I hold a Generative AI Skills for Product Managers certification from IBM and an N8N Workflow Automation certification from AcceleratorX. My <strong>M.Sc. in Entrepreneurship and Innovation Management (Distinction)</strong> is from the University of Liverpool.</p><p>I break ambiguous problems into first principles, write sharp PRDs, and work directly with engineering and design to move fast with full ownership. Outside full time work, I've built and shipped live AI applications solo, including RK Jarvis, a production RAG chatbot, proving I can take an idea to a deployed product without an engineering team.</p></div>
+<div class="stats"><div><span class="big">4+</span>Years experience</div><div><span class="big">£10K+</span>New B2B contracts at Sood Agency</div><div><span class="big">30%</span>Performance uplift from a 5 year issue fixed at CLO</div><div><span class="big">35%</span>Revenue growth in 7 weeks</div><div><span class="big">81%</span>Highest cohort score</div><div><span class="big">100%</span>Client retention</div></div>
+<div class="quote">"I use AI not to replace thinking, but to move from thinking to shipping, faster."</div>`},
 
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-}
+products:{t:'Products',s:'Shipped and live',h:G(
+ card('RK Jarvis','Live',['RAG Architecture','Vector Search','AI Chatbot'],'<button class="lnk" data-chat>Try it now: the chat button, bottom right</button>',PR('A portfolio page can only show what\'s written on it, with no way for a visitor to ask a follow up question about my experience or projects.','A production RAG chatbot built directly into this site that answers questions about my experience, skills, and projects in real time.'),['Designed and deployed a production RAG pipeline using Pinecone for vector retrieval and Gemini for response generation','Achieved sub-200ms p99 query latency and 100% response accuracy across 70+ test queries, including graceful out of scope rejection handling','Live in production with zero downtime for over a month'])+
+ card(YESPM.name,YESPM.badge,YESPM.tags,a(YESPM.link),[...PR(YESPM.prob,YESPM.sol),['Three tabs',YESPM.tabs],['Six-section case schema',YESPM.schema]],YESPM.bul)+
+ card('New Year Resolution Tracker','Live',['Productivity','Habit Tracking','Personal Growth'],a('https://new-year-resolution-tracker-d0aa1e0b.base44.app'),PR('Most people set resolutions but have no structured system to track, measure, and stay accountable, leading to abandonment within weeks.','A clean, goal oriented web app where users set resolutions, break them into milestones, track weekly progress, and stay accountable through visualisation.'),['Built and shipped the app solo, from user research and PRD through launch','AI features include personalised milestone suggestions, progress adaptive check ins, and smart inactivity triggered reminders','Adopted by 20+ users across my personal network','Live in production for 5 months with zero reported issues'])+
+ card('Shaadi Sync Plan','Live',['Event Management','Wedding Tech','Coordination'],a('https://shaadi-sync-plan.base44.app'),PR('Indian wedding planning involves coordinating dozens of vendors, guests, events, and budgets across weeks, and generic event tools fail this complexity completely.','Wedding planning platform tailored to Indian weddings: event timeline management, vendor tracker, guest list, and budget management in one place.'),['Built the full product solo across three user flows: couple, coordinator, and vendor','AI features include a vendor recommendation engine, automated task generation, and smart budget allocation','Piloted free with a wedding planning company for 5 to 6 months','Adopted for end-to-end event tracking across their combined workflows']))},
 
-function sendSuggestion(btn) {
-  const text = btn.textContent;
-  document.getElementById('chatInput').value = text;
-  document.getElementById('chatSuggestions').style.display = 'none';
-  sendMessage();
-}
+experience:{t:'Experience',s:'Where I\'ve shipped',h:G(
+ [['Sood Agency','Apr 2024 – Jan 2026','Technical Business Manager · AI-Augmented Product & Growth','Liverpool, UK',['Owned product features end to end from discovery through launch, maintaining <strong>100% client retention</strong>','Integrated AI tools including OpenAI GPT-4o and N8N automation pipelines, generating <strong>£10,000+ in new B2B contracts</strong>','Deployed ReachInbox AI for cold outreach, running a 550 lead campaign with a 13.8% reply rate that converted 2 new clients','Ran A/B experiments across onboarding and messaging using Google Analytics, tracking CAC and retention']],
+ ['CLO Virtual Fashion Inc.','Feb 2022 – Sep 2023','IT Consultant · Product Owner & Technical PM','Bengaluru, India · Seoul, South Korea',['Owned three concurrent enterprise integrations (WFX, Centric PLM, Modern Mirror), achieving <strong>100% on time delivery</strong>','Resolved a 5 year critical legacy issue through first principles root cause analysis, unlocking a <strong>30% performance uplift</strong>','Wrote Python scripts for backend API endpoints supporting the integration workflows','<strong>Key Contributor ×3</strong>, selected for Seoul deployment, coached cross-functional teams']],
+ ['Accenture','Jun 2021 – Dec 2021','Transaction Processing Associate','Bengaluru, India',['AWS cloud workflows, <strong>100% compliance</strong>, automated reporting pipelines for senior stakeholders']]]
+ .map(e=>card(e[0],e[1],[e[2]],'',[['Location',e[3]]],e[4])).join(''))},
 
-function getTime() {
-  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+cases:{t:'Case studies',s:'Teardown and research',h:G(
+ card('Mixpanel Product Teardown','Analysis',['Product Analytics','User Retention','UX Deconstruction'],a('https://rishabhrishabhh.github.io/mixpanel-product-teardown/'),[['Objective','Deconstructing Mixpanel\'s user onboarding and core analytics funnel to identify friction points and structural optimization opportunities for retention.'],['Execution','Mapped six user personas across Mixpanel\'s 29,000+ company user base and traced the full analytics workflow using Jobs to be Done framing and 5 Whys analysis.']],['Prioritised two high ROI bets: an AI Analytics Assistant for plain-English insight queries and a Guided Onboarding Wizard','Structured a 9 month phased delivery plan across three quarters','Set a North Star of 10% uplift in Weekly Active Accounts within six months','Supporting metrics: 30% onboarding completion and 25% weekly AI assistant adoption'])+
+ card('Dissertation: Paradox of Choice','Research',['Information Overload','Decision Architecture','AI UX Strategy'],a('https://rishabhrishabhh.github.io/Paradox-of-Choice-Information-Overload/'),[['Problem','An overflow of data and options paralyzes user decision-making. Generic systems present raw volume instead of contextual clarity.'],['Core insight','A structured academic framework analyzing how intentional information curation cuts noise, directly translating to how agentic AI UI/UX should surface signals.']],['Awarded 81%, the highest score in the University of Liverpool cohort','Decomposed cognitive barriers preventing users from making high confidence choices','Established foundational guidelines for designing clean, high signal AI user interfaces']))},
 
-function formatBotAnswer(text) {
-  let html = escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  const lines = html.split('\n');
-  let result = [];
-  let inList = false;
+awards:{t:'Achievements',s:'Proof of product thinking',h:G(
+ [['AI Strategy Consultancy · Mando Agency','Jan–Mar 2024 · University Live Challenge','Delivered a full AI integration roadmap identifying how agentic AI tools could automate workflows and unlock enterprise value.'],
+ ['Best Negotiator Award','Jan 2024 · University of Liverpool','Won by structuring a sponsorship deal delivering 25% higher brand value through first-principles data analysis.'],
+ ['Dragon\'s Den · Best Elevated Pitch','Mar 2024 · Enterprise Challenge','Built and presented a full investor-ready business concept end-to-end under competition pressure.'],
+ ['1st Place Business Simulation','Mar 2024 · Board Director & Strategic Manager','Led 6 member team to 1st place, outperforming 20+ university teams under real-time strategic ambiguity.'],
+ ['81% · Highest in Cohort','Sep 2024 · University of Liverpool','Research on "The Impact of Information Overload on Decision-Making," foundational to AI UX design philosophy.'],
+ ['Key Contributor Award ×3','2022–2023 · CLO Virtual Fashion','Recognised three consecutive times for mastering new technologies and delivering 30% performance improvement.']]
+ .map((x,i)=>`<article class="card"><span class="ic">${['🤖','🏆','🎤','🥇','📚','⭐'][i]}</span><h3>${x[0]}</h3><small style="color:var(--c)">${x[1]}</small><p style="margin-top:8px">${x[2]}</p></article>`).join(''))},
 
-  for (let line of lines) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
-      if (!inList) { result.push('<ul>'); inList = true; }
-      result.push(`<li>${trimmed.slice(2)}</li>`);
-    } else {
-      if (inList) { result.push('</ul>'); inList = false; }
-      if (trimmed) result.push(`<p>${trimmed}</p>`);
-    }
-  }
-  if (inList) result.push('</ul>');
-  return result.join('');
-}
-function appendMsg(role, text) {
-  const messages = document.getElementById('chatMessages');
-  const div = document.createElement('div');
-  div.className = `chat-msg ${role}`;
-  div.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g,'<br>')}</div><div class="chat-time">${getTime()}</div>`;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-  return div;
-}
+certs:{t:'Certifications',s:'Validated and current',h:G(
+ card('Generative AI Skills for Product Managers','IBM',['LLM Product Design','Agentic Systems','Feature Prioritisation'],'<small>Credential ID: CEGAIPM1 · Issued May 2026</small>',[['','Advanced validation in framing enterprise opportunities using LLM architectures, managing output risks, and evaluating prompt sensitivity patterns.']])+
+ card('N8N Workflow Automation Certification','AcceleratorX',['Multi-Step AI Pipelines','API Integrations','Process Automation'],'<small>Issued May 2026</small>',[['','Hands-on engineering logic for stringing together foundational AI models, API keys, and enterprise databases into high availability agentic loops.']])+
+ card('Project Management Assessment','LearnTube.ai',['Top 0.23% Globally','Score 100%'],'<small>Rank 410 of 179,216 · Issued Feb 2026</small>',[['','Ranked in the top 0.23% worldwide with a perfect score, validating structured project planning and delivery fundamentals.']]))},
 
-function showTyping() {
-  const messages = document.getElementById('chatMessages');
-  const div = document.createElement('div');
-  div.className = 'typing-indicator';
-  div.id = 'typingIndicator';
-  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
+skills:{t:'Skills',s:'What I bring',h:G(Object.entries({'AI product management':['AI Tools Integration','Agentic Workflows','LLM-Powered Use Cases','AI Roadmapping','Feature Prioritisation','Product Prototyping'],'Product execution':['End-to-End Ownership','PRD & User Stories','Backlog Prioritisation','Sprint Execution','A/B Testing','Discovery & Research'],'Analytical thinking':['First-Principles Decomposition','Google Analytics','Funnel & Cohort Analysis','KPI / OKR Frameworks','Data Driven Decisions'],'Tools and platforms':['JIRA','Google Analytics','AWS','Base44','SQL','ChatGPT','Claude','CRM / ERP / PLM','MS Excel']}).map(([k,v])=>`<article class="card"><h3>${k}</h3><div class="tags" style="margin-top:12px">${v.map(t=>`<i>${t}</i>`).join('')}</div></article>`).join(''))},
 
-function hideTyping() {
-  const el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
+timeline:{t:'Timeline',s:'Career graph',h:tlHtml()},
 
-async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const query = input.value.trim();
-  if (!query) return;
+contact:{t:'Contact',s:'Say hello',h:`<p style="margin-bottom:10px">Human in the loop. Agentic in execution.</p><button class="mail" id="mail">${EMAIL}</button><div id="toast"></div><p style="color:var(--mu)">+91 8660127783 · Bengaluru, India</p><p style="margin-top:14px">${a('https://linkedin.com/in/rishabh-rishabhh','LinkedIn')} &nbsp; ${a('https://new-year-resolution-tracker-d0aa1e0b.base44.app','Resolution Tracker')} &nbsp; ${a('https://shaadi-sync-plan.base44.app','Shaadi Sync Plan')}</p>`}
+};
 
-  if (!PROXY_URL) {
-    appendMsg('user', query);
-    appendMsg('bot', `⚙️ Set <code>PROXY_URL</code> to your Cloudflare Worker URL in the script.<br>Or email Rishabh at <a href="mailto:${EMAIL}" style="color:var(--gold)">${EMAIL}</a>`);
-    return;
-  }
+/* ===== build tiles ===== */
+const $=id=>document.getElementById(id);
+const holo=$('holo');
+const bars=a=>`<svg class="tv" viewBox="0 0 120 42" preserveAspectRatio="none">${a.map((v,i)=>`<rect class="f" x="${i*(120/a.length)+2}" y="${42-v}" width="${120/a.length-5}" height="${v}"/>`).join('')}</svg>`;
+const line=a=>`<svg class="tv" viewBox="0 0 120 42" preserveAspectRatio="none"><polyline class="s" points="${a.map((v,i)=>(i*120/(a.length-1))+','+(40-v*.4)).join(' ')}"/></svg>`;
+const don=(p,t)=>`<svg class="tv d" viewBox="0 0 44 44"><circle class="tr" cx="22" cy="22" r="17"/><circle class="fg" cx="22" cy="22" r="17" stroke-dasharray="${p*1.068} 107" transform="rotate(-90 22 22)"/><text x="22" y="25">${t}</text></svg>`;
+const rad=`<svg class="tv d" viewBox="0 0 60 60"><circle class="tr" cx="30" cy="30" r="26"/><circle class="tr" cx="30" cy="30" r="15"/><g class="sw"><line class="s" x1="30" y1="30" x2="30" y2="5"/></g><circle class="f" cx="42" cy="22" r="2.5"/><circle class="f" cx="20" cy="40" r="2"/></svg>`;
+/* x%, y%, width, tilt, parallax, hue, preview, gist lines. Scattered on purpose; centre left free for the video */
+/* x%, y% of the video frame, width, tilt, parallax, hue, preview, gist. Laid out on the holographic screen (x 17-83%, y 11-84% from 14s) around the character */
+const L=20.6,R=63.8,W='14.8%',Y=[19.6,34.4,49.2,64];
+const P={
+about:[L,Y[0],W,'0deg',6,192,don(80,'4+ yrs'),['AI Product Manager','M.Sc. Distinction']],
+experience:[L,Y[1],W,'0deg',8,186,bars([8,14,20,28,36]),['Sood · CLO · Accenture','2021 to 2026']],
+awards:[L,Y[2],W,'0deg',7,320,don(100,'×6'),['6 awards and wins','1st place · Best Negotiator · Best pitch']],
+skills:[L,Y[3],W,'0deg',9,196,line([6,14,10,22,18,30,26,36]),['Agentic AI · LLM use cases','Analytics · SQL · AWS']],
+products:[R,Y[0],W,'0deg',8,200,bars([14,22,18,30,26,36]),['4 products live','Jarvis · Yes PM · Tracker · Shaadi']],
+cases:[R,Y[1],W,'0deg',6,330,rad,['Mixpanel teardown','Dissertation: 81%']],
+certs:[R,Y[2],W,'0deg',7,176,don(99.77,'0.23%'),['IBM · AcceleratorX · LearnTube','Top 0.23% worldwide']],
+timeline:[R,Y[3],W,'0deg',9,152,line([10,24,45,62,80,96]),['Career graph','2016 to 2025']],
+contact:[39.1,70.6,'20.8%','0deg',5,205,'',['rishabhukrishabh@gmail.com']]};
+holo.innerHTML=Object.entries(S).map(([k,v],ix)=>{const p=P[k],col=false;if(k==='contact')return `<button class="tile mini" data-k="${k}" style="--x:${p[0]}%;--y:${p[1]}%;--w:${p[2]};--r:${p[3]};--d:${p[4]};--h:${p[5]};--i:${ix}"><div class="th"><b>${v.t}</b><small>${p[7][0]}</small></div></button>`;return `<button class="tile" data-k="${k}" style="--x:${p[0]}%;--y:${p[1]}%;--w:${p[2]};--r:${p[3]};--d:${p[4]};--h:${p[5]};--i:${ix}\"><div class=\"th\"><b>${v.t}</b><span class="dot"></span></div><div class="tb${col?' col':''}">${p[6]}<ul class="tg">${p[7].map(l=>`<li>${l}</li>`).join('')}</ul></div></button>`}).join('');
+function cu(){$('wb').querySelectorAll('.big').forEach(e=>{const m=e.textContent.match(/^(\D*)(\d+)(.*)$/);if(!m)return;const n=+m[2],t0=performance.now();(function f(t){const p=Math.min((t-t0)/900,1);e.textContent=m[1]+Math.round(n*(1-Math.pow(1-p,3)))+m[3];if(p<1)requestAnimationFrame(f)})(t0)})}
+function bindTL(){const pts=$('wb').querySelectorAll('.pt'),sel=p=>{pts.forEach(x=>x.classList.remove('on'));p.classList.add('on');const d=$('tld');d.style.animation='none';d.offsetWidth;d.style.animation='';d.innerHTML=tlD(+p.dataset.i)};pts.forEach(p=>{p.onmouseenter=p.onfocus=p.onclick=()=>sel(p)})}
+function open_(k){const v=S[k];$('wt').textContent=v.t;$('win').style.setProperty('--h',P[k][5]);$('win').dataset.k=k;$('wb').innerHTML=v.h;$('wb').scrollTop=0;document.body.classList.add('open');cu();if(k==='timeline')bindTL();$('wx').focus();
+ const m=$('mail');if(m)m.onclick=()=>{(navigator.clipboard?navigator.clipboard.writeText(EMAIL):Promise.reject()).then(()=>$('toast').textContent='Copied to clipboard').catch(()=>$('toast').textContent='Copy failed. Select the address and copy it.')};
+ const c=$('wb').querySelector('[data-chat]');if(c)c.onclick=()=>{close_();toggleChat(true)}}
+function close_(){document.body.classList.remove('open')}
+holo.addEventListener('click',e=>{const t=e.target.closest('.tile');if(t)open_(t.dataset.k)});
+$('wx').onclick=$('back').onclick=close_;
+addEventListener('keydown',e=>{if(e.key==='Escape')close_();if(e.key.toLowerCase()==='g'&&e.target.tagName!=='INPUT')document.body.classList.toggle('cal')});
 
-  input.value = '';
-  document.getElementById('chatSend').disabled = true;
-  appendMsg('user', query);
-  chatHistory.push({ role: 'user', text: query });
-  showTyping();
+/* ===== mouse: hologram tilt + cursor ===== */
+const cd=$('cd'),cr=$('cr');let tx=0,ty=0,rx=0,ry=0;
+addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;cd.style.left=tx+'px';cd.style.top=ty+'px';
+ const nx=e.clientX/innerWidth-.5,ny=e.clientY/innerHeight-.5;holo.style.setProperty('--mx',-nx);holo.style.setProperty('--my',-ny);
+ cr.classList.toggle('h',!!e.target.closest('button,a,input'))});
+(function f(){rx+=(tx-rx)*.15;ry+=(ty-ry)*.15;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(f)})();
 
-  try {
-    const response = await fetch(PROXY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, history: chatHistory.slice(-6) })
-    });
+$('ty').textContent='AI Product Manager';
 
-    const data = await response.json();
-    hideTyping();
+/* ===== RK Jarvis chat (same Worker, same request shape) ===== */
+let hist=[];
+function toggleChat(v){const p=$('cp');p.classList.toggle('on',v===undefined?!p.classList.contains('on'):v);if(p.classList.contains('on'))$('cin').focus()}
+$('ct').onclick=()=>toggleChat();$('cx').onclick=()=>toggleChat(false);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function fmt(t){let out=[],ul=false;for(const l of esc(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').split('\n')){const s=l.trim();
+ if(/^[*-] /.test(s)){if(!ul){out.push('<ul>');ul=true}out.push(`<li>${s.slice(2)}</li>`)}else{if(ul){out.push('</ul>');ul=false}if(s)out.push(`<p>${s}</p>`)}}
+ if(ul)out.push('</ul>');return out.join('')}
+function add(r,h){const d=document.createElement('div');d.className='m '+r;d.innerHTML=h;$('cm').appendChild(d);$('cm').scrollTop=1e9;return d}
+async function send(){const i=$('cin'),q=i.value.trim();if(!q)return;i.value='';$('cs').style.display='none';$('csend').disabled=true;
+ add('u',esc(q));hist.push({role:'user',text:q});const w=add('b','Thinking...');
+ try{const r=await fetch(PROXY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:q,history:hist.slice(-6)})});
+  const d=await r.json();if(!r.ok||d.error)throw new Error(d.error||'HTTP '+r.status);
+  hist.push({role:'model',text:d.answer});w.innerHTML=fmt(d.answer)}
+ catch(e){w.innerHTML='Jarvis is unavailable right now ('+esc(e.message)+'). Email <a href="mailto:'+EMAIL+'" style="color:var(--c)">'+EMAIL+'</a> instead.'}
+ $('csend').disabled=false;i.focus()}
+$('csend').onclick=send;$('cin').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();send()}};
+$('cs').onclick=e=>{if(e.target.tagName==='BUTTON'){$('cin').value=e.target.textContent;send()}};
 
-    if (!response.ok || data.error) {
-      const errMsg = data.error || `HTTP ${response.status}`;
-      appendMsg('bot', `🔴 <strong>Error:</strong> ${errMsg}<br><span style="font-size:11px;color:var(--muted)">Check your Cloudflare Worker logs, or open browser Console (F12) for details.</span>`);
-      console.error('Worker error:', data);
-    } else {
-      chatHistory.push({ role: 'model', text: data.answer });
-      appendMsg('bot', formatBotAnswer(data.answer));    
-    }
-
-  } catch (err) {
-    hideTyping();
-    appendMsg('bot', `🔴 <strong>Network error:</strong> ${err.message}<br><br>
-      Common causes:<br>
-      • Incorrect <code>PROXY_URL</code><br>
-      • Worker not deployed or CORS misconfigured<br><br>
-      <span style="font-size:11px;color:var(--muted)">Full error in Console (F12 → Console tab)</span>`);
-    console.error('Chat fetch error:', err);
-  }
-
-  document.getElementById('chatSend').disabled = false;
-  input.focus();
-}
-
-/* ── COPY EMAIL ── */
-function copyEmail() {
-  navigator.clipboard.writeText(EMAIL).then(() => {
-    const toast = document.getElementById('copyToast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = EMAIL;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const toast = document.getElementById('copyToast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  });
-}
-
-/* ═══ CUSTOM CURSOR ═══ */
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
-function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
-animRing();
-document.querySelectorAll('a,button,.stat-card,.product-card,.ach-card,.skill-tag').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.classList.add('hovering');ring.classList.add('hovering');});
-  el.addEventListener('mouseleave',()=>{cursor.classList.remove('hovering');ring.classList.remove('hovering');});
-});
-
-/* ═══ PARTICLE CANVAS ═══ */
-const canvas=document.getElementById('particleCanvas');
-const ctx=canvas.getContext('2d');
-let W,H,particles=[];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-resize();window.addEventListener('resize',resize);
-class Particle{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.5+.3;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.alpha=Math.random()*.5+.1;this.pulse=Math.random()*Math.PI*2;}update(){this.x+=this.vx;this.y+=this.vy;this.pulse+=.02;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(56,189,248,${this.alpha*(0.7+Math.sin(this.pulse)*0.3)})`;ctx.fill();}}
-for(let i=0;i<120;i++)particles.push(new Particle());
-let mouseX=W/2,mouseY=H/2;
-document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
-function drawConnections(){for(let i=0;i<particles.length;i++){const p=particles[i];const dx=mouseX-p.x,dy=mouseY-p.y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouseX,mouseY);ctx.strokeStyle=`rgba(56,189,248,${(1-dist/120)*.2})`;ctx.lineWidth=.5;ctx.stroke();}for(let j=i+1;j<particles.length;j++){const p2=particles[j];const d=Math.sqrt((p.x-p2.x)**2+(p.y-p2.y)**2);if(d<80){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.strokeStyle=`rgba(56,189,248,${(1-d/80)*.08})`;ctx.lineWidth=.4;ctx.stroke();}}}}
-function animParticles(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});drawConnections();requestAnimationFrame(animParticles);}
-animParticles();
-
-/* ═══ SCROLL PROGRESS ═══ */
-const progressBar=document.getElementById('progress');
-window.addEventListener('scroll',()=>{const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;progressBar.style.width=pct+'%';});
-
-/* ═══ NAV SCROLL ═══ */
-const navEl=document.getElementById('nav');
-window.addEventListener('scroll',()=>{navEl.classList.toggle('scrolled',window.scrollY>60);});
-
-/* ═══ INTERSECTION OBSERVER ═══ */
-const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el=>revObs.observe(el));
-
-/* ═══ TYPEWRITER ═══ */
-const phrases=['AI Product Manager | AI Workflow Automation','Agentic Systems | AI-Powered Product Strategy','B2B SaaS | Enterprise Integrations | LLM Products'];
-let pi=0,ci=0,del=false;
-const typedEl=document.getElementById('typedText');
-function typeStep(){const phrase=phrases[pi];if(!del){ci++;typedEl.textContent=phrase.slice(0,ci);if(ci===phrase.length){del=true;setTimeout(typeStep,2200);return;}setTimeout(typeStep,40);}else{ci--;typedEl.textContent=phrase.slice(0,ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;setTimeout(typeStep,400);return;}setTimeout(typeStep,18);}}
-setTimeout(typeStep,1800);
-
-/* ═══ COUNT-UP ═══ */
-function countUp(el,target,prefix,suffix,dur){let start=null;function step(ts){if(!start)start=ts;const p=Math.min((ts-start)/dur,1);const ease=1-Math.pow(1-p,3);const val=Math.round(ease*target);el.textContent=(prefix||'')+val+(suffix||'');if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
-const countObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('[data-target]').forEach(el=>{const target=+el.getAttribute('data-target');const prefix=el.getAttribute('data-prefix')||'';const suffix=el.getAttribute('data-suffix')||'';countUp(el,target,prefix,suffix,1200);});countObs.disconnect();}});},{threshold:.3});
-const metricsEl=document.querySelector('.hero-metrics');
-if(metricsEl)countObs.observe(metricsEl);
-
-/* ═══ PARALLAX BLOBS ═══ */
-const blobs=document.querySelectorAll('.blob');
-document.addEventListener('mousemove',e=>{const cx=e.clientX/window.innerWidth-.5;const cy=e.clientY/window.innerHeight-.5;blobs.forEach((b,i)=>{const depth=(i+1)*12;b.style.transform=`translate(${cx*depth}px,${cy*depth}px)`;});});
-
-/* ═══ MAGNETIC BUTTONS ═══ */
-document.querySelectorAll('.btn-primary,.btn-ghost').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const bx=e.clientX-r.left-r.width/2;const by=e.clientY-r.top-r.height/2;btn.style.transform=`translate(${bx*.15}px,${by*.25}px)`;});btn.addEventListener('mouseleave',()=>{btn.style.transform='';});});
-
-/* ═══ ACTIVE NAV LINK ═══ */
-const sections=document.querySelectorAll('section[id]');
-const navLinks=document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});navLinks.forEach(l=>{l.style.color='';if(l.getAttribute('href')==='#'+cur)l.style.color='var(--gold)';});});
+/* ===== Video sequence. Timestamps in seconds, from your video ===== */
+const CFG={HOLD:3.0,   /* pause on the "Click to open" card */
+ REVEAL:14.2};         /* panels fly out once the big screen has nearly settled; the video then runs on and freezes on its last frame */
+const v=$('v'),go=$('go'),fld=$('holo'),mm=$('mm');let st='intro';
+mm.innerHTML=Object.entries(S).map(([k,x])=>`<button data-k="${k}">${x.t}</button>`).join('');
+mm.addEventListener('click',e=>{const b=e.target.closest('button');if(b)open_(b.dataset.k)});
+const END=()=>Math.max(0,(v.duration||16.75)-.05);
+function reveal(){fld.classList.add('show');mm.classList.add('show');document.body.classList.add('on');setTimeout(()=>fld.classList.add('done'),2600)}
+function begin(){const p=v.play();if(p)p.catch(()=>$('st').classList.add('on'))}
+function skip(){go.classList.remove('on');st='end';v.pause();v.readyState<1?v.addEventListener('loadedmetadata',()=>{v.currentTime=END()},{once:true}):v.currentTime=END();reveal()}
+function replay(){fld.classList.remove('show','done');mm.classList.remove('show');document.body.classList.remove('on');close_();st='intro';v.currentTime=0;begin()}
+go.onclick=()=>{go.classList.remove('on');st='play';begin()};
+$('sk').onclick=skip;$('rp').onclick=replay;$('st').onclick=()=>{$('st').classList.remove('on');v.play()};
+v.onended=()=>{st='end'};
+(function tick(){const t=v.currentTime;
+ if(st==='intro'&&t>=CFG.HOLD){v.pause();v.currentTime=CFG.HOLD;st='wait';go.classList.add('on');go.focus({preventScroll:true})}
+ else if(st==='play'&&t>=CFG.REVEAL){st='end';reveal()}
+ requestAnimationFrame(tick)})();
+if(matchMedia('(prefers-reduced-motion:reduce)').matches)skip();else begin();
 </script>
 </body>
 </html>
